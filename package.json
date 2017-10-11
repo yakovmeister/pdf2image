@@ -1,0 +1,40 @@
+{
+  "name": "pdf2image",
+  "version": "0.1.0",
+  "description": "Node module for converting PDF to image based on pdf2img by Fitra Adity",
+  "main": "index.js",
+  "license": "MIT",
+  "homepage": "https://github.com/yakovmeister/pdf2image",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yakovmeister/pdf2image.git"
+  },
+  "scripts": {
+    "compile": "babel-compile -p es2015 src:lib"
+  },
+  "keywords": [
+    "pdf to image",
+    "pdf to jpg",
+    "pdf to png"
+  ],
+  "author": "Jacob Baring <jacob@dnamicro.com>",
+  "dependencies": {
+    "bluebird": "^3.5.1",
+    "co": "^4.6.0",
+    "dotenv": "^4.0.0",
+    "fs-extra": "^4.0.2",
+    "gm": "^1.23.0"
+  },
+  "engines": { 
+    "node": ">=8.0.0",
+    "npm": ">=5.4.2"
+  }, 
+  "devDependencies": {
+    "babel-cli": "^6.24.0",
+    "babel-compile": "^2.0.0",
+    "babel-polyfill": "^6.23.0",
+    "babel-preset-es2015": "^6.24.0",
+    "babel-preset-stage-2": "^6.22.0",
+    "babel-register": "^6.24.0"
+  }
+}
