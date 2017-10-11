@@ -75,6 +75,12 @@ class PDF2IMG {
 
     }
 
+    /**
+     * Intialize converter
+     * @param {String} pdf_path path to file
+     * @param {Page} page page number to be converted (-1 for all pages)
+     * @return {Object} image status
+     */
     async convert(pdf_path, page = 1) {
         this.isValidPDF(pdf_path)
         this.fileExists(pdf_path)

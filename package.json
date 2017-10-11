@@ -20,8 +20,6 @@
   "author": "Jacob Baring <jacob@dnamicro.com>",
   "dependencies": {
     "bluebird": "^3.5.1",
-    "co": "^4.6.0",
-    "dotenv": "^4.0.0",
     "fs-extra": "^4.0.2",
     "gm": "^1.23.0"
   },
