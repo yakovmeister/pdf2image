@@ -1,4 +1,5 @@
 require("babel-polyfill")
+require('es8-polyfill')
 
 import Promise from "bluebird"
 import gm from "gm"
