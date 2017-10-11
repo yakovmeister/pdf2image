@@ -10,7 +10,7 @@
     "url": "https://github.com/yakovmeister/pdf2image.git"
   },
   "scripts": {
-    "compile": "babel-compile -p es2015 src:lib",
+    "compile": "babel-compile -p es2017 -p es2015 src:lib",
     "test": "_mocha test"
   },
   "keywords": [
@@ -34,8 +34,7 @@
     "babel-plugin-syntax-async-functions": "^6.1.4",
     "babel-plugin-transform-regenerator": "^6.1.4",
     "babel-polyfill": "^6.23.0",
-    "babel-preset-es2015": "^6.24.0",
-    "babel-preset-stage-2": "^6.22.0",
+    "babel-preset-es2017": "^6.24.1",
     "babel-register": "^6.24.0",
     "es8-polyfill": "^0.1.0",
     "mocha": "^4.0.1"
