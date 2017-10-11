@@ -1,3 +1,5 @@
+require("babel-polyfill")
+
 import Promise from "bluebird"
 import gm from "gm"
 import path from "path"

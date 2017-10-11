@@ -27,14 +27,12 @@
     "fs-extra": "^4.0.2",
     "gm": "^1.23.0"
   },
-  "engines": {
-    "node": ">=8.0.0",
-    "npm": ">=5.4.2"
-  },
   "devDependencies": {
     "babel-cli": "^6.24.0",
     "babel-compile": "^2.0.0",
     "babel-polyfill": "^6.23.0",
+    "babel-plugin-syntax-async-functions": "^6.1.4",
+    "babel-plugin-transform-regenerator": "^6.1.4",
     "babel-preset-es2015": "^6.24.0",
     "babel-preset-stage-2": "^6.22.0",
     "babel-register": "^6.24.0",
