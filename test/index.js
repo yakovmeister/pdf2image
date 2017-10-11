@@ -2,7 +2,8 @@ require("babel-polyfill")
 require('es8-polyfill')
 
 var assert = require('assert')
-var PDF2Pic = require('./../lib')
+var PDF2Pic = require('./../index')
+
 var PDF2PicInstance = new PDF2Pic({
     savedir: "./test/o",
     savename: "tests",
