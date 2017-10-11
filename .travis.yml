@@ -3,4 +3,6 @@ before_install:
   - sudo apt-get install graphicsmagick
 language: node_js
 node_js:
+  - 7.10.0
+  - 8.0.0
   - 8.5.0
