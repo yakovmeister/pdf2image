@@ -1,5 +1,6 @@
 # PDF2Pic  
-[![Build Status](https://travis-ci.org/yakovmeister/pdf2image.svg?branch=dev)](https://travis-ci.org/yakovmeister/pdf2image)  
+[![Build Status](https://travis-ci.org/yakovmeister/pdf2image.svg?branch=dev)](https://travis-ci.org/yakovmeister/pdf2image)
+[![GitHub package version](https://img.shields.io/github/package-json/v/badges/shields.svg)]()  
 Node module for converting PDF to image based on pdf2img by Fitra Adity  
 
 ## Prerequisite  
