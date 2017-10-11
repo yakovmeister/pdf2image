@@ -43,7 +43,6 @@ class PDF2IMG {
             })
         }
 
-
         /**
          * GM command - write
          * @access private
@@ -78,14 +77,13 @@ class PDF2IMG {
     /**
      * Intialize converter
      * @param {String} pdf_path path to file
-     * @param {Page} page page number to be converted (-1 for all pages)
+     * @param {Page} page page number to be converted
      * @return {Object} image status
      */
     async convert(pdf_path, page = 1) {
         this.isValidPDF(pdf_path)
         this.fileExists(pdf_path)
 
-        let stdout = []
         let output = path.basename(pdf_path, path.extname(path.basename(pdf_path)))
 
         // Set output dir
@@ -108,15 +106,42 @@ class PDF2IMG {
     }
 
     /**
+     * Intialize converter, well the bulk version
+     * @param {String} pdf_path path to file
+     * @param {Page} page page number to be converted (-1 for all pages)
+     * @return {Object} image status
+     */
+    async convertBulk(pdf_path, pages = -1) {
+        let result = []
+
+        pages = pages === -1 ? await this.getPage(pdf_path) : (Array.isArray(pages) ? pages : [1])
+
+        await Promise.each(pages, async function(each) {
+            result.push(await this.convert(pdf_path, each))
+        }.bind(this))
+        
+        return result
+    }
+
+    /**
      * Get how many pages are there in the pdf file
      * @param {String} pdf_path path to file
      * @return {Integer} number of pages
      */
     async getPageCount(pdf_path) {
+        return await this.getPage(pdf_path).length
+    }
+
+    /**
+     * Get pages numbers
+     * @param {String} pdf_path path to file
+     * @return {Array} pages
+     */
+    async getPage(pdf_path) {
         let page = await Private(this).identify(pdf_path, "%p ")
         page = page.split(" ")
         
-        return page.length
+        return page
     }
 
     /**
@@ -128,7 +153,7 @@ class PDF2IMG {
     async toImage(pdf_path, page) {
         let iStream  = fs.createReadStream(pdf_path)
         let file     = `${this.get("savedir")}${this.get("savename")}_${page}.${this.get("format")}`
-        let filename = this.getFilePath(iStream)
+        let filename = `${this.getFilePath(iStream)}[${page - 1}]`
 
         return await Private(this).writeImage(iStream, file, filename, page)
     }
