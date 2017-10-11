@@ -11,7 +11,7 @@
   },
   "scripts": {
     "compile": "babel-compile -p es2015 src:lib",
-    "test": "mocha"
+    "test": "_mocha test"
   },
   "keywords": [
     "pdf to image",
@@ -37,7 +37,7 @@
     "babel-preset-es2015": "^6.24.0",
     "babel-preset-stage-2": "^6.22.0",
     "babel-register": "^6.24.0",
-    "mocha": "^4.0.1",
-    "mocha-co": "^1.17.2"
+    "istanbul": "^0.4.5",
+    "mocha": "^4.0.1"
   }
 }
