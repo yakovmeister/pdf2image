@@ -46,4 +46,13 @@ describe('PDF2Pic', () => {
             return assert(resolve.length > 0, "conversion is successful")
         })
     })
+
+    it("should convert all huge_size pages to pdf", function () { 
+        this.timeout(100000)
+        PDF2PicInstance.set("savedir", "./test/o/test_5")
+        PDF2PicInstance.convertBulk("./test/docs/huge size.pdf").then(resolve => {
+            console.log('@test-5:', resolve.length)
+            return assert(resolve.length > 0, "conversion is successful")
+        })
+    })
 })
