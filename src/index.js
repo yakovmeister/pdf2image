@@ -1,5 +1,6 @@
 require("babel-polyfill")
 require('es8-polyfill')
+require('gm-base64')
 
 import Promise from "bluebird"
 import gm from "gm"
@@ -75,6 +76,33 @@ class PDF2IMG {
             })
         }
 
+        /**
+         * GM command - toBase64
+         * @access private
+         * @param {Stream} stream
+         * @param {String} output
+         * @param {String} filename
+         * @param {Integer} page
+         * @return {Promise} 
+         */
+        Private(this).toBase64 = (stream, filename, page) => {
+            return new Promise((resolve, reject) => {
+                gm(stream, filename)
+                    .density(Private(this).density, Private(this).density)
+                    .resize(Private(this).size)
+                    .quality(Private(this).quality)
+                    .toBase64(Private(this).format, (error, base64) => {
+                        if(error)
+                            return reject(error)
+
+                        return resolve({
+                            base64,
+                            page
+                        })
+                  })
+            })
+        }
+
     }
 
     /**
@@ -106,6 +134,55 @@ class PDF2IMG {
             throw {error: "InvalidPageSelection", message: "Cannot convert non-existent page"}
         
         return await this.toImage(pdf_path, page)
+    }
+
+    /**
+     * Intialize pdftobase64 converter
+     * @param {String} pdf_path path to file
+     * @param {Page} page page number to be converted
+     * @return {Object} image status
+     */
+    async convertToBase64(pdf_path, page = 1) {
+        this.isValidPDF(pdf_path)
+        this.fileExists(pdf_path)
+
+        let output = path.basename(pdf_path, path.extname(path.basename(pdf_path)))
+
+        // Set output dir
+        if (this.get("savedir"))
+            this.set("savedir", this.get("savedir") + path.sep)
+        else
+            this.set("savedir", output + path.sep)
+        
+        fs.mkdirsSync(this.get("savedir"))
+
+        if(!this.get("savename"))
+            this.set("savename", output)
+
+        let pages = await this.getPageCount(pdf_path)
+
+        if(page > pages)
+            throw {error: "InvalidPageSelection", message: "Cannot convert non-existent page"}
+        
+        return await this.toBase64(pdf_path, page, true)
+    }
+
+    /**
+     * Intialize pdftobase64 converter, well the bulk version
+     * @param {String} pdf_path path to file
+     * @param {Page} page page number to be converted (-1 for all pages)
+     * @return {Object} image status
+     */
+    async convertToBase64Bulk(pdf_path, pages = -1) {
+        let result = []
+        
+        pages = pages === -1 ? await this.getPage(pdf_path) : (Array.isArray(pages) ? pages : [1])
+        
+        await Promise.each(pages, async function(each) {
+            result.push(await this.convertToBase64(pdf_path, each))
+        }.bind(this))
+                
+        return result
     }
 
     /**
@@ -153,12 +230,25 @@ class PDF2IMG {
      * @param {Integer} page
      * @return {Promise} 
      */
-    async toImage(pdf_path, page) {
+    async toImage(pdf_path, page = 1) {
         let iStream  = fs.createReadStream(pdf_path)
         let file     = `${this.get("savedir")}${this.get("savename")}_${page}.${this.get("format")}`
         let filename = `${this.getFilePath(iStream)}[${page - 1}]`
 
         return await Private(this).writeImage(iStream, file, filename, page)
+    }
+
+    /**
+     * Converts pdf to image
+     * @param {String} pdf_path 
+     * @param {Integer} page
+     * @return {Promise} 
+     */
+    async toBase64(pdf_path, page = 1) {
+        let iStream  = fs.createReadStream(pdf_path)
+        let filename = `${this.getFilePath(iStream)}[${page - 1}]`
+
+        return await Private(this).toBase64(iStream,filename, page)
     }
 
     /**

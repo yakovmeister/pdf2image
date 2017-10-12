@@ -14,6 +14,7 @@ var PDF2PicInstance = new PDF2Pic({
 
 describe('PDF2Pic', () => {
     it("should convert pdf1 first page", function () {
+        this.timeout(100000)
         PDF2PicInstance.set("savedir", "./test/o/test_1")
         PDF2PicInstance.convert("./test/docs/pdf1.pdf").then(resolve => {
             console.log('@test-1:', resolve.name)
@@ -22,6 +23,7 @@ describe('PDF2Pic', () => {
     })
     
     it("should convert pdf1 second page", function () {
+        this.timeout(100000)
         PDF2PicInstance.set("savedir", "./test/o/test_2")
         PDF2PicInstance.convert("./test/docs/pdf1.pdf", 2).then(resolve => {
             console.log('@test-2:', resolve.name)
@@ -53,6 +55,22 @@ describe('PDF2Pic', () => {
         PDF2PicInstance.convertBulk("./test/docs/huge size.pdf").then(resolve => {
             console.log('@test-5:', resolve.length)
             return assert(resolve.length > 0, "conversion is successful")
+        })
+    })
+
+    it("should convert pdf1 first page to base64", function () { 
+        this.timeout(100000)
+        PDF2PicInstance.convertToBase64("./test/docs/pdf1.pdf").then(resolve => {
+            console.log('@test-5:', resolve.page)
+            return assert(resolve.page, "conversion is successful")
+        })
+    })
+
+    it("should convert all pages of pdf1 to base64", function () { 
+        this.timeout(100000)
+        PDF2PicInstance.convertToBase64Bulk("./test/docs/pdf1.pdf").then(resolve => {
+            console.log('@test-7:', resolve.length)
+            return assert(resolve.length, "conversion is successful")
         })
     })
 })
