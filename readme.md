@@ -12,6 +12,7 @@ Node module for converting PDF to image based on pdf2img by Fitra Adity
 * bluebird  
 * fs-extra  
 * gm  
+* gm-base64
   
 ## Installation  
   
