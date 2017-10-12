@@ -11,9 +11,10 @@
   },
   "scripts": {
     "clean": "rm -rf ./lib && mkdir ./lib",
+    "clean:compile": "rm -rf ./lib/compiled",
     "compile:babel": "babel-compile -p es2017 -p es2015 src:lib/compiled",
-    "compile:uglify": "uglifyjs ./lib/compiled/helper.js ./lib/compiled/index.js -o ./lib/main.min.js --compress sequences=false,toplevel=true --mangle --verbose",
-    "compile": "npm run clean && npm run compile:babel",
+    "compile:minify": "minify lib/compiled -d lib",
+    "compile": "npm run clean && npm run compile:babel && npm run compile:minify && npm run clean:compile",
     "test": "_mocha test"
   },
   "keywords": [
@@ -34,6 +35,7 @@
   "devDependencies": {
     "babel-cli": "^6.24.0",
     "babel-compile": "^2.0.0",
+    "babel-minify": "^0.2.0",
     "babel-plugin-syntax-async-functions": "^6.1.4",
     "babel-plugin-transform-regenerator": "^6.1.4",
     "babel-polyfill": "^6.23.0",
