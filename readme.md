@@ -1,6 +1,6 @@
 # PDF2Pic  
-[![Build Status](https://travis-ci.org/yakovmeister/pdf2image.svg?branch=dev)](https://travis-ci.org/yakovmeister/pdf2image)
-[![Version](https://img.shields.io/badge/version-1.0.2-blue.svg)]()  
+[![Build Status](https://travis-ci.org/yakovmeister/pdf2image.svg?branch=1.0)](https://travis-ci.org/yakovmeister/pdf2image)
+[![Version](https://img.shields.io/badge/version-1.0.3%20beta%200-red.svg)]()  
 Node module for converting PDF to image based on pdf2img by Fitra Adity  
 
 ## Prerequisite  
@@ -57,7 +57,7 @@ converter.convertBulk("path/to/pdf/sample.pdf", -1)
   
 ## To do  
   
-* base64 as output
+* base64 as output (beta)
 ___
 
 This module is based on Fitra Adity's Great work.
