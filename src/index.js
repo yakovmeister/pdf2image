@@ -10,7 +10,7 @@ import props from "./helper"
 
 let Private = props()
 
-class PDF2IMG {
+class PDF2Pic {
     constructor(options) {
         Private(this).quality = 100
         Private(this).format = options.format || "png"
@@ -219,9 +219,8 @@ class PDF2IMG {
      */
     async getPage(pdf_path) {
         let page = await Private(this).identify(pdf_path, "%p ")
-        page = page.split(" ")
         
-        return page
+        return page.split(" ")
     }
 
     /**
@@ -293,6 +292,9 @@ class PDF2IMG {
      * @return {Mixed} value of the property 
      */
     get(property) {
+        if(Object.prototype.toString.call(Private(this)[property]) == '[object Function]')
+            return undefined
+
         return Private(this)[property]
     }
 
@@ -309,4 +311,4 @@ class PDF2IMG {
     }
 }
 
-module.exports = PDF2IMG
+module.exports = PDF2Pic

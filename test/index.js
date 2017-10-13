@@ -13,6 +13,17 @@ var PDF2PicInstance = new PDF2Pic({
 })
 
 describe('PDF2Pic', () => {
+
+    it("should not return private functions", function () { 
+        this.timeout(100000)
+        return assert(PDF2PicInstance.get("identify") === undefined, "undefined is returned")
+    })
+
+    it("should return private properties", function () { 
+        this.timeout(100000)
+        return assert(PDF2PicInstance.get("quality") !== undefined, "undefined is returned")
+    })
+
     it("should convert pdf1 first page", function () {
         this.timeout(100000)
         PDF2PicInstance.set("savedir", "./test/o/test_1")
@@ -61,7 +72,7 @@ describe('PDF2Pic', () => {
     it("should convert pdf1 first page to base64", function () { 
         this.timeout(100000)
         PDF2PicInstance.convertToBase64("./test/docs/pdf1.pdf").then(resolve => {
-            console.log('@test-5:', resolve.page)
+            console.log('@test-6:', resolve.page)
             return assert(resolve.page, "conversion is successful")
         })
     })
