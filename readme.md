@@ -68,6 +68,8 @@ converter.convertToBase64("path/to/pdf/sample.pdf")
 ## To do  
   
 * base64 as output (beta)  
+* accept base64 as input  
+* bundle everything into single file (if possible)  
   
 ## Issues  
   
