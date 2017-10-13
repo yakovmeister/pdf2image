@@ -305,7 +305,8 @@ class PDF2Pic {
      * @return {Object} this 
      */
     set(property, value) {
-        Private(this)[property] = value
+        if(this.get(property) !== undefined)
+           Private(this)[property] = value
 
         return this
     }

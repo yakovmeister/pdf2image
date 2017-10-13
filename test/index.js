@@ -24,6 +24,18 @@ describe('PDF2Pic', () => {
         return assert(PDF2PicInstance.get("quality") !== undefined, "undefined is returned")
     })
 
+    it("should not set private functions", function () { 
+        this.timeout(100000)
+        PDF2PicInstance.set("identify", "asd")
+        return assert(PDF2PicInstance.get("identify") === undefined, "undefined is returned")
+    })
+
+    it("should set private properties", function () { 
+        this.timeout(100000)
+        PDF2PicInstance.set("savedir", "./test/o/test_1")
+        return assert(PDF2PicInstance.get("savedir") == "./test/o/test_1", "savedir is returned")
+    })
+
     it("should convert pdf1 first page", function () {
         this.timeout(100000)
         PDF2PicInstance.set("savedir", "./test/o/test_1")
@@ -84,4 +96,5 @@ describe('PDF2Pic', () => {
             return assert(resolve.length, "conversion is successful")
         })
     })
+
 })
