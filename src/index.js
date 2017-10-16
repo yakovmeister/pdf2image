@@ -14,11 +14,12 @@ class PDF2Pic {
     constructor(options) {
         Private(this).quality = 0
         Private(this).format = options.format || "png"
-        Private(this).size = options.size || 600
+        Private(this).size = options.size || "768x512"
         Private(this).density = options.density || 72
         Private(this).savedir = options.savedir || undefined
         Private(this).savename = options.savename || undefined
         Private(this).compression = options.compression || "jpeg"
+        Private(this).gm = options.imageMagick === true ? gm.subClass({imageMagick: true}) : gm
         
         /**
          * GM command - identify
@@ -28,7 +29,7 @@ class PDF2Pic {
          * @return {Promise} 
          */
         Private(this).identify = (file_path, argument = undefined) => {
-            let image = gm(file_path)
+            let image = Private(this).gm(file_path)
             
             return new Promise((resolve, reject) => {
                 if(argument)
@@ -59,7 +60,7 @@ class PDF2Pic {
          */
         Private(this).writeImage = (stream, output, filename, page) => {
             return new Promise((resolve, reject) => {
-                gm(stream, filename)
+                Private(this).gm(stream, filename)
                     .density(Private(this).density, Private(this).density)
                     .resize(Private(this).size)
                     .quality(Private(this).quality)
@@ -89,7 +90,7 @@ class PDF2Pic {
          */
         Private(this).toBase64 = (stream, filename, page) => {
             return new Promise((resolve, reject) => {
-                gm(stream, filename)
+                Private(this).gm(stream, filename)
                     .density(Private(this).density, Private(this).density)
                     .resize(Private(this).size)
                     .quality(Private(this).quality)

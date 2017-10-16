@@ -1,11 +1,16 @@
 # PDF2Pic  
 [![Build Status](https://travis-ci.org/yakovmeister/pdf2image.svg?branch=dev)](https://travis-ci.org/yakovmeister/pdf2image)
-[![Version](https://img.shields.io/badge/version-1.0.3%20beta-red.svg)](https://github.com/yakovmeister/pdf2image/tree/1.0)  
+[![Version](https://img.shields.io/badge/version-1.1.0-blue.svg)](https://github.com/yakovmeister/pdf2image/tree/1.0)  
 Node module for converting PDF to image based on pdf2img by Fitra Adity  
 
 ## Prerequisite  
   
 * node >= 4.1.2 
+
+## Features  
+  
+* converts pdf to image, duh.  
+* converts pdf to base64.  
   
 ## Dependencies
   
@@ -65,16 +70,11 @@ converter.convertToBase64("path/to/pdf/sample.pdf")
          })
 ```  
   
-## To do  
-  
-* base64 as output (beta)  
-* accept base64 as input  
-* bundle everything into single file (if possible)  
-  
 ## Issues  
   
 * running convert() after running convertToBase64() doesn't save the file.
-* private functions are returned by get() function
+* private functions are returned by get() function  
+* for some reason, test file results are all fucked up
 ___
 
 This module is based on Fitra Adity's Great work.
