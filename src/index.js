@@ -12,12 +12,13 @@ let Private = props()
 
 class PDF2Pic {
     constructor(options) {
-        Private(this).quality = 100
+        Private(this).quality = 0
         Private(this).format = options.format || "png"
         Private(this).size = options.size || 600
-        Private(this).density = options.density || 200
+        Private(this).density = options.density || 72
         Private(this).savedir = options.savedir || undefined
         Private(this).savename = options.savename || undefined
+        Private(this).compression = options.compression || "jpeg"
         
         /**
          * GM command - identify
@@ -62,6 +63,7 @@ class PDF2Pic {
                     .density(Private(this).density, Private(this).density)
                     .resize(Private(this).size)
                     .quality(Private(this).quality)
+                    .compress(Private(this).compression)
                     .write(output, (error) => {
                         if(error)
                             return reject(error)
@@ -91,6 +93,7 @@ class PDF2Pic {
                     .density(Private(this).density, Private(this).density)
                     .resize(Private(this).size)
                     .quality(Private(this).quality)
+                    .compress(Private(this).compression)
                     .toBase64(Private(this).format, (error, base64) => {
                         if(error)
                             return reject(error)
