@@ -1,5 +1,3 @@
-require("babel-polyfill")
-require('es8-polyfill')
 require('gm-base64')
 
 import Promise from "bluebird"
