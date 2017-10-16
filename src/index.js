@@ -1,5 +1,5 @@
-require('gm-base64')
-
+import "babel-polyfill"
+import "gm-base64"
 import Promise from "bluebird"
 import gm from "gm"
 import path from "path"
