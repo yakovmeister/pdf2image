@@ -4,21 +4,21 @@ import Promise from "bluebird"
 import gm from "gm"
 import path from "path"
 import fs from "fs-extra"
-import props from "./helper"
-
-let Private = props()
+import Private from "private-props"
 
 class PDF2Pic {
     constructor(options) {
-        Private(this).quality = 0
-        Private(this).format = options.format || "png"
-        Private(this).size = options.size || "768x512"
-        Private(this).density = options.density || 72
-        Private(this).savedir = options.savedir || undefined
-        Private(this).savename = options.savename || undefined
-        Private(this).compression = options.compression || "jpeg"
-        Private(this).gm = options.imageMagick === true ? gm.subClass({imageMagick: true}) : gm
-        
+        Private(this).quality       = 0
+        Private(this).format        = options.format        || "png"
+        Private(this).size          = options.size          || "768x512"
+        Private(this).density       = options.density       || 72
+        Private(this).savedir       = options.savedir       || undefined
+        Private(this).savename      = options.savename      || undefined
+        Private(this).compression   = options.compression   || "jpeg"
+        Private(this).gm            = options.imageMagick === true 
+                                    ? gm.subClass({imageMagick: true}) 
+                                    : gm
+                                    
         /**
          * GM command - identify
          * @access private
@@ -198,9 +198,12 @@ class PDF2Pic {
 
         pages = pages === -1 ? await this.getPage(pdf_path) : (Array.isArray(pages) ? pages : [1])
 
-        await Promise.each(pages, async function(each) {
-            result.push(await this.convert(pdf_path, each))
-        }.bind(this))
+        /** not sure yet if this would work */
+        pages = pages.map(page => {
+            return this.convert(pdf_path, page)
+        })
+
+        result = await Promise.all(pages)
         
         return result
     }

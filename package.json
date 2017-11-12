@@ -1,6 +1,6 @@
 {
   "name": "pdf2pic",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "Node module for converting PDF to image based on pdf2img by Fitra Adity",
   "main": "index.js",
   "license": "MIT",
@@ -34,7 +34,8 @@
     "bluebird": "^3.5.1",
     "fs-extra": "^4.0.2",
     "gm": "^1.23.0",
-    "gm-base64": "^1.1.1"
+    "gm-base64": "^1.1.1",
+    "private-props": "^0.1.0"
   },
   "devDependencies": {
     "babel-cli": "^6.24.0",
