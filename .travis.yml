@@ -1,6 +1,9 @@
 before_install:
   - sudo apt-get update
   - sudo apt-get install graphicsmagick
+install:
+  - npm install
+  - npm run compile
 language: node_js
 node_js:
   - 4.1.2
