@@ -35,7 +35,7 @@
     "fs-extra": "^4.0.2",
     "gm": "^1.23.0",
     "gm-base64": "^1.1.1",
-    "private-props": "^0.1.0"
+    "private-props": "^0.1.1"
   },
   "devDependencies": {
     "babel-cli": "^6.24.0",
