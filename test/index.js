@@ -1,4 +1,3 @@
-require("babel-polyfill")
 
 var assert = require('assert')
 var PDF2Pic = require('./../index')

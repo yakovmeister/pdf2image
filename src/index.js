@@ -1,4 +1,3 @@
-import "babel-polyfill"
 import "gm-base64"
 import Promise from "bluebird"
 import gm from "gm"
@@ -7,7 +6,7 @@ import fs from "fs-extra"
 import Private from "private-props"
 
 class PDF2Pic {
-    constructor(options) {
+    constructor(options = {}) {
         Private(this).quality       = 0
         Private(this).format        = options.format        || "png"
         Private(this).size          = options.size          || "768x512"
