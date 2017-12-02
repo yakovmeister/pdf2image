@@ -179,10 +179,12 @@ class PDF2Pic {
         let result = []
         
         pages = pages === -1 ? await this.getPage(pdf_path) : (Array.isArray(pages) ? pages : [1])
+
+        pages = pages.map(page => {
+            return this.convertToBase64(pdf_path, page)
+        })
         
-        await Promise.each(pages, async function(each) {
-            result.push(await this.convertToBase64(pdf_path, each))
-        }.bind(this))
+        result = await Promise.all(pages)
                 
         return result
     }
