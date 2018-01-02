@@ -11,9 +11,9 @@
   },
   "scripts": {
     "postinstall": "npm run compile",
-    "clean": "rm -rf ./lib && mkdir ./lib",
-    "clean:test": "rm -rf ./test/o && mkdir ./test/o",
-    "clean:compile": "rm -rf ./lib/compiled",
+    "clean": "rimraf ./lib && mkdir ./lib",
+    "clean:test": "rimraf ./test/o && mkdir ./test/o",
+    "clean:compile": "rimraf ./lib/compiled",
     "compile:babel": "babel-compile -p es2017 -p es2015 src:lib/compiled",
     "compile:minify": "minify lib/compiled -d lib",
     "compile": "npm run clean && npm run compile:babel && npm run compile:minify && npm run clean:compile",
@@ -48,6 +48,7 @@
     "babel-preset-es2017": "^6.24.1",
     "babel-preset-stage-2": "^6.22.0",
     "babel-register": "^6.24.0",
-    "mocha": "^4.0.1"
+    "mocha": "^4.0.1",
+    "rimraf": "^2.6.1"
   }
 }
