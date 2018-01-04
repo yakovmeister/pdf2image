@@ -1,6 +1,6 @@
 {
   "name": "pdf2pic",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "description": "Node module for converting PDF to image based on pdf2img by Fitra Adity",
   "main": "index.js",
   "license": "MIT",
@@ -10,9 +10,8 @@
     "url": "https://github.com/yakovmeister/pdf2image.git"
   },
   "scripts": {
-    "postinstall": "npm run compile",
-    "clean": "rimraf ./lib && mkdir ./lib",
-    "clean:test": "rimraf ./test/o && mkdir ./test/o",
+    "clean": "rimraf ./lib && mkdir lib",
+    "clean:test": "rimraf ./test/o && mkdir test/o",
     "clean:compile": "rimraf ./lib/compiled",
     "compile:babel": "babel-compile -p es2017 -p es2015 src:lib/compiled",
     "compile:minify": "minify lib/compiled -d lib",
