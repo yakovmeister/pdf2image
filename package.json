@@ -13,7 +13,7 @@
     "clean": "rimraf ./lib && mkdir lib",
     "clean:test": "rimraf ./test/o && mkdir test/o",
     "clean:compile": "rimraf ./lib/compiled",
-    "compile:babel": "babel-compile -p es2017 -p es2015 src:lib/compiled",
+    "compile:babel": "babel-compile -p env src:lib/compiled",
     "compile:minify": "minify lib/compiled -d lib",
     "compile": "npm run clean && npm run compile:babel && npm run compile:minify && npm run clean:compile",
     "test": "npm run clean:test && _mocha test"

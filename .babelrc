@@ -1,4 +1,4 @@
 {
-    "presets": ["es2017", "es2015"],
+    "presets": ["env"],
     "plugins": ["syntax-async-functions", "transform-regenerator"]
 }
