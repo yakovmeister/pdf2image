@@ -1,6 +1,6 @@
 {
   "name": "pdf2pic",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "description": "Node module for converting PDF to image based on pdf2img by Fitra Adity",
   "main": "index.js",
   "license": "MIT",
@@ -19,13 +19,17 @@
     "test": "npm run clean:test && _mocha test"
   },
   "keywords": [
-    "pdf to image",
-    "pdf to jpg",
-    "pdf to png",
+    "pdf-to-image",
+    "pdf-to-jpg",
+    "pdf-to-png",
     "pdf",
+    "convert",
     "image",
     "pdf2img",
+    "pdf2pic",
     "pdf2image",
+    "imagemagick",
+    "graphicsmagick",
     "gm"
   ],
   "author": "Jacob Baring <owari@waifu.club>",
