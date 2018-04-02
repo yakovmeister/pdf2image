@@ -77,17 +77,17 @@ class PDF2Pic {
   writeImage(stream, output, filename, page) {
     return new Promise((resolve, reject) => {
       this.graphicMagickBaseCommand(stream, filename)
-          .write(output, (error) => {
-              if (error) {
-                return reject(error)
-              }
+        .write(output, (error) => {
+          if (error) {
+            return reject(error)
+          }
 
-              return resolve({
-                  name: path.basename(output),
-                  size: fs.statSync(output)['size'] / 1000.0,
-                  path: output,
-                  page
-              })
+          return resolve({
+            name: path.basename(output),
+            size: fs.statSync(output)['size'] / 1000.0,
+            path: output,
+            page
+          })
         })
     })
   }
@@ -193,131 +193,99 @@ class PDF2Pic {
 
       /** not sure yet if this would work */
       pages = pages.map(page => {
-          return this.convert(pdf_path, page)
+        return this.convert(pdf_path, page)
       })
 
       result = await Promise.all(pages)
       
       return result
   }
+
+  /**
+   * Get how many pages are there in the pdf file
+   * @param {String} pdf_path path to file
+   * @return {Integer} number of pages
+   */
+  async getPageCount(pdf_path) {
+    return await this.getPage(pdf_path).length
+  }
+
+  /**
+   * Get pages numbers
+   * @param {String} pdf_path path to file
+   * @return {Array} pages
+   */
+  async getPage(pdf_path) {
+      let page = await this.identify(pdf_path, "%p ")
+      
+      return page.split(" ")
+  }
+
+  /**
+   * Converts pdf to image
+   * @param {String} pdf_path 
+   * @param {Integer} page
+   * @return {Promise} 
+   */
+  async toImage(pdf_path, page = 1) {
+      let iStream  = fs.createReadStream(pdf_path)
+      let file     = `${this.get("savedir")}${this.get("savename")}_${page}.${this.get("format")}`
+      let filename = `${this.getFilePath(iStream)}[${page - 1}]`
+
+      return await this.writeImage(iStream, file, filename, page)
+  }
+
+  /**
+   * Converts pdf to image
+   * @param {String} pdf_path 
+   * @param {Integer} page
+   * @return {Promise} 
+   */
+  async toBase64(pdf_path, page = 1) {
+    let iStream  = fs.createReadStream(pdf_path)
+    let filename = `${this.getFilePath(iStream)}[${page - 1}]`
+
+    return await this.toBase64(iStream,filename, page)
+  }
+
+  /**
+   * Get file path
+   * @param {Stream} stream
+   * @return {String} path
+   */
+  getFilePath(stream) {
+    if (!stream) {
+      throw {error: "InvalidPath", message: "Invalid Path"}
+    }
+
+    return stream.path
+  }
+
+  /**
+   * Checks if the supplied file has the exact file format
+   * @param {String} pdf_path path to file
+   * @return {Mixed} file status
+   */
+  isValidPDF(pdf_path) {
+    if (path.extname(path.basename(pdf_path)) != '.pdf') {
+      throw {error: "InvalidPDF", message: "File supplied is not a valid PDF"}
+    }
+
+    return true
+  }
+
+  /**
+   * Checks if the supplied file has exists
+   * @param {String} pdf_path path to file
+   * @return {Mixed} file status
+   */
+  fileExists(pdf_path) {
+      if (!fs.existsSync(pdf_path)) {
+        throw new Error('File supplied cannot be found')
+      }
+
+    return true
+  }
 }
 
-
-
-
-
-
-
-
-
-
-//     /**
-//      * Get how many pages are there in the pdf file
-//      * @param {String} pdf_path path to file
-//      * @return {Integer} number of pages
-//      */
-//     async getPageCount(pdf_path) {
-//         return await this.getPage(pdf_path).length
-//     }
-
-//     /**
-//      * Get pages numbers
-//      * @param {String} pdf_path path to file
-//      * @return {Array} pages
-//      */
-//     async getPage(pdf_path) {
-//         let page = await Private(this).identify(pdf_path, "%p ")
-        
-//         return page.split(" ")
-//     }
-
-//     /**
-//      * Converts pdf to image
-//      * @param {String} pdf_path 
-//      * @param {Integer} page
-//      * @return {Promise} 
-//      */
-//     async toImage(pdf_path, page = 1) {
-//         let iStream  = fs.createReadStream(pdf_path)
-//         let file     = `${this.get("savedir")}${this.get("savename")}_${page}.${this.get("format")}`
-//         let filename = `${this.getFilePath(iStream)}[${page - 1}]`
-
-//         return await Private(this).writeImage(iStream, file, filename, page)
-//     }
-
-//     /**
-//      * Converts pdf to image
-//      * @param {String} pdf_path 
-//      * @param {Integer} page
-//      * @return {Promise} 
-//      */
-//     async toBase64(pdf_path, page = 1) {
-//         let iStream  = fs.createReadStream(pdf_path)
-//         let filename = `${this.getFilePath(iStream)}[${page - 1}]`
-
-//         return await Private(this).toBase64(iStream,filename, page)
-//     }
-
-//     /**
-//      * Get file path
-//      * @param {Stream} stream
-//      * @return {String} path
-//      */
-//     getFilePath(stream) {
-//         if(!stream)
-//             throw {error: "InvalidPath", message: "Invalid Path"}
-
-//         return stream.path
-//     }
-
-//     /**
-//      * Checks if the supplied file has the exact file format
-//      * @param {String} pdf_path path to file
-//      * @return {Mixed} file status
-//      */
-//     isValidPDF(pdf_path) {
-//         if (path.extname(path.basename(pdf_path)) != '.pdf') 
-//             throw {error: "InvalidPDF", message: "File supplied is not a valid PDF"}
-        
-//         return true
-//     }
-
-//     /**
-//      * Checks if the supplied file has exists
-//      * @param {String} pdf_path path to file
-//      * @return {Mixed} file status
-//      */
-//     fileExists(pdf_path) {
-//         if(!fs.existsSync(pdf_path))
-//             throw {error: "FileNotFound", message: "File supplied cannot be found"}
-
-//         return true
-//     }
-
-//     /**
-//      * Get value from private property
-//      * @param {String} property
-//      * @return {Mixed} value of the property 
-//      */
-//     get(property) {
-//         if(Object.prototype.toString.call(Private(this)[property]) == '[object Function]')
-//             return undefined
-
-//         return Private(this)[property]
-//     }
-
-//     /**
-//      * Add/set value as private property
-//      * @param {String} property 
-//      * @param {String} value
-//      * @return {Object} this 
-//      */
-//     set(property, value) {
-//         if(this.get(property) !== undefined)
-//            Private(this)[property] = value
-
-//         return this
-//     }
-// }
-
-// module.exports = PDF2Pic
+module.exports = PDF2Pic

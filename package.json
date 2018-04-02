@@ -16,7 +16,7 @@
     "compile:babel": "babel-compile -p env src:lib/compiled",
     "compile:minify": "minify lib/compiled -d lib",
     "compile": "npm run clean && npm run compile:babel && npm run compile:minify && npm run clean:compile",
-    "test": "npm run clean:test && _mocha test"
+    "test": "npm run clean:test && _mocha test --require babel-polyfill --require babel-register"
   },
   "keywords": [
     "pdf-to-image",
