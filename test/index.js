@@ -2,13 +2,18 @@ import assert from 'assert'
 import PDF2Pic from './../src/index'
 import { expect } from 'chai'
 
-describe('PDF2Pic', () => {
+describe('PDF2Pic', function () {
   let pdf2pic = new PDF2Pic({
-    savedir: "./test/output",
-    savename: "tests",
+    savename: "test",
     density: 72,
     size: "768x512",
     format: "png"
+  })
+
+  beforeEach(function () {
+    let savedir = `./test/output/${Math.random().toString(10).substring(7)}`
+
+    pdf2pic.setOption('savedir', savedir)
   })
 
   it('should convert pdf1 first page', function () {
@@ -25,8 +30,8 @@ describe('PDF2Pic', () => {
       )
   })
 
-  it("should convert pdf1 all pages", function () { 
-    return pdf2pic.convertBulk('./test/docs/pdf1.pdf', -1)
+  it("should convert pdf1 all pages", function () {
+    pdf2pic.convertBulk('./test/docs/pdf1.pdf', -1)
       .then(resolve =>
         expect(resolve.length).to.be.above(0)
       )
@@ -38,25 +43,11 @@ describe('PDF2Pic', () => {
         expect(resolve.length).to.be.equal(3)
       )
   })
-
-  it('should convert all huge_size pages to pdf', function () {
-    return pdf2pic.convertBulk('./test/docs/huge size.pdf')
-      .then(resolve =>
-        expect(resolve.length).to.be.above(0)
-      )
-  })
-
+  
   it('should convert pdf1 first page to base64', function () {
     return pdf2pic.convertToBase64('./test/docs/pdf1.pdf')
-      .then(resolve => 
-        expect(resolve.page).not.to.be.empty
-      )
-  })
-  
-  it('should convert all pages of pdf1 to base64', function () {
-    return pdf2pic.convertToBase64Bulk('./test/docs/pdf1.pdf')
       .then(resolve =>
-        expect(resolve.length).not.to.be.empty
+        expect(resolve.page).to.be.above(0)
       )
   })
 })

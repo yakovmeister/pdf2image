@@ -1,11 +1,12 @@
 # PDF2Pic  
 [![Build Status](https://travis-ci.org/yakovmeister/pdf2image.svg?branch=1.0)](https://travis-ci.org/yakovmeister/pdf2image)
-[![Version](https://img.shields.io/badge/version-1.1.7-blue.svg)](https://github.com/yakovmeister/pdf2image/tree/1.0)  
-Node module for converting PDF to image based on pdf2img by Fitra Adity  
+[![Version](https://img.shields.io/badge/version-1.2.0-blue.svg)](https://github.com/yakovmeister/pdf2image/tree/1.0)  
+A utility for converting pdf to image and base64 format.  
 
 ## Prerequisite  
   
 * node >= 4.1.2 
+* graphicsmagick
 
 ## Features  
   
@@ -28,7 +29,7 @@ npm install -S pdf2pic
 ## Usage  
   
 ```javascript
-let PDF2Pic = require('pdf2pic')
+let PDF2Pic = require('pdf2pic').PDF2Pic
 let converter = new PDF2Pic({
     density: 100,           // output pixels per inch
     savename: "untitled",   // output file name
@@ -73,7 +74,3 @@ converter.convertToBase64("path/to/pdf/sample.pdf")
 ## Issues  
   
 * running convert() after running convertToBase64() doesn't save the file.
-* for some reason, test file results are all fucked up
-___
-
-This module is based on Fitra Adity's Great work.

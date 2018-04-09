@@ -1,4 +1,8 @@
 {
-    "presets": ["env"],
-    "plugins": ["syntax-async-functions", "transform-regenerator"]
+    "presets": [
+        "env",
+        "stage-0",
+        "stage-1",
+        "stage-2"
+    ]
 }

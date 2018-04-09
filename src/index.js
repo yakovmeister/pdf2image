@@ -103,7 +103,7 @@ export default class PDF2Pic {
     let { format } = this.options
 
     return new Promise((resolve, reject) => {
-      this.graphicMagickBaseCommand(stream,filename)
+      this.graphicMagickBaseCommand(stream, filename)
           .toBase64(format, (error, base64) => {
               if (error) {
                 return reject(error)
@@ -149,6 +149,40 @@ export default class PDF2Pic {
     }
     
     return await this.toImage(pdf_path, page)
+  }
+
+  /**
+   * Intialize pdftobase64 converter,
+   * @param {String} pdf_path path to file
+   * @param {Page} page page number to be converted
+   * @returns {Object} image status
+   */
+  async convertToBase64(pdf_path, page = 1) {
+    this.isValidPDF(pdf_path)
+    this.fileExists(pdf_path)
+
+    let output = path.basename(pdf_path, path.extname(path.basename(pdf_path)))
+
+    // Set output dir
+    if (this.getOption("savedir")) {
+      this.setOption("savedir", this.getOption("savedir") + path.sep)
+    } else {
+      this.setOption("savedir", output + path.sep)
+    }
+    
+    fs.mkdirsSync(this.getOption("savedir"))
+
+    if (!this.getOption("savename")) {
+      this.setOption("savename", output)
+    }
+
+    let pages = await this.getPageCount(pdf_path)
+
+    if (page > pages) {
+      throw new Error('Cannot convert non-existent page')
+    }
+    
+    return await this.streamToBase64(pdf_path, page, true)
   }
 
   /**
@@ -227,14 +261,12 @@ export default class PDF2Pic {
    * @returns {Promise} 
    */
   async toImage(pdf_path, page = 1) {
-      let { savedir, savename, format } = this.getOption()
-      let iStream  = fs.createReadStream(pdf_path)
-      let file     = `${savedir}${savename}_${page}.${format}`
-      let filename = `${this.getFilePath(iStream)}[${page - 1}]`
+    let { savedir, savename, format } = this.getOption()
+    let iStream  = fs.createReadStream(pdf_path)
+    let file     = `${savedir.replace(/\/*$/, '/')}${savename}_${page}.${format}`
+    let filename = `${this.getFilePath(iStream)}[${page - 1}]`
 
-      console.log(file)
-
-      return await this.writeImage(iStream, file, filename, page)
+    return await this.writeImage(iStream, file, filename, page)
   }
 
   /**
@@ -243,7 +275,7 @@ export default class PDF2Pic {
    * @param {Integer} page
    * @returns {Promise} 
    */
-  async toBase64(pdf_path, page = 1) {
+  async streamToBase64(pdf_path, page = 1) {
     let iStream  = fs.createReadStream(pdf_path)
     let filename = `${this.getFilePath(iStream)}[${page - 1}]`
 
