@@ -11,7 +11,7 @@
   },
   "scripts": {
     "clean": "rimraf ./lib && mkdir lib",
-    "clean:test": "rimraf ./test/o && mkdir test/o",
+    "clean:test": "rimraf ./test/output && mkdir test/output",
     "clean:compile": "rimraf ./lib/compiled",
     "compile:babel": "babel-compile -p env src:lib/compiled",
     "compile:minify": "minify lib/compiled -d lib",
