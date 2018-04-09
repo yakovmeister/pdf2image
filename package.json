@@ -1,6 +1,6 @@
 {
   "name": "pdf2pic",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "A utility for converting pdf to image and base64 format.",
   "main": "index.js",
   "license": "MIT",
@@ -34,6 +34,7 @@
   ],
   "author": "Jacob Baring <owari@waifu.club>",
   "dependencies": {
+    "babel-polyfill": "^6.26.0",
     "bluebird": "^3.5.1",
     "fs-extra": "^4.0.2",
     "gm": "^1.23.0",
@@ -45,7 +46,6 @@
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.2.2",
     "babel-minify": "^0.2.0",
-    "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-stage-0": "^6.24.1",
     "babel-preset-stage-1": "^6.24.1",
