@@ -29,7 +29,7 @@ npm install -S pdf2pic
 ## Usage  
   
 ```javascript
-let PDF2Pic = require('pdf2pic').PDF2Pic
+let PDF2Pic = require('pdf2pic').default
 let converter = new PDF2Pic({
     density: 100,           // output pixels per inch
     savename: "untitled",   // output file name
