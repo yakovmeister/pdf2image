@@ -14,6 +14,7 @@ describe('PDF2Pic', function () {
     let savedir = `./test/output/${Math.random().toString(10).substring(7)}`
 
     pdf2pic.setOption('savedir', savedir)
+    this.timeout(1000000)
   })
 
   it('should convert pdf1 first page', function () {
