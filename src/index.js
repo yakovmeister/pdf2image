@@ -23,7 +23,7 @@ export default class PDF2Pic {
    * GM command - identify
    * @param {String} filepath path to valid file
    * @param {Mixed} argument gm identify argument
-   * @returns {Promise} 
+   * @returns {Promise} Promise
    */
   identify(filepath, argument) {
     let image = gm(filepath)
@@ -51,9 +51,9 @@ export default class PDF2Pic {
 
   /**
    * Initialize base graphicmagick setup.
-   * @param {Stream} stream
-   * @param {String} filename
-   * @returns {gm} 
+   * @param {Stream} stream fs stream
+   * @param {String} filename save file name
+   * @returns {gm} graphicsmagick object
    */
   graphicMagickBaseCommand(stream, filename) {
     let { density, size, quality, compression } = this.options
@@ -67,11 +67,11 @@ export default class PDF2Pic {
 
   /**
    * GM command - write
-   * @param {Stream} stream
-   * @param {String} output
-   * @param {String} filename
-   * @param {Integer} page
-   * @returns {Promise} 
+   * @param {Stream} stream fs stream
+   * @param {String} output output
+   * @param {String} filename filename
+   * @param {Integer} page page count
+   * @returns {Promise} Promise
    */
   writeImage(stream, output, filename, page) {
     return new Promise((resolve, reject) => {
@@ -83,7 +83,7 @@ export default class PDF2Pic {
 
           return resolve({
             name: path.basename(output),
-            size: fs.statSync(output)['size'] / 1000.0,
+            size: fs.statSync(output).size / 1000.0,
             path: output,
             page
           })
@@ -93,26 +93,25 @@ export default class PDF2Pic {
 
   /**
    * GM command - toBase64
-   * @param {Stream} stream
-   * @param {String} output
-   * @param {String} filename
-   * @param {Integer} page
-   * @returns {Promise} 
+   * @param {Stream} stream fs stream
+   * @param {String} filename filename
+   * @param {Integer} page page count
+   * @returns {Promise} Promise
    */
   toBase64(stream, filename, page) {
     let { format } = this.options
 
     return new Promise((resolve, reject) => {
       this.graphicMagickBaseCommand(stream, filename)
-          .toBase64(format, (error, base64) => {
-              if (error) {
-                return reject(error)
-              }
+        .toBase64(format, (error, base64) => {
+          if (error) {
+            return reject(error)
+          }
 
-              return resolve({
-                  base64,
-                  page
-              })
+          return resolve({
+            base64,
+            page
+          })
         })
     })
   }
@@ -135,7 +134,7 @@ export default class PDF2Pic {
     } else {
       this.setOption('savedir', output + path.sep)
     }
-    
+
     fs.mkdirsSync(this.getOption('savedir'))
 
     if (!this.getOption('savename')) {
@@ -147,7 +146,7 @@ export default class PDF2Pic {
     if (page > pages) {
       throw new Error('Cannot convert non-existent page')
     }
-    
+
     return await this.toImage(pdf_path, page)
   }
 
@@ -164,16 +163,16 @@ export default class PDF2Pic {
     let output = path.basename(pdf_path, path.extname(path.basename(pdf_path)))
 
     // Set output dir
-    if (this.getOption("savedir")) {
-      this.setOption("savedir", this.getOption("savedir") + path.sep)
+    if (this.getOption('savedir')) {
+      this.setOption('savedir', this.getOption('savedir') + path.sep)
     } else {
-      this.setOption("savedir", output + path.sep)
+      this.setOption('savedir', output + path.sep)
     }
-    
-    fs.mkdirsSync(this.getOption("savedir"))
 
-    if (!this.getOption("savename")) {
-      this.setOption("savename", output)
+    fs.mkdirsSync(this.getOption('savedir'))
+
+    if (!this.getOption('savename')) {
+      this.setOption('savename', output)
     }
 
     let pages = await this.getPageCount(pdf_path)
@@ -181,57 +180,57 @@ export default class PDF2Pic {
     if (page > pages) {
       throw new Error('Cannot convert non-existent page')
     }
-    
+
     return await this.streamToBase64(pdf_path, page, true)
   }
 
   /**
    * Intialize pdftobase64 converter, well the bulk version
    * @param {String} pdf_path path to file
-   * @param {Page} page page number to be converted (-1 for all pages)
+   * @param {Page} pages page number to be converted (-1 for all pages)
    * @returns {Object} image status
    */
   async convertToBase64Bulk(pdf_path, pages = -1) {
     let result = []
-    
+
     let pageCount = Array.isArray(pages) ? pages : [1]
 
-    pages = pages === -1 
-      ? await this.getPage(pdf_path) 
+    pages = pages === -1
+      ? await this.getPage(pdf_path)
       : pageCount
 
     pages = pages.map(page => {
       return this.convertToBase64(pdf_path, page)
     })
-    
+
     result = await Promise.all(pages)
-            
+
     return result
   }
 
   /**
    * Intialize converter, well the bulk version
    * @param {String} pdf_path path to file
-   * @param {Page} page page number to be converted (-1 for all pages)
+   * @param {Page} pages page number to be converted (-1 for all pages)
    * @returns {Object} image status
    */
   async convertBulk(pdf_path, pages = -1) {
-      let result = []
+    let result = []
 
-      let pageCount = Array.isArray(pages) ? pages : [1]
+    let pageCount = Array.isArray(pages) ? pages : [1]
 
-      pages = pages === -1 
-        ? await this.getPage(pdf_path) 
-        : pageCount 
+    pages = pages === -1
+      ? await this.getPage(pdf_path)
+      : pageCount
 
       /** not sure yet if this would work */
-      pages = pages.map(page => {
-        return this.convert(pdf_path, page)
-      })
+    pages = pages.map(page => {
+      return this.convert(pdf_path, page)
+    })
 
-      result = await Promise.all(pages)
-      
-      return result
+    result = await Promise.all(pages)
+
+    return result
   }
 
   /**
@@ -249,21 +248,21 @@ export default class PDF2Pic {
    * @returns {Array} pages
    */
   async getPage(pdf_path) {
-      let page = await this.identify(pdf_path, "%p ")
-      
-      return page.split(" ")
+    let page = await this.identify(pdf_path, '%p ')
+
+    return page.split(' ')
   }
 
   /**
    * Converts pdf to image
-   * @param {String} pdf_path 
-   * @param {Integer} page
-   * @returns {Promise} 
+   * @param {String} pdf_path pdf path
+   * @param {Integer} page page count
+   * @returns {Promise} Promise
    */
   async toImage(pdf_path, page = 1) {
     let { savedir, savename, format } = this.getOption()
-    let iStream  = fs.createReadStream(pdf_path)
-    let file     = `${savedir.replace(/\/*$/, '/')}${savename}_${page}.${format}`
+    let iStream = fs.createReadStream(pdf_path)
+    let file = `${savedir.replace(/\/*$/, '/')}${savename}_${page}.${format}`
     let filename = `${this.getFilePath(iStream)}[${page - 1}]`
 
     return await this.writeImage(iStream, file, filename, page)
@@ -271,25 +270,25 @@ export default class PDF2Pic {
 
   /**
    * Converts pdf to image
-   * @param {String} pdf_path 
-   * @param {Integer} page
-   * @returns {Promise} 
+   * @param {String} pdf_path pdf path
+   * @param {Integer} page page count
+   * @returns {Promise} Promise
    */
   async streamToBase64(pdf_path, page = 1) {
-    let iStream  = fs.createReadStream(pdf_path)
+    let iStream = fs.createReadStream(pdf_path)
     let filename = `${this.getFilePath(iStream)}[${page - 1}]`
 
-    return await this.toBase64(iStream,filename, page)
+    return await this.toBase64(iStream, filename, page)
   }
 
   /**
    * Get file path
-   * @param {Stream} stream
+   * @param {Stream} stream fs stream
    * @returns {String} path
    */
   getFilePath(stream) {
     if (!stream) {
-      throw {error: "InvalidPath", message: "Invalid Path"}
+      throw new Error('Invalid Stream')
     }
 
     return stream.path
@@ -301,8 +300,8 @@ export default class PDF2Pic {
    * @returns {Mixed} file status
    */
   isValidPDF(pdf_path) {
-    if (path.extname(path.basename(pdf_path)) != '.pdf') {
-      throw {error: "InvalidPDF", message: "File supplied is not a valid PDF"}
+    if (path.extname(path.basename(pdf_path)) !== '.pdf') {
+      throw new Error('File supplied is not a valid PDF')
     }
 
     return true
@@ -314,9 +313,9 @@ export default class PDF2Pic {
    * @returns {Mixed} file status
    */
   fileExists(pdf_path) {
-      if (!fs.existsSync(pdf_path)) {
-        throw new Error('File supplied cannot be found')
-      }
+    if (!fs.existsSync(pdf_path)) {
+      throw new Error('File supplied cannot be found')
+    }
 
     return true
   }
@@ -332,13 +331,13 @@ export default class PDF2Pic {
 
   /**
    * Set a key-value to this options
-   * @param {*} key 
-   * @param {*} value
-   * @returns {object} this 
+   * @param {*} key key from this.options
+   * @param {*} value value to be assigned on this.options[key]
+   * @returns {object} this
    */
   setOption(key, value) {
     this.options[key] = value
-    
+
     return this
   }
 }

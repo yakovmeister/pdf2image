@@ -1,6 +1,6 @@
 {
   "name": "pdf2pic",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "A utility for converting pdf to image and base64 format.",
   "main": "index.js",
   "license": "MIT",
@@ -43,6 +43,7 @@
     "babel-cli": "^6.24.0",
     "babel-compile": "^2.0.0",
     "babel-core": "^6.26.0",
+    "babel-eslint": "^8.2.2",
     "babel-minify": "^0.2.0",
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.6.1",
@@ -51,6 +52,9 @@
     "babel-preset-stage-2": "^6.24.1",
     "babel-register": "^6.24.0",
     "chai": "^4.1.2",
+    "eslint": "^4.19.1",
+    "eslint-plugin-import": "^2.10.0",
+    "eslint-plugin-babel": "^5.0.0",
     "mocha": "^4.1.0",
     "rimraf": "^2.6.1"
   }
