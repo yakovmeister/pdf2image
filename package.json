@@ -1,7 +1,7 @@
 {
   "name": "pdf2pic",
   "version": "1.2.0",
-  "description": "Node module for converting PDF to image based on pdf2img by Fitra Adity",
+  "description": "A utility for converting pdf to image and base64 format.",
   "main": "index.js",
   "license": "MIT",
   "homepage": "https://github.com/yakovmeister/pdf2image",
