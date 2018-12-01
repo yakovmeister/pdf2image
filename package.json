@@ -41,21 +41,26 @@
     "gm-base64": "^1.1.1"
   },
   "devDependencies": {
-    "babel-cli": "^6.24.0",
-    "babel-compile": "^2.0.0",
-    "babel-core": "^6.26.0",
-    "babel-eslint": "^8.2.2",
-    "babel-minify": "^0.2.0",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-stage-0": "^6.24.1",
-    "babel-preset-stage-1": "^6.24.1",
-    "babel-preset-stage-2": "^6.24.1",
-    "babel-register": "^6.24.0",
+    "@babel/cli": "^7.0.0-beta.53",
+    "@babel/core": "^7.0.0-beta.53",
+    "@babel/plugin-external-helpers": "^7.0.0-beta.53",
+    "@babel/plugin-proposal-class-properties": "^7.0.0",
+    "@babel/polyfill": "^7.0.0-beta.53",
+    "@babel/preset-env": "^7.0.0-beta.53",
+    "@babel/preset-stage-3": "^7.0.0-beta.53",
+    "babel-plugin-module-resolver": "^3.1.1",
     "chai": "^4.1.2",
     "eslint": "^4.19.1",
     "eslint-plugin-import": "^2.10.0",
     "eslint-plugin-babel": "^5.0.0",
     "mocha": "^4.1.0",
-    "rimraf": "^2.6.1"
+    "rimraf": "^2.6.1",
+    "rollup": "^0.65.0",
+    "rollup-plugin-alias": "^1.4.0",
+    "rollup-plugin-babel": "^4.0.0-beta.7",
+    "rollup-plugin-commonjs": "^9.1.3",
+    "rollup-plugin-json": "^3.0.0",
+    "rollup-plugin-node-resolve": "^3.3.0",
+    "rollup-plugin-uglify": "^5.0.2"
   }
 }
