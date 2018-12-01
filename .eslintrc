@@ -184,7 +184,7 @@
     "one-var": [1, "never"], // allow just one var statement per function (off by default)
     "operator-assignment": [1, "never"], // require assignment operator shorthand where possible or prohibit it entirely (off by default)
     "padded-blocks": [1, "never"], // enforce padding within blocks (off by default)
-    "quotes": ["error", "single", { "allowTemplateLiterals": true }], // specify whether double or single quotes should be used
+    "quotes": ["error", "double", { "allowTemplateLiterals": true }], // specify whether double or single quotes should be used
     "semi": [1, "never"], // require or disallow use of semicolons instead of ASI
     "semi-spacing": [1, {"before": false, "after": true}], // enforce spacing before and after semicolons
     "sort-vars": 0, // sort variables within the same declaration block (off by default)
