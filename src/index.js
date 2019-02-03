@@ -301,7 +301,7 @@ export default class PDF2Pic {
    * @returns {Mixed} file status
    */
   isValidPDF(pdf_path) {
-    if (path.extname(path.basename(pdf_path)) !== '.pdf') {
+    if (path.extname(path.basename(pdf_path)).toLowerCase() !== '.pdf') {
       throw new Error('File supplied is not a valid PDF')
     }
 
