@@ -1,6 +1,7 @@
 # PDF2Pic  
-[![Build Status](https://travis-ci.org/yakovmeister/pdf2image.svg?branch=1.0)](https://travis-ci.org/yakovmeister/pdf2image)
-[![Version](https://img.shields.io/badge/version-1.2.6-blue.svg)](https://github.com/yakovmeister/pdf2image/tree/1.0)  
+[![Build Status][travis-image]][travis-url]
+[![NPM Version][npm-image]][npm-url]
+[![Downloads Stats][npm-downloads]][npm-url]  
 A utility for converting pdf to image and base64 format.  
 
 ## Prerequisite  
@@ -72,3 +73,9 @@ converter.convertToBase64("path/to/pdf/sample.pdf")
     }
   })
 ```  
+<!-- Markdown link & img dfn's -->
+[npm-image]: https://img.shields.io/npm/v/pdf2pic.svg?style=flat-square
+[npm-url]: https://www.npmjs.com/package/pdf2pic
+[npm-downloads]: https://img.shields.io/npm/dm/pdf2pic.svg?style=flat-square
+[travis-image]: https://travis-ci.org/yakovmeister/pdf2image.svg?branch=dev
+[travis-url]: https://travis-ci.org/yakovmeister/pdf2image
