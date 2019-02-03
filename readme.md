@@ -77,5 +77,5 @@ converter.convertToBase64("path/to/pdf/sample.pdf")
 [npm-image]: https://img.shields.io/npm/v/pdf2pic.svg?style=flat-square
 [npm-url]: https://www.npmjs.com/package/pdf2pic
 [npm-downloads]: https://img.shields.io/npm/dm/pdf2pic.svg?style=flat-square
-[travis-image]: https://travis-ci.org/yakovmeister/pdf2image.svg?branch=dev
+[travis-image]: https://travis-ci.org/yakovmeister/pdf2image.svg?branch=1.0
 [travis-url]: https://travis-ci.org/yakovmeister/pdf2image
