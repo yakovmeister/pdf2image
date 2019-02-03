@@ -1,4 +1,4 @@
-import 'babel-polyfill'
+import "@babel/polyfill"
 import 'gm-base64'
 import gm from 'gm'
 import path from 'path'
