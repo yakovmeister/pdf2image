@@ -4,7 +4,8 @@ import { uglify } from "rollup-plugin-uglify"
 const base = {
   plugins: [
     babel({
-      exclude: "node_modules/**"
+      exclude: "node_modules/**",
+      runtimeHelpers: true
     }),
     uglify()
   ]

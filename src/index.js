@@ -1,19 +1,18 @@
-import "@babel/polyfill"
-import 'gm-base64'
-import gm from 'gm'
-import path from 'path'
-import fs from 'fs-extra'
-import Promise from 'bluebird'
+import "gm-base64"
+import gm from "gm"
+import path from "path"
+import fs from "fs-extra"
+import Promise from "bluebird"
 
 export default class PDF2Pic {
   static defaultOptions = {
     quality: 0,
-    format: 'png',
-    size: '768x512',
+    format: "png",
+    size: "768x512",
     density: 72,
-    savedir: './',
-    savename: 'untitled',
-    compression: 'jpeg'
+    savedir: "./",
+    savename: "untitled",
+    compression: "jpeg"
   }
 
   constructor(options = {}) {
@@ -130,22 +129,22 @@ export default class PDF2Pic {
     let output = path.basename(pdf_path, path.extname(path.basename(pdf_path)))
 
     // Set output dir
-    if (this.getOption('savedir')) {
-      this.setOption('savedir', this.getOption('savedir') + path.sep)
+    if (this.getOption("savedir")) {
+      this.setOption("savedir", this.getOption("savedir") + path.sep)
     } else {
-      this.setOption('savedir', output + path.sep)
+      this.setOption("savedir", output + path.sep)
     }
 
-    fs.mkdirsSync(this.getOption('savedir'))
+    fs.mkdirsSync(this.getOption("savedir"))
 
-    if (!this.getOption('savename')) {
-      this.setOption('savename', output)
+    if (!this.getOption("savename")) {
+      this.setOption("savename", output)
     }
 
     let pages = await this.getPageCount(pdf_path)
 
     if (page > pages) {
-      throw new Error('Cannot convert non-existent page')
+      throw new Error("Cannot convert non-existent page")
     }
 
     return await this.toImage(pdf_path, page)
@@ -164,22 +163,22 @@ export default class PDF2Pic {
     let output = path.basename(pdf_path, path.extname(path.basename(pdf_path)))
 
     // Set output dir
-    if (this.getOption('savedir')) {
-      this.setOption('savedir', this.getOption('savedir') + path.sep)
+    if (this.getOption("savedir")) {
+      this.setOption("savedir", this.getOption("savedir") + path.sep)
     } else {
-      this.setOption('savedir', output + path.sep)
+      this.setOption("savedir", output + path.sep)
     }
 
-    fs.mkdirsSync(this.getOption('savedir'))
+    fs.mkdirsSync(this.getOption("savedir"))
 
-    if (!this.getOption('savename')) {
-      this.setOption('savename', output)
+    if (!this.getOption("savename")) {
+      this.setOption("savename", output)
     }
 
     let pages = await this.getPageCount(pdf_path)
 
     if (page > pages) {
-      throw new Error('Cannot convert non-existent page')
+      throw new Error("Cannot convert non-existent page")
     }
 
     return await this.streamToBase64(pdf_path, page, true)
@@ -249,9 +248,9 @@ export default class PDF2Pic {
    * @returns {Array} pages
    */
   async getPage(pdf_path) {
-    let page = await this.identify(pdf_path, '%p ')
+    let page = await this.identify(pdf_path, "%p ")
 
-    return page.split(' ')
+    return page.split(" ")
   }
 
   /**
@@ -263,7 +262,7 @@ export default class PDF2Pic {
   async toImage(pdf_path, page = 1) {
     let { savedir, savename, format } = this.getOption()
     let iStream = fs.createReadStream(pdf_path)
-    let file = `${savedir.replace(/\/*$/, '/')}${savename}_${page}.${format}`
+    let file = `${savedir.replace(/\/*$/, "/")}${savename}_${page}.${format}`
     let filename = `${this.getFilePath(iStream)}[${page - 1}]`
 
     return await this.writeImage(iStream, file, filename, page)
@@ -289,7 +288,7 @@ export default class PDF2Pic {
    */
   getFilePath(stream) {
     if (!stream) {
-      throw new Error('Invalid Stream')
+      throw new Error("Invalid Stream")
     }
 
     return stream.path
@@ -301,8 +300,8 @@ export default class PDF2Pic {
    * @returns {Mixed} file status
    */
   isValidPDF(pdf_path) {
-    if (path.extname(path.basename(pdf_path)).toLowerCase() !== '.pdf') {
-      throw new Error('File supplied is not a valid PDF')
+    if (path.extname(path.basename(pdf_path)).toLowerCase() !== ".pdf") {
+      throw new Error("File supplied is not a valid PDF")
     }
 
     return true
@@ -315,7 +314,7 @@ export default class PDF2Pic {
    */
   fileExists(pdf_path) {
     if (!fs.existsSync(pdf_path)) {
-      throw new Error('File supplied cannot be found')
+      throw new Error("File supplied cannot be found")
     }
 
     return true
