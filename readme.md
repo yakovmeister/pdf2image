@@ -31,48 +31,93 @@ npm install -S pdf2pic
   
 ## Usage  
   
+## Basic  
+  
 ```javascript
-let PDF2Pic = require('pdf2pic').default
-let converter = new PDF2Pic({
+const PDF2Pic = require("pdf2pic");
+
+const pdf2pic = new PDF2Pic({
   density: 100,           // output pixels per inch
   savename: "untitled",   // output file name
   savedir: "./images",    // output file location
   format: "png",          // output file format
   size: 600               // output size in pixels
-})
+});
 
-// by default the first page of the pdf will be converted
-// to image
-converter.convert("/path/to/pdf/sample.pdf")
-  .then(resolve => {
-    console.log("image converted successfully")
-  })
+pdf2pic.convert("/path/to/pdf/sample.pdf").then((resolve) => {
+  console.log("image converter successfully!");
 
-// or you can also convert bulk
-// in this example we will only convert pages 1 4 and 6
-converter.convertBulk("path/to/pdf/sample.pdf", [1,4,6])
-  .then(resolve => {
-    console.log("image converted successfully")
-  })
+  return resolve;
+});
+
+```
+## Convert all pages
+  
+```javascript
+const PDF2Pic = require("pdf2pic");
+
+const pdf2pic = new PDF2Pic({
+  density: 100,           // output pixels per inch
+  savename: "untitled",   // output file name
+  savedir: "./images",    // output file location
+  format: "png",          // output file format
+  size: 600               // output size in pixels
+});
+
+pdf2pic.convertBulk("path/to/pdf/sample.pdf", -1).then((resolve) => {
+  console.log("image converter successfully!");
+
+  return resolve;
+});
+
+```
+
+## Multiple page conversion (specific pages)  
+  
+```javascript
+const PDF2Pic = require("pdf2pic");
+
+const pdf2pic = new PDF2Pic({
+  density: 100,           // output pixels per inch
+  savename: "untitled",   // output file name
+  savedir: "./images",    // output file location
+  format: "png",          // output file format
+  size: 600               // output size in pixels
+});
+
+pdf2pic.convertBulk("path/to/pdf/sample.pdf", [1,4,6]).then((resolve) => {
+  console.log("image converter successfully!");
+
+  return resolve;
+});
+
+```
 
 
-// we can also convert all pages to pdf by
-// supplying -1 as second argument
-converter.convertBulk("path/to/pdf/sample.pdf", -1)
-  .then(resolve => {
-    console.log("image converted successfully")
-  })
+## Convert pdf to base64 string of an image  
+  
+```javascript
+const PDF2Pic = require("pdf2pic");
 
+const pdf2pic = new PDF2Pic({
+  density: 100,           // output pixels per inch
+  savename: "untitled",   // output file name
+  savedir: "./images",    // output file location
+  format: "png",          // output file format
+  size: 600               // output size in pixels
+});
 
-// you can also directly convert pdf to base64 of an image
-converter.convertToBase64("path/to/pdf/sample.pdf")
-  .then(resolve => {
-    if (resolve.base64) {
-      // assuming you're using some ORM to save base64 to db
-      db.model.table('users').update({id: "1", image: resolve.base64})
-    }
-  })
-```  
+pdf2pic.convertToBase64("path/to/pdf/sample.pdf").then((resolve) => {
+  if (resolve.base64) {
+    console.log("image converter successfully!");
+
+    // assuming you're using some ORM to save base64 to db
+    return db.model.table('users').update({id: "1", image: resolve.base64});
+  }
+});
+
+```
+
 <!-- Markdown link & img dfn's -->
 [npm-image]: https://img.shields.io/npm/v/pdf2pic.svg?style=flat-square
 [npm-url]: https://www.npmjs.com/package/pdf2pic
