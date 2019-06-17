@@ -1,6 +1,6 @@
 {
   "name": "pdf2pic",
-  "version": "1.3.4",
+  "version": "1.3.5",
   "description": "A utility for converting pdf to image and base64 format.",
   "main": "index.js",
   "license": "MIT",
@@ -13,8 +13,6 @@
     "clean": "rimraf ./lib && mkdir lib",
     "clean:test": "rimraf ./test/output && mkdir test/output",
     "clean:compile": "rimraf ./lib/compiled",
-    "compile:babel": "babel-compile -p env -p stage-0 -p stage-1 -p stage-2 src:lib/compiled",
-    "compile:minify": "minify lib/compiled -d lib",
     "compile:rollup": "rollup -c",
     "compile": "npm run clean && npm run compile:rollup && npm run clean:compile",
     "test": "npm run clean:test && mocha --require @babel/register"

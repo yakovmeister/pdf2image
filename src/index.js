@@ -58,9 +58,20 @@ export default class PDF2Pic {
   graphicMagickBaseCommand(stream, filename) {
     let { density, size, quality, compression } = this.options
 
+    const width = size.split(/x/i)[0]
+    const height = size.split(/x/i)[1]
+
+    if (!height) {
+      return gm(stream, filename)
+        .density(density, density)
+        .resize(size)
+        .quality(quality)
+        .compress(compression)
+    }
+
     return gm(stream, filename)
       .density(density, density)
-      .resize(size)
+      .resize(width, height)
       .quality(quality)
       .compress(compression)
   }
