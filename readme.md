@@ -42,7 +42,7 @@ const pdf2pic = new PDF2Pic({
   savename: "untitled",   // output file name
   savedir: "./images",    // output file location
   format: "png",          // output file format
-  size: 600               // output size in pixels
+  size: "600x600"         // output size in pixels
 });
 
 pdf2pic.convert("/path/to/pdf/sample.pdf").then((resolve) => {
@@ -62,7 +62,7 @@ const pdf2pic = new PDF2Pic({
   savename: "untitled",   // output file name
   savedir: "./images",    // output file location
   format: "png",          // output file format
-  size: 600               // output size in pixels
+  size: "600x600"         // output size in pixels
 });
 
 pdf2pic.convertBulk("path/to/pdf/sample.pdf", -1).then((resolve) => {
@@ -83,7 +83,7 @@ const pdf2pic = new PDF2Pic({
   savename: "untitled",   // output file name
   savedir: "./images",    // output file location
   format: "png",          // output file format
-  size: 600               // output size in pixels
+  size: "600x600"         // output size in pixels
 });
 
 pdf2pic.convertBulk("path/to/pdf/sample.pdf", [1,4,6]).then((resolve) => {
@@ -105,7 +105,7 @@ const pdf2pic = new PDF2Pic({
   savename: "untitled",   // output file name
   savedir: "./images",    // output file location
   format: "png",          // output file format
-  size: 600               // output size in pixels
+  size: "600x600"         // output size in pixels
 });
 
 pdf2pic.convertToBase64("path/to/pdf/sample.pdf").then((resolve) => {
