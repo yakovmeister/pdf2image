@@ -35,7 +35,7 @@ export default class PDF2Pic {
             return reject(error)
           }
 
-          return resolve(data)
+          return resolve(data.replace(/^[\w\W]+?1/,'1'))
         })
       } else {
         image.identify((error, data) => {
