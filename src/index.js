@@ -2,7 +2,6 @@ import "gm-base64"
 import gm from "gm"
 import path from "path"
 import fs from "fs-extra"
-import Promise from "bluebird"
 
 export default class PDF2Pic {
   static defaultOptions = {

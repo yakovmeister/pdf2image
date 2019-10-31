@@ -6,7 +6,7 @@ A utility for converting pdf to image and base64 format.
 
 ## Prerequisite  
   
-* node >= 7.x 
+* node >= 8.x 
 * graphicsmagick  
 * ghostscript  
 
@@ -19,7 +19,6 @@ A utility for converting pdf to image and base64 format.
   
 ## Dependencies
   
-* bluebird  
 * fs-extra  
 * gm  
 * gm-base64
