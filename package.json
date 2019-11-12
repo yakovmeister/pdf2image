@@ -34,7 +34,7 @@
   "author": "Jacob Baring <owari@waifu.club>",
   "dependencies": {
     "@babel/runtime": "^7.6.3",
-    "fs-extra": "^4.0.2",
+    "fs-extra": "^8.1.0",
     "gm": "^1.23.0",
     "gm-base64": "^1.1.1"
   },
@@ -50,12 +50,12 @@
     "babel-eslint": "^10.0.3",
     "babel-plugin-module-resolver": "^3.2.0",
     "chai": "^4.2.0",
-    "eslint": "^4.19.1",
+    "eslint": "^6.6.0",
     "eslint-plugin-babel": "^5.3.0",
     "eslint-plugin-import": "^2.18.2",
-    "mocha": "^4.1.0",
-    "rimraf": "^2.7.1",
-    "rollup": "^1.26.0",
+    "mocha": "^6.2.2",
+    "rimraf": "^3.0.0",
+    "rollup": "^1.26.5",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-uglify": "^6.0.3"
   }
