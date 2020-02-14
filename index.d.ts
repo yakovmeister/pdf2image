@@ -3,7 +3,7 @@
 // Definitions by:  Jihoon Lee <https://github.com/NoMoreViolence>
 // TypeScript Version: 3.7.5
 
-export interface Pdf2picOption {
+interface Pdf2picConstructor {
   /**
    * output pixels per inch  */
   density: number;
@@ -49,7 +49,7 @@ export interface ConvertBase64Result {
 }
 
 declare class Pdf2pic {
-  constructor(option?: Pdf2picOption);
+  constructor(option?: Pdf2picConstructor);
 
   /**
    *
