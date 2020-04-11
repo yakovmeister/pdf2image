@@ -1,6 +1,7 @@
 
 # Created by https://www.gitignore.io/api/node
 
+yarn.lock
 package-lock.json
 
 ### Node ###
@@ -70,3 +71,6 @@ typings/
 test/output/**
 
 dist/**
+
+# IDE config
+.idea
