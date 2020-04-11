@@ -42,9 +42,14 @@ describe("PDF2Pic", function () {
   it("should convert pdf1 all pages", function () {
     this.timeout(1000000)
     return pdf2pic.convertBulk("./test/docs/pdf1.pdf", -1)
-      .then(resolve =>
+      .then(resolve => {
         expect(resolve.length).to.be.above(0)
-      )
+
+        const testedPage = 3
+        expect(resolve[testedPage].name).to.equal(`test_${testedPage + 1}.png`)
+        expect(resolve[testedPage].path).to.match(new RegExp(`^\./test/output/\\d+/test_${testedPage + 1}.png$`))
+        expect(resolve[testedPage].page).to.equal(testedPage + 1)
+      })
   })
 
   it("should convert pdf1 first page to base64", function () {
