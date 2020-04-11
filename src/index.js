@@ -206,7 +206,7 @@ export default class PDF2Pic {
     let pageCount = Array.isArray(pages) ? pages : [1]
 
     pages = pages === -1
-      ? await this.getPage(pdf_path)
+      ? await this.getPages(pdf_path)
       : pageCount
 
     pages = pages.map(page => {
@@ -230,7 +230,7 @@ export default class PDF2Pic {
     let pageCount = Array.isArray(pages) ? pages : [1]
 
     pages = pages === -1
-      ? await this.getPage(pdf_path)
+      ? await this.getPages(pdf_path)
       : pageCount
 
       /** not sure yet if this would work */
@@ -249,7 +249,7 @@ export default class PDF2Pic {
    * @returns {Integer} number of pages
    */
   async getPageCount(pdf_path) {
-    return await this.getPage(pdf_path).length
+    return await this.getPages(pdf_path).length
   }
 
   /**
@@ -257,7 +257,7 @@ export default class PDF2Pic {
    * @param {String} pdf_path path to file
    * @returns {Array} pages
    */
-  async getPage(pdf_path) {
+  async getPages(pdf_path) {
     let page = await this.identify(pdf_path, "%p ")
 
     return page.split(" ").map(Number)
