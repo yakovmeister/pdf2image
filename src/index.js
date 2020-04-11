@@ -221,20 +221,20 @@ export default class PDF2Pic {
   /**
    * Intialize converter, well the bulk version
    * @param {String} pdf_path path to file
-   * @param {Page} pages page number to be converted (-1 for all pages)
+   * @param {Page} pagesToConvert page number to be converted (-1 for all pages)
    * @returns {Object} image status
    */
-  async convertBulk(pdf_path, pages = -1) {
+  async convertBulk(pdf_path, pagesToConvert = -1) {
     let result = []
 
-    let pageCount = Array.isArray(pages) ? pages : [1]
+    if (pagesToConvert === -1) {
+      pagesToConvert = await this.getPages(pdf_path)
+    } else if (!Array.isArray(pagesToConvert)) {
+      pagesToConvert = [1]
+    }
 
-    pages = pages === -1
-      ? await this.getPages(pdf_path)
-      : pageCount
-
-      /** not sure yet if this would work */
-    pages = pages.map(page => {
+    /** not sure yet if this would work */
+    const pages = pagesToConvert.map(page => {
       return this.convert(pdf_path, page)
     })
 
