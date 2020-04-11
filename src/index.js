@@ -230,7 +230,7 @@ export default class PDF2Pic {
     if (pagesToConvert === -1) {
       pagesToConvert = await this.getPages(pdf_path)
     } else if (!Array.isArray(pagesToConvert)) {
-      pagesToConvert = [1]
+      pagesToConvert = [pagesToConvert]
     }
 
     /** not sure yet if this would work */
