@@ -260,7 +260,7 @@ export default class PDF2Pic {
   async getPage(pdf_path) {
     let page = await this.identify(pdf_path, "%p ")
 
-    return page.split(" ")
+    return page.split(" ").map(Number)
   }
 
   /**
