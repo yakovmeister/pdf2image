@@ -41,7 +41,7 @@ describe("PDF2Pic", function () {
 
   it("should convert pdf1 all pages", function () {
     this.timeout(1000000)
-    pdf2pic.convertBulk("./test/docs/pdf1.pdf", -1)
+    return pdf2pic.convertBulk("./test/docs/pdf1.pdf", -1)
       .then(resolve =>
         expect(resolve.length).to.be.above(0)
       )
