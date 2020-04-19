@@ -65,7 +65,7 @@ declare module "pdf2pic" {
      */
     public convertBulk(
       pdfPath: string,
-      page?: number
+      page?: number | number[]
     ): Promise<ConvertResult[]>;
     /**
      *

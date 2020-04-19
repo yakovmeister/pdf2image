@@ -206,7 +206,7 @@ export default class PDF2Pic {
     let pageCount = Array.isArray(pages) ? pages : [1]
 
     pages = pages === -1
-      ? await this.getPage(pdf_path)
+      ? await this.getPages(pdf_path)
       : pageCount
 
     pages = pages.map(page => {
@@ -221,20 +221,20 @@ export default class PDF2Pic {
   /**
    * Intialize converter, well the bulk version
    * @param {String} pdf_path path to file
-   * @param {Page} pages page number to be converted (-1 for all pages)
+   * @param {Page} pagesToConvert page number to be converted (-1 for all pages)
    * @returns {Object} image status
    */
-  async convertBulk(pdf_path, pages = -1) {
+  async convertBulk(pdf_path, pagesToConvert = -1) {
     let result = []
 
-    let pageCount = Array.isArray(pages) ? pages : [1]
+    if (pagesToConvert === -1) {
+      pagesToConvert = await this.getPages(pdf_path)
+    } else if (!Array.isArray(pagesToConvert)) {
+      pagesToConvert = [pagesToConvert]
+    }
 
-    pages = pages === -1
-      ? await this.getPage(pdf_path)
-      : pageCount
-
-      /** not sure yet if this would work */
-    pages = pages.map(page => {
+    /** not sure yet if this would work */
+    const pages = pagesToConvert.map(page => {
       return this.convert(pdf_path, page)
     })
 
@@ -249,7 +249,7 @@ export default class PDF2Pic {
    * @returns {Integer} number of pages
    */
   async getPageCount(pdf_path) {
-    return await this.getPage(pdf_path).length
+    return await this.getPages(pdf_path).length
   }
 
   /**
@@ -257,10 +257,10 @@ export default class PDF2Pic {
    * @param {String} pdf_path path to file
    * @returns {Array} pages
    */
-  async getPage(pdf_path) {
+  async getPages(pdf_path) {
     let page = await this.identify(pdf_path, "%p ")
 
-    return page.split(" ")
+    return page.split(" ").map(Number)
   }
 
   /**
