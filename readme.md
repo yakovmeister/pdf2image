@@ -1,5 +1,6 @@
 # PDF2Pic  
 
+[![Donate][paypal-image]](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=938FMCPPQG4DQ&currency_code=USD&source=url)
 [![Greenkeeper badge](https://badges.greenkeeper.io/yakovmeister/pdf2image.svg)](https://greenkeeper.io/)
 [![Build Status][travis-image]][travis-url]
 [![NPM Version][npm-image]][npm-url]
@@ -126,3 +127,4 @@ pdf2pic.convertToBase64("path/to/pdf/sample.pdf").then((resolve) => {
 [npm-downloads]: https://img.shields.io/npm/dm/pdf2pic.svg?style=flat-square
 [travis-image]: https://travis-ci.org/yakovmeister/pdf2image.svg?branch=1.0
 [travis-url]: https://travis-ci.org/yakovmeister/pdf2image
+[paypal-image]: https://img.shields.io/badge/Donate-PayPal-green.svg
