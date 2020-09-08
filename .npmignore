@@ -1,3 +1,8 @@
 /src
 /test
 .travis.yml
+.eslintignore
+.eslintrc
+.nycrc
+rollup.config.js
+tsconfig.json

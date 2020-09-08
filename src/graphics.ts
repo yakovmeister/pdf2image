@@ -1,9 +1,9 @@
 import gm from "gm";
 import path from "path";
 import fs from "fs-extra";
-import { WriteImageResponse } from "./types/writeImageResponse";
-import { GetOptionResponse } from "./types/GetOptionResponse";
-import { ToBase64Response } from "./types/toBase64Response";
+import { WriteImageResponse } from "@module/types/writeImageResponse";
+import { GetOptionResponse } from "@module/types/GetOptionResponse";
+import { ToBase64Response } from "@module/types/toBase64Response";
 
 export class Graphics {
   private quality = 0;
@@ -42,6 +42,7 @@ export class Graphics {
 
   public toBase64(stream: fs.ReadStream, page?: number): Promise<ToBase64Response> {
     const pageSetup = `${stream.path}[${page}]`;
+
     return new Promise((resolve, reject) => {
       this.gmBaseCommand(stream, pageSetup).stream(this.format, (error, stdout) => {
         let buffer = "";
@@ -55,7 +56,7 @@ export class Graphics {
             buffer += data.toString("binary");
           })
           .on("end", () => {
-            const binString = new Buffer(buffer, "binary");
+            const binString = Buffer.from(buffer, "binary");
             const result = binString.toString("base64");
 
             return resolve({

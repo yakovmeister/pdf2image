@@ -13,19 +13,16 @@
 A utility for converting pdf to image and base64 format.  
 
 > IMPORTANT NOTE: Please support this library by donating via [PayPal](https://www.paypal.com/paypalme/yakovmeister), your help is much appreciated. Contributors are also welcome!
-
+  
 ## Prerequisite  
   
 * node >= 12.x 
 * graphicsmagick  
 * ghostscript  
-
-## Features  
   
-* converts pdf to image.  
-* converts pdf to base64. 
-* customizable output.  
-* customizable image quality.  
+### Don't have graphicsmagick and ghostscript yet?  
+  
+Follow [this](docs/gm-installation.md) guide to install the required dependencies.  
   
 ## Dependencies
   
@@ -41,92 +38,30 @@ npm install -S pdf2pic
   
 ## Usage  
   
-## Basic  
+### Converting specific page of PDF from path, then saving as image file  
   
 ```javascript
-const PDF2Pic = require("pdf2pic");
+import { fromPath } from "pdf2pic";
 
-const pdf2pic = new PDF2Pic({
+const options = {
   density: 100,           // output pixels per inch
   savename: "untitled",   // output file name
   savedir: "./images",    // output file location
   format: "png",          // output file format
   size: "600x600"         // output size in pixels
-});
+};
+const storeAsImage = fromPath("/path/to/pdf/sample.pdf", options);
+const pageToConvertAsImage = 1;
 
-pdf2pic.convert("/path/to/pdf/sample.pdf").then((resolve) => {
-  console.log("image converter successfully!");
+storeAsImage(pageToConvertAsImage).then((resolve) => {
+  console.log("Page 1 is now converted as image");
 
   return resolve;
 });
 
-```
-## Convert all pages
+```  
   
-```javascript
-const PDF2Pic = require("pdf2pic");
-
-const pdf2pic = new PDF2Pic({
-  density: 100,           // output pixels per inch
-  savename: "untitled",   // output file name
-  savedir: "./images",    // output file location
-  format: "png",          // output file format
-  size: "600x600"         // output size in pixels
-});
-
-pdf2pic.convertBulk("path/to/pdf/sample.pdf", -1).then((resolve) => {
-  console.log("image converter successfully!");
-
-  return resolve;
-});
-
-```
-
-## Multiple page conversion (specific pages)  
-  
-```javascript
-const PDF2Pic = require("pdf2pic");
-
-const pdf2pic = new PDF2Pic({
-  density: 100,           // output pixels per inch
-  savename: "untitled",   // output file name
-  savedir: "./images",    // output file location
-  format: "png",          // output file format
-  size: "600x600"         // output size in pixels
-});
-
-pdf2pic.convertBulk("path/to/pdf/sample.pdf", [1,4,6]).then((resolve) => {
-  console.log("image converter successfully!");
-
-  return resolve;
-});
-
-```
-
-
-## Convert pdf to base64 string of an image  
-  
-```javascript
-const PDF2Pic = require("pdf2pic");
-
-const pdf2pic = new PDF2Pic({
-  density: 100,           // output pixels per inch
-  savename: "untitled",   // output file name
-  savedir: "./images",    // output file location
-  format: "png",          // output file format
-  size: "600x600"         // output size in pixels
-});
-
-pdf2pic.convertToBase64("path/to/pdf/sample.pdf").then((resolve) => {
-  if (resolve.base64) {
-    console.log("image converter successfully!");
-
-    // assuming you're using some ORM to save base64 to db
-    return db.model.table('users').update({id: "1", image: resolve.base64});
-  }
-});
-
-```
+## TO BE CONTINUED!
 
 <!-- Markdown link & img dfn's -->
 [npm-image]: https://img.shields.io/npm/v/pdf2pic.svg?style=flat-square

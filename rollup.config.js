@@ -23,7 +23,7 @@ export default [
     {},
     base,
     {
-      input: "src/graphics.ts",
+      input: "src/index.ts",
       output: {
         dir: "dist",
         format: "cjs"

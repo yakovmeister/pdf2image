@@ -1,8 +1,8 @@
 {
   "name": "pdf2image",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "A utility for converting pdf to image and base64 format.",
-  "main": "dist/index.min.js",
+  "main": "dist/index.js",
   "dependencies": {
     "fs-extra": "^9.0.1",
     "gm": "^1.23.1",
