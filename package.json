@@ -1,67 +1,60 @@
 {
-  "name": "pdf2pic",
-  "version": "1.4.0",
-  "types": "index.d.ts",
+  "name": "pdf2image",
+  "version": "1.0.0",
   "description": "A utility for converting pdf to image and base64 format.",
-  "main": "index.js",
-  "license": "MIT",
-  "homepage": "https://github.com/yakovmeister/pdf2image",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/yakovmeister/pdf2image.git"
-  },
-  "funding": {
-		"type": "paypal",
-		"url": "https://www.paypal.me/yakovmeister"
-	},
-  "scripts": {
-    "clean": "rimraf ./lib && mkdir lib",
-    "clean:test": "rimraf ./test/output && mkdir test/output",
-    "clean:compile": "rimraf ./lib/compiled",
-    "compile:rollup": "rollup -c",
-    "compile": "npm run clean && npm run compile:rollup && npm run clean:compile",
-    "test": "npm run clean:test && mocha --require @babel/register"
-  },
-  "keywords": [
-    "pdf-to-image",
-    "pdf-to-jpg",
-    "pdf-to-png",
-    "pdf",
-    "convert",
-    "image",
-    "pdf2img",
-    "pdf2pic",
-    "pdf2image",
-    "imagemagick",
-    "graphicsmagick",
-    "gm"
-  ],
-  "author": "Jacob Baring <owari@waifu.club>",
+  "main": "dist/index.min.js",
   "dependencies": {
-    "@babel/runtime": "^7.8.7",
-    "fs-extra": "^8.1.0",
-    "gm": "^1.23.0",
+    "fs-extra": "^9.0.1",
+    "gm": "^1.23.1",
     "gm-base64": "^1.1.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.8.7",
-    "@babel/plugin-external-helpers": "^7.8.3",
-    "@babel/plugin-proposal-class-properties": "^7.8.3",
-    "@babel/plugin-proposal-object-rest-spread": "^7.9.5",
-    "@babel/plugin-transform-runtime": "^7.9.0",
-    "@babel/preset-env": "^7.8.7",
-    "@babel/register": "^7.8.6",
-    "babel-eslint": "^10.1.0",
-    "babel-plugin-module-resolver": "^4.0.0",
+    "@rollup/plugin-alias": "^3.1.1",
+    "@rollup/plugin-sucrase": "^3.1.0",
+    "@rollup/plugin-typescript": "^5.0.2",
+    "@types/chai": "^4.2.12",
+    "@types/chai-as-promised": "^7.1.3",
+    "@types/fs-extra": "^9.0.1",
+    "@types/gm": "^1.18.9",
+    "@types/mocha": "^8.0.3",
+    "@types/node": "^14.6.4",
+    "@types/pixelmatch": "^5.2.1",
+    "@types/pngjs": "^3.4.2",
+    "@types/rimraf": "^3.0.0",
+    "@typescript-eslint/eslint-plugin": "^4.1.0",
+    "@typescript-eslint/parser": "^4.1.0",
     "chai": "^4.2.0",
-    "eslint": "^6.6.0",
-    "eslint-plugin-babel": "^5.3.0",
-    "eslint-plugin-import": "^2.20.2",
-    "mocha": "^7.1.2",
+    "chai-as-promised": "^7.1.1",
+    "eslint": "^7.8.1",
+    "mocha": "^8.1.3",
+    "nyc": "^15.1.0",
+    "pixelmatch": "^5.2.1",
+    "pngjs": "^5.0.0",
     "rimraf": "^3.0.2",
-    "rollup": "^2.0.0",
-    "rollup-plugin-babel": "^4.4.0",
-    "rollup-plugin-uglify": "^6.0.4"
-  }
+    "rollup": "^2.26.11",
+    "rollup-plugin-terser": "^7.0.2",
+    "ts-node": "^9.0.0",
+    "tsconfig-paths": "^3.9.0",
+    "tslib": "^2.0.1",
+    "typescript": "^4.0.2"
+  },
+  "scripts": {
+    "mocha": "./node_modules/.bin/mocha test/**/*.test.ts",
+    "test": "npm run lint && nyc npm run mocha",
+    "rollup": "rollup -c",
+    "clean": "rimraf ./dist",
+    "lint": "./node_modules/.bin/eslint . --ext .ts",
+    "build": "npm run test && npm run clean && npm run rollup"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yakovmeister/pdf2image.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yakovmeister/pdf2image/issues"
+  },
+  "homepage": "https://github.com/yakovmeister/pdf2image#readme"
 }

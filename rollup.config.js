@@ -1,26 +1,33 @@
-import babel from "rollup-plugin-babel"
-import { uglify } from "rollup-plugin-uglify"
+import transpile from "@rollup/plugin-typescript"
+import { terser } from "rollup-plugin-terser"
+import alias from "@rollup/plugin-alias"
 
 const base = {
   plugins: [
-    babel({
-      exclude: "node_modules/**",
-      runtimeHelpers: true
+    transpile(),
+    alias({
+      entries: {
+        "@module": "./src"
+      }
     }),
-    uglify()
+    terser({
+      output: {
+        comments: false
+      }
+    })
   ]
-}
+};
 
 export default [
   Object.assign(
     {},
     base,
     {
-      input: "src/index.js",
+      input: "src/graphics.ts",
       output: {
-        format: "cjs",
-        file: "dist/index.min.js"
+        dir: "dist",
+        format: "cjs"
       }
     }
   )
-]
+];

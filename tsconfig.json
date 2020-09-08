@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "declaration": true,
+    "declarationDir": "dist",
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
+    "emitDecoratorMetadata": true,
+    "sourceMap": false,
+    "baseUrl": "src",
+    "lib": [
+      "esnext"
+    ],
+    "paths": {
+      "@module/*": ["*"]
+    }
+  },
+  "include": [
+    "./src"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
