@@ -3,6 +3,10 @@ matrix:
     - os: linux
       dist: trusty
       sudo: required
+language: node_js
+node_js:
+  - "node"
+  - "lts/*"
 before_install:
   - sudo apt-get update
   - sudo apt-get install ghostscript
@@ -14,13 +18,12 @@ before_install:
   - npm i -g npm@latest
 install:
   - npm install
+script:
   - npm run test
 after_success:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
   - nyc report --reporter=text-lcov > coverage.lcov && codecov
 git:
   depth: false
-language: node_js
-node_js:
-  - "node"
-  - "lts/*"
+cache: npm
+

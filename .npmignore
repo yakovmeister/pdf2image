@@ -6,3 +6,11 @@
 .nycrc
 rollup.config.js
 tsconfig.json
+/.gitignore
+/.rpt2_cache
+/coverage
+/.nyc_output
+/.vscode
+/tslint.json
+/.mocharc
+/.nycrc
