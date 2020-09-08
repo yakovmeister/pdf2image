@@ -1,0 +1,13 @@
+{
+  "editor.tabSize": 2,
+  "prettier.singleQuote": false,
+  "prettier.printWidth": 120,
+  "editor.insertSpaces": true,
+  "files.eol": "\n",
+  "window.zoomLevel": 0,
+  "eslint.validate": [
+    "javascript",
+    "typescript"
+  ],
+  "typescript.tsdk": "node_modules/typescript/lib"
+}

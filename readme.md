@@ -24,12 +24,6 @@ A utility for converting pdf to image and base64 format.
   
 Follow [this](docs/gm-installation.md) guide to install the required dependencies.  
   
-## Dependencies
-  
-* fs-extra  
-* gm  
-* gm-base64
-  
 ## Installation  
   
 ```
@@ -55,6 +49,32 @@ const pageToConvertAsImage = 1;
 
 storeAsImage(pageToConvertAsImage).then((resolve) => {
   console.log("Page 1 is now converted as image");
+
+  return resolve;
+});
+
+```  
+### Converting specific page of PDF from path, then saving as base64 string of image  
+  
+```javascript
+import { fromPathToBase64 } from "pdf2pic";
+
+const options = {
+  density: 100,           // output pixels per inch
+  savename: "untitled",   // output file name
+  savedir: "./images",    // output file location
+  format: "png",          // output file format
+  size: "600x600"         // output size in pixels
+};
+const convertPdf2Base64Image = fromPathToBase64("/path/to/pdf/sample.pdf", options);
+const pageToConvertAsImage = 1;
+
+convertPdf2Base64Image(pageToConvertAsImage).then((resolve) => {
+  console.log("Page 1 is now converted as base64string");
+
+  console.log({
+    base64string: resolve.base64
+  })
 
   return resolve;
 });

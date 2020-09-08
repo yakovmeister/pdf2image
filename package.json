@@ -1,5 +1,5 @@
 {
-  "name": "pdf2image",
+  "name": "pdf2pic",
   "version": "2.0.0",
   "description": "A utility for converting pdf to image and base64 format.",
   "main": "dist/index.js",
@@ -53,9 +53,26 @@
     "type": "git",
     "url": "git+https://github.com/yakovmeister/pdf2image.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "pdf-to-image",
+    "pdf-to-jpg",
+    "pdf-to-png",
+    "pdf",
+    "convert",
+    "image",
+    "pdf2img",
+    "pdf2pic",
+    "pdf2image",
+    "imagemagick",
+    "graphicsmagick",
+    "gm"
+  ],
+  "funding": {
+    "type": "paypal",
+    "url": "https://www.paypal.me/yakovmeister"
+  },
+  "author": "Jacob Baring <owari@waifu.club>",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/yakovmeister/pdf2image/issues"
   },
