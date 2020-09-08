@@ -3,6 +3,7 @@ import path from "path";
 import fs from "fs-extra";
 import { WriteImageResponse } from "./types/writeImageResponse";
 import { GetOptionResponse } from "./types/GetOptionResponse";
+import { ToBase64Response } from "./types/toBase64Response";
 
 export class Graphics {
   private quality = 0;
@@ -23,15 +24,15 @@ export class Graphics {
 
   private gm = gm;
 
-  public generateValidFilename(suffix?: string | number): string {
-    if (!!suffix) {
-      return `${this.savePath}/${this.saveFilename}.${suffix}.${this.format}`;
+  public generateValidFilename(page?: number): string {
+    if (typeof page === "number") {
+      return `${this.savePath}/${this.saveFilename}.${page}.${this.format}`;
     }
 
     return `${this.savePath}/${this.saveFilename}.${this.format}`;
   }
 
-  public gmBaseCommand(stream: NodeJS.ReadableStream | Buffer | string, filename: string): gm.State {
+  public gmBaseCommand(stream: fs.ReadStream, filename: string): gm.State {
     return this.gm(stream, filename)
       .density(this.density, this.density)
       .resize(this.width, this.height, "!")
@@ -39,11 +40,39 @@ export class Graphics {
       .compress(this.compression)
   }
 
-  public writeImage(stream: NodeJS.ReadableStream | Buffer | string, page: number): Promise<WriteImageResponse> {
+  public toBase64(stream: fs.ReadStream, page?: number): Promise<ToBase64Response> {
+    const pageSetup = `${stream.path}[${page}]`;
+    return new Promise((resolve, reject) => {
+      this.gmBaseCommand(stream, pageSetup).stream(this.format, (error, stdout) => {
+        let buffer = "";
+        
+        if (error) {
+          return reject(error);
+        }
+
+        stdout
+          .on("data", (data) => {
+            buffer += data.toString("binary");
+          })
+          .on("end", () => {
+            const binString = new Buffer(buffer, "binary");
+            const result = binString.toString("base64");
+
+            return resolve({
+              base64: result,
+              page
+            });
+          });
+      });
+    });
+  }
+
+  public writeImage(stream: fs.ReadStream, page?: number): Promise<WriteImageResponse> {
     const output = this.generateValidFilename(page);
+    const pageSetup = `${stream.path}[${page}]`;
 
     return new Promise((resolve, reject) => {
-      this.gmBaseCommand(stream, this.saveFilename)
+      this.gmBaseCommand(stream, pageSetup)
         .write(output, (error) => {
           if (error) {
             return reject(error);

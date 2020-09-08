@@ -1,6 +1,6 @@
 import chai, { expect } from "chai";
 import { Graphics } from "../src/graphics";
-import { mkdirsSync, readFileSync } from "fs-extra";
+import { mkdirsSync, readFileSync, createReadStream } from "fs-extra";
 import { PNG } from "pngjs";
 import pixelmatch from "pixelmatch";
 import rimraf from "rimraf";
@@ -110,17 +110,18 @@ describe("graphics", () => {
     expect(options.height).to.be.equal(200);
   });
 
-  it("should save image as file", async () => {
+  it("should save first page as image file", async () => {
     mkdirsSync("./dump/savefiletest");
     const gm = new Graphics();
 
     gm.setSize(1684, 2384);
     gm.setSavePath(`./dump/savefiletest`);
-    const file = readFileSync("./test/data/pdf2.pdf");
+    const file = createReadStream("./test/data/pdf2.pdf");
 
-    await gm.writeImage(file, 1);
+    await gm.writeImage(file, 0);
+
     const snapshot = PNG.sync.read(readFileSync("./test/snapshots/philpostapplicationpage1.png"));
-    const actual = PNG.sync.read(readFileSync("./dump/savefiletest/untitled.1.png"));
+    const actual = PNG.sync.read(readFileSync("./dump/savefiletest/untitled.0.png"));
     const {width, height} = snapshot;
     const diff = new PNG({ width, height });
 
@@ -128,4 +129,5 @@ describe("graphics", () => {
 
     expect(result).to.be.equal(0);
   });
+
 });

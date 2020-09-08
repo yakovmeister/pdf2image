@@ -1,15 +1,22 @@
 # PDF2Pic  
-
 [![Donate][paypal-image]](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=938FMCPPQG4DQ&currency_code=USD&source=url)
-[![Greenkeeper badge](https://badges.greenkeeper.io/yakovmeister/pdf2image.svg)](https://greenkeeper.io/)
+[![CodeFactor](https://www.codefactor.io/repository/github/yakovmeister/pdf2image/badge/next)](https://www.codefactor.io/repository/github/yakovmeister/pdf2image/overview/next)
+[![install size](https://packagephobia.com/badge?p=pdf2pic)](https://packagephobia.com/result?p=pdf2pic)
 [![Build Status][travis-image]][travis-url]
 [![NPM Version][npm-image]][npm-url]
+[![License](https://img.shields.io/npm/l/pdf2pic?color=blue)][npm-url]
+![David](https://img.shields.io/david/peer/yakovmeister/pdf2image)
+![David](https://img.shields.io/david/dev/yakovmeister/pdf2image)
+[![Known Vulnerabilities](https://snyk.io/test/npm/pdf2pic/badge.svg)](https://snyk.io/test/npm/pdf2pic)
 [![Downloads Stats][npm-downloads]][npm-url]  
+  
 A utility for converting pdf to image and base64 format.  
+
+> IMPORTANT NOTE: Please support this library by donating via [PayPal](https://www.paypal.com/paypalme/yakovmeister), your help is much appreciated. Contributors are also welcome!
 
 ## Prerequisite  
   
-* node >= 8.x 
+* node >= 12.x 
 * graphicsmagick  
 * ghostscript  
 
