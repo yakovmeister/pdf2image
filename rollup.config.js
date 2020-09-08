@@ -1,4 +1,4 @@
-import transpile from "@rollup/plugin-typescript"
+import transpile from "rollup-plugin-typescript2"
 import { terser } from "rollup-plugin-terser"
 import alias from "@rollup/plugin-alias"
 
@@ -25,8 +25,8 @@ export default [
     {
       input: "src/index.ts",
       output: {
-        dir: "dist",
-        format: "cjs"
+        format: "cjs",
+        file: "dist/index.js"
       }
     }
   )
