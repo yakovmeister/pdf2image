@@ -1,0 +1,19 @@
+{
+  "check-coverage": true,
+  "statements": 20,
+  "lines": 20,
+  "branch": 20,
+  "extension": [
+    ".ts"
+  ],
+  "require": [
+    "ts-node/register",
+    "tsconfig-paths/register"
+  ],
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "**/*.d.ts"
+  ]
+}
