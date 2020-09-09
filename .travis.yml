@@ -1,8 +1,7 @@
-matrix:
-  include:
-    - os: linux
-      dist: trusty
 language: node_js
+dist: trusty
+addons:
+  chrome: stable
 node_js:
   - "node"
   - "lts/*"
@@ -13,6 +12,7 @@ before_install:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
+  - npm i -g nyc
   - npm i -g codecov
   - npm i -g npm@latest
   - npm i -g typescript
@@ -21,8 +21,8 @@ install:
 script:
   - npm run test
 after_success:
-  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
   - nyc report --reporter=text-lcov > coverage.lcov && codecov
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 git:
   depth: false
 cache: npm
