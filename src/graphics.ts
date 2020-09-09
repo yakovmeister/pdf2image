@@ -127,7 +127,7 @@ export class Graphics {
 
   public setSize(width: number, height?: number): Graphics {
     this.width = width;
-    this.height = height ?? width;
+    this.height = !!height ? height : width;
 
     return this;
   }

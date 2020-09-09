@@ -57,7 +57,7 @@ storeAsImage(pageToConvertAsImage).then((resolve) => {
 ### Converting specific page of PDF from path, then saving as base64 string of image  
   
 ```javascript
-import { fromPathToBase64 } from "pdf2pic";
+import { fromPath } from "pdf2pic";
 
 const options = {
   density: 100,           // output pixels per inch
@@ -66,10 +66,11 @@ const options = {
   format: "png",          // output file format
   size: "600x600"         // output size in pixels
 };
-const convertPdf2Base64Image = fromPathToBase64("/path/to/pdf/sample.pdf", options);
+const convertPdf2Base64Image = fromPath("/path/to/pdf/sample.pdf", options);
 const pageToConvertAsImage = 1;
 
-convertPdf2Base64Image(pageToConvertAsImage).then((resolve) => {
+// adding true as second parameter will transform response to base64 string
+convertPdf2Base64Image(pageToConvertAsImage, true).then((resolve) => {
   console.log("Page 1 is now converted as base64string");
 
   console.log({

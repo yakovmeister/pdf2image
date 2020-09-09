@@ -21,52 +21,18 @@ export function fromPath(filePath: string, options = defaultOptions): ConvertFro
 
   options = { ...defaultOptions, ...options };
 
-  const convert: ConvertFromPath = (page = 1): Promise<WriteImageResponse> => {
+  const convert: ConvertFromPath = (page = 1, toBase64 = false): Promise<WriteImageResponse|ToBase64Response> => {
     if (page < 1) {
       throw new Error("Page number should be more than or equal 1");
     }
 
     const stream = createReadStream(filePath);
+
+    if (!!toBase64) {
+      return gm.toBase64(stream, (page - 1));
+    }
 
     return gm.writeImage(stream, (page - 1));
-  };
-
-  convert.setOptions = (): void => {
-    gm.setQuality(options.quality)
-      .setFormat(options.format)
-      .setSize(options.width, options.height)
-      .setDensity(options.density)
-      .setSavePath(options.savePath)
-      .setSaveFilename(options.saveFilename)
-      .setCompression(options.compression)
-
-    return;
-  };
-
-  convert.setGMClass = (gmClass: string | boolean): void => {
-    gm.setGMClass(gmClass);
-
-    return;
-  };
-
-  convert.setOptions();
-
-  return convert;
-}
-
-export function fromPathToBase64(filePath: string, options = defaultOptions): ConvertFromPath {
-  const gm = new Graphics();
-
-  options = { ...defaultOptions, ...options };
-
-  const convert: ConvertFromPath = (page = 1): Promise<ToBase64Response> => {
-    if (page < 1) {
-      throw new Error("Page number should be more than or equal 1");
-    }
-
-    const stream = createReadStream(filePath);
-
-    return gm.toBase64(stream, (page - 1));
   };
 
   convert.setOptions = (): void => {
