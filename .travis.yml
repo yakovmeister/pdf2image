@@ -8,14 +8,15 @@ node_js:
   - "node"
   - "lts/*"
 before_install:
-  - sudo apt-get update
-  - sudo apt-get install ghostscript
-  - sudo apt-get install graphicsmagick
+  - apt-get update
+  - apt-get install ghostscript
+  - apt-get install graphicsmagick
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
   - npm i -g codecov
   - npm i -g npm@latest
+  - npm i -g typescript
 install:
   - npm install
 script:
