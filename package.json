@@ -40,7 +40,7 @@
   },
   "scripts": {
     "mocha": "./node_modules/.bin/mocha test/**/*.test.ts",
-    "test": "npm run lint && nyc npm run mocha --reporter=lcov",
+    "test": "npm run lint && nyc --reporter=lcov npm run mocha",
     "rollup": "rollup -c",
     "clean": "rimraf ./dist",
     "lint": "./node_modules/.bin/eslint . --ext .ts",
