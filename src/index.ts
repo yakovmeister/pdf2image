@@ -16,6 +16,18 @@ const defaultOptions: GetOptionResponse = {
   compression: "jpeg"
 };
 
+function setGMOptions(gm: Graphics, options: GetOptionResponse): void {
+  gm.setQuality(options.quality)
+  .setFormat(options.format)
+  .setSize(options.width, options.height)
+  .setDensity(options.density)
+  .setSavePath(options.savePath)
+  .setSaveFilename(options.saveFilename)
+  .setCompression(options.compression)
+
+  return;
+}
+
 export function fromPath(filePath: string, options = defaultOptions): ConvertFromPath {
   const gm = new Graphics();
 
@@ -35,17 +47,7 @@ export function fromPath(filePath: string, options = defaultOptions): ConvertFro
     return gm.writeImage(stream, (page - 1));
   };
 
-  convert.setOptions = (): void => {
-    gm.setQuality(options.quality)
-      .setFormat(options.format)
-      .setSize(options.width, options.height)
-      .setDensity(options.density)
-      .setSavePath(options.savePath)
-      .setSaveFilename(options.saveFilename)
-      .setCompression(options.compression)
-
-    return;
-  };
+  convert.setOptions = (): void => setGMOptions(gm, options);
 
   convert.setGMClass = (gmClass: string | boolean): void => {
     gm.setGMClass(gmClass);

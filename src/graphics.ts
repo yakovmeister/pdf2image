@@ -2,7 +2,7 @@ import gm from "gm";
 import path from "path";
 import fs from "fs-extra";
 import { WriteImageResponse } from "@module/types/writeImageResponse";
-import { GetOptionResponse } from "@module/types/GetOptionResponse";
+import { GetOptionResponse } from "@module/types/getOptionResponse";
 import { ToBase64Response } from "@module/types/toBase64Response";
 
 export class Graphics {

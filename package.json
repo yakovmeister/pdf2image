@@ -6,15 +6,13 @@
   "types": "dist/index.d.ts",
   "dependencies": {
     "fs-extra": "^9.0.1",
-    "gm": "^1.23.1",
-    "gm-base64": "^1.1.1"
+    "gm": "^1.23.1"
   },
   "directories": {
     "test": "test"
   },
   "devDependencies": {
     "@rollup/plugin-alias": "^3.1.1",
-    "@rollup/plugin-sucrase": "^3.1.0",
     "@types/chai": "^4.2.12",
     "@types/fs-extra": "^9.0.1",
     "@types/gm": "^1.18.9",
