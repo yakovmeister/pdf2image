@@ -110,7 +110,7 @@ describe("graphics", () => {
     expect(options.height).to.be.equal(200);
   });
 
-  it("should save first page as image file", async () => {
+  it.skip("should save first page as image file", async () => {
     mkdirsSync("./dump/savefiletest");
     const gm = new Graphics();
 
