@@ -2,8 +2,6 @@ import { Graphics } from "@module/graphics";
 import { createReadStream, ReadStream } from "fs-extra";
 import { ConvertFromPath } from "@module/types/convertFromPath";
 import { GetOptionResponse } from "@module/types/getOptionResponse";
-import { WriteImageResponse } from "@module/types/writeImageResponse";
-import { ToBase64Response } from "@module/types/toBase64Response";
 import { Readable } from "stream";
 
 const defaultOptions: GetOptionResponse = {
@@ -35,6 +33,18 @@ function bufferToStream(buffer: Buffer): ReadStream {
   return readableInstanceStream as ReadStream;
 }
 
+function convertToStream(source: string, file: string | Buffer): ReadStream {
+  if (source === "buffer") {
+    return  bufferToStream(file as Buffer);
+  }
+
+  if (source === "path") {
+    return  createReadStream(source as string);
+  }
+
+  throw new Error("Cannot recognize specified source");
+}
+
 function setGMOptions(gm: Graphics, options: GetOptionResponse): void {
   gm.setQuality(options.quality)
   .setFormat(options.format)
@@ -47,17 +57,17 @@ function setGMOptions(gm: Graphics, options: GetOptionResponse): void {
   return;
 }
 
-export function fromPath(filePath: string, options = defaultOptions): ConvertFromPath {
+function convert(source: string, filePath: string | Buffer, options = defaultOptions) {
   const gm = new Graphics();
 
   options = combine(defaultOptions, options);
 
-  const convert: ConvertFromPath = (page = 1, toBase64 = false): Promise<WriteImageResponse|ToBase64Response> => {
+  const convert = (page = 1, toBase64 = false) => {
     if (page < 1) {
       throw new Error("Page number should be more than or equal 1");
     }
 
-    const stream = createReadStream(filePath);
+    const stream = convertToStream(source, filePath);
 
     if (!!toBase64) {
       return gm.toBase64(stream, (page - 1));
@@ -79,34 +89,10 @@ export function fromPath(filePath: string, options = defaultOptions): ConvertFro
   return convert;
 }
 
+export function fromPath(filePath: string, options = defaultOptions): ConvertFromPath {
+  return convert("path", filePath, options);
+}
+
 export function fromBuffer(buffer: Buffer, options = defaultOptions): ConvertFromPath {
-  const gm = new Graphics();
-
-  options = combine(defaultOptions, options);
-
-  const convert: ConvertFromPath = (page = 1, toBase64 = false): Promise<WriteImageResponse|ToBase64Response> => {
-    if (page < 1) {
-      throw new Error("Page number should be more than or equal 1");
-    }
-
-    const stream = bufferToStream(buffer);
-
-    if (!!toBase64) {
-      return gm.toBase64(stream, (page - 1));
-    }
-
-    return gm.writeImage(stream, (page - 1));
-  }
-
-  convert.setOptions = (): void => setGMOptions(gm, options);
-
-  convert.setGMClass = (gmClass: string | boolean): void => {
-    gm.setGMClass(gmClass);
-
-    return;
-  };
-
-  convert.setOptions();
-
-  return convert;
+  return convert("buffer", buffer, options);
 }
