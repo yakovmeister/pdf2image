@@ -9,15 +9,17 @@ export async function bulkConvert(gm: Graphics, source: string, filePath: string
     throw new Error("Page number should be more than or equal 1");
   }
 
-  const stream = convertToStream(source, filePath);
+  const stream      = convertToStream(source, filePath);
+  const tempStream  = convertToStream(source, filePath);
+  const pageNumbers = Array.isArray(pageNumber) ? pageNumber : [pageNumber];
 
-  if (pageNumber === -1) {
-    pageNumber = await getPages(gm, stream);
-  } else if (!Array.isArray(pageNumber)) {
-    pageNumber = [pageNumber];
-  }
+  pageNumber = pageNumber === -1 ? await getPages(gm, tempStream) : pageNumbers;
 
   const pages: (Promise<WriteImageResponse> | Promise<ToBase64Response>)[] = pageNumber.map(page => {
+    if (pageNumber < 1) {
+      throw new Error("Page number should be more than or equal 1");
+    }
+  
     if (!!toBase64) {
       return gm.toBase64(stream, (page - 1));
     }
@@ -25,5 +27,5 @@ export async function bulkConvert(gm: Graphics, source: string, filePath: string
     return gm.writeImage(stream, (page - 1));
   });
 
-  return pages; 
+  return pages;
 }

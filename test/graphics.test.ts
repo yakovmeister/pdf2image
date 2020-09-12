@@ -167,17 +167,9 @@ describe("graphics", () => {
     const file = createReadStream("./test/data/pdf2.pdf");
 
     const base64string = await gm.toBase64(file, 1);
+    const expected = readFileSync("./test/snapshots/philpostapplicationpage2.png", "base64");
 
-    writeFileSync("./dump/savefiletest/frombase64.png", Buffer.from(base64string.base64, "base64"));
-
-    const snapshot = PNG.sync.read(readFileSync("./test/snapshots/philpostapplicationpage2.png"));
-    const actual = PNG.sync.read(readFileSync("./dump/savefiletest/frombase64.png"));
-    const {width, height} = snapshot;
-    const diff = new PNG({ width, height });
-
-    const result = pixelmatch(snapshot.data, actual.data, diff.data, width, height, {threshold: 0.1});
-
-    expect(result).to.be.equal(0);
+    expect(base64string.base64).to.be.equal(expected);
   });
 
 });

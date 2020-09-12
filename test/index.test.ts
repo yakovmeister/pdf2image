@@ -11,8 +11,8 @@ describe("PDF2Pic Core", () => {
   const baseOptions = {
     quality: 100,
     format: "jpg",
-    width: 1684,
-    height: 2384,
+    width: 768,
+    height: 512,
     savePath: "./dump/fromfiletest"
   };
 
@@ -31,10 +31,10 @@ describe("PDF2Pic Core", () => {
       saveFilename: "test-1"
     }
 
-    const convert = fromPath("./test/data/pdf2.pdf", options);
+    const convert = fromPath("./test/data/pdf1.pdf", options);
 
     const converted = (await convert() as WriteImageResponse);
-    const imageResult = await looksSame("./dump/fromfiletest/test-1.1.png", "./test/snapshots/philpostapplicationpage1.png");
+    const imageResult = await looksSame("./dump/fromfiletest/test-1.1.png", "./test/snapshots/car1.png");
 
     expect(converted).to.haveOwnProperty("path");
     expect(converted).to.haveOwnProperty("name");
@@ -50,14 +50,28 @@ describe("PDF2Pic Core", () => {
       saveFilename: "test-2"
     }
 
-    const convert = fromPath("./test/data/pdf2.pdf", options);
+    const convert = fromPath("./test/data/pdf1.pdf", options);
 
     const converted = (await convert(2, true) as ToBase64Response);
 
     writeFileSync("./dump/fromfiletest/frombase64.png", Buffer.from(converted.base64, "base64"));
 
-    const imageResult = await looksSame("./dump/fromfiletest/frombase64.png", "./test/snapshots/philpostapplicationpage2.png");
+    const imageResult = await looksSame("./dump/fromfiletest/frombase64.png", "./test/snapshots/car2.png");
 
     expect(imageResult.equal).to.be.true;
+  });
+
+  it("should convert pdf to pic (file input, bulk all pages)", async () => {
+    const options = {
+      ...baseOptions,
+      format: "png",
+      width: 768,
+      height: 512,
+      saveFilename: "test-3"
+    }
+
+    const convert = fromPath("./test/data/pdf1.pdf", options);
+
+    await convert.bulk(-1);
   });
 });
