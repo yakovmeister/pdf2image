@@ -2,7 +2,7 @@ import gm from "gm";
 import path from "path";
 import fs from "fs-extra";
 import { WriteImageResponse } from "@module/types/writeImageResponse";
-import { GetOptionResponse } from "@module/types/getOptionResponse";
+import { Options } from "@module/types/options";
 import { ToBase64Response } from "@module/types/toBase64Response";
 
 export class Graphics {
@@ -61,6 +61,7 @@ export class Graphics {
 
             return resolve({
               base64: result,
+              size: `${this.width}x${this.height}`,
               page
             });
           });
@@ -89,7 +90,7 @@ export class Graphics {
     });
   }
 
-  public identify(filepath: string, argument?: string): Promise<gm.ImageInfo | string> {
+  public identify(filepath: string | fs.ReadStream, argument?: string): Promise<gm.ImageInfo | string> {
     const image = this.gm(filepath);
 
     return new Promise((resolve, reject) => {
@@ -174,7 +175,7 @@ export class Graphics {
     return this;
   }
 
-  public getOptions(): GetOptionResponse {
+  public getOptions(): Options {
     return {
       quality:      this.quality,
       format:       this.format,

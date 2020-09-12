@@ -63,11 +63,11 @@ storeAsImage(pageToConvertAsImage).then((resolve) => {
 import { fromPath } from "pdf2pic";
 
 const options = {
-  density: 100,           // output pixels per inch
-  savename: "untitled",   // output file name
-  savedir: "./images",    // output file location
-  format: "png",          // output file format
-  size: "600x600"         // output size in pixels
+  density: 100,
+  savename: "untitled",
+  savedir: "./images",
+  format: "png",
+  size: "600x600"
 };
 const convertPdf2Base64Image = fromPath("/path/to/pdf/sample.pdf", options);
 const pageToConvertAsImage = 1;
@@ -85,6 +85,26 @@ convertPdf2Base64Image(pageToConvertAsImage, true).then((resolve) => {
 
 ```  
   
+### Bulk conversion  
+  
+```javascript
+const options = {
+  density: 100,
+  savename: "untitled",
+  savedir: "./images",
+  format: "png",
+  size: "600x600"
+};
+const convert = fromPath("/path/to/pdf/sample.pdf", options);
+const pageToConvertAsImage = [4, 5]; // let's convert page 4 and 5
+
+convert.bulk(pageToConvertAsImage).then((resolve) => {
+  console.log("Page 4 and 5 is now converted as image");
+
+  return resolve;
+});
+
+```
 ## TO BE CONTINUED!
 
 <!-- Markdown link & img dfn's -->

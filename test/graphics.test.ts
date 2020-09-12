@@ -19,6 +19,15 @@ describe("graphics", () => {
     expect(pageNumbers).to.be.equal("1 2");
   });
 
+  it("should return page numbers (from stream)", async () => {
+    const gm = new Graphics();
+    const file = createReadStream("./test/data/pdf1.pdf");
+
+    const pageNumbers = await gm.identify(file, "%p ");
+
+    expect(pageNumbers).to.be.equal("1 2 3 4 5 6 7 8 9");
+  });
+
   it("should return file information", async () => {
     const gm = new Graphics();
 

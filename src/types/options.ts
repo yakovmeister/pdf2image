@@ -1,4 +1,4 @@
-export type GetOptionResponse = {
+export type Options = {
   quality?: number;
   format?: string;
   width?: number;
