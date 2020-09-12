@@ -9,6 +9,8 @@ import gm from "gm";
 describe("graphics", () => {
   before(() => {
     rimraf.sync("./dump/savefiletest");
+
+    mkdirsSync("./dump/savefiletest");
   });
 
   it("should return page numbers", async () => {
@@ -120,7 +122,6 @@ describe("graphics", () => {
   });
 
   it.skip("should save first page as image file", async () => {
-    mkdirsSync("./dump/savefiletest");
     const gm = new Graphics();
 
     gm.setSize(1684, 2384);
@@ -130,26 +131,6 @@ describe("graphics", () => {
     await gm.writeImage(file, 0);
 
     const snapshot = PNG.sync.read(readFileSync("./test/snapshots/philpostapplicationpage1.png"));
-    const actual = PNG.sync.read(readFileSync("./dump/savefiletest/untitled.0.png"));
-    const {width, height} = snapshot;
-    const diff = new PNG({ width, height });
-
-    const result = pixelmatch(snapshot.data, actual.data, diff.data, width, height, {threshold: 0.1});
-
-    expect(result).to.be.equal(0);
-  });
-
-  it("should save second page as image file", async () => {
-    mkdirsSync("./dump/savefiletest");
-    const gm = new Graphics();
-
-    gm.setSize(1684, 2384);
-    gm.setSavePath(`./dump/savefiletest`);
-    const file = createReadStream("./test/data/pdf2.pdf");
-
-    await gm.writeImage(file, 1);
-
-    const snapshot = PNG.sync.read(readFileSync("./test/snapshots/philpostapplicationpage2.png"));
     const actual = PNG.sync.read(readFileSync("./dump/savefiletest/untitled.1.png"));
     const {width, height} = snapshot;
     const diff = new PNG({ width, height });
@@ -159,8 +140,26 @@ describe("graphics", () => {
     expect(result).to.be.equal(0);
   });
 
+  it("should save second page as image file", async () => {
+    const gm = new Graphics();
+
+    gm.setSize(1684, 2384);
+    gm.setSavePath(`./dump/savefiletest`);
+    const file = createReadStream("./test/data/pdf2.pdf");
+
+    await gm.writeImage(file, 1);
+
+    const snapshot = PNG.sync.read(readFileSync("./test/snapshots/philpostapplicationpage2.png"));
+    const actual = PNG.sync.read(readFileSync("./dump/savefiletest/untitled.2.png"));
+    const {width, height} = snapshot;
+    const diff = new PNG({ width, height });
+
+    const result = pixelmatch(snapshot.data, actual.data, diff.data, width, height, {threshold: 0.1});
+
+    expect(result).to.be.equal(0);
+  });
+
   it("should save second page as base64 string", async () => {
-    mkdirsSync("./dump/savefiletest");
     const gm = new Graphics();
 
     gm.setSize(1684, 2384);

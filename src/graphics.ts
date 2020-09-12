@@ -26,7 +26,7 @@ export class Graphics {
 
   public generateValidFilename(page?: number): string {
     if (typeof page === "number") {
-      return `${this.savePath}/${this.saveFilename}.${page}.${this.format}`;
+      return `${this.savePath}/${this.saveFilename}.${page + 1}.${this.format}`;
     }
 
     return `${this.savePath}/${this.saveFilename}.${this.format}`;
@@ -62,7 +62,7 @@ export class Graphics {
             return resolve({
               base64: result,
               size: `${this.width}x${this.height}`,
-              page
+              page: page + 1
             });
           });
       });
@@ -84,7 +84,7 @@ export class Graphics {
             name: path.basename(output),
             size: fs.statSync(output).size / 1000.0,
             path: output,
-            page
+            page: page + 1
           });
         });
     });

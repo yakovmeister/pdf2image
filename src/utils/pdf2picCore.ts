@@ -10,7 +10,7 @@ import { ToBase64Response } from "@module/types/toBase64Response";
 export function pdf2picCore(source: string, filePath: string | Buffer, options = defaultOptions): Convert {
   const gm = new Graphics();
 
-  options = { ...options, ...defaultOptions };
+  options = { ...defaultOptions, ...options };
 
   const convert = (page = 1, toBase64 = false) => {
     if (page < 1) {
