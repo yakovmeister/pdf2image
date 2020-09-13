@@ -13,6 +13,8 @@
 A utility for converting pdf to image and base64 format.  
 
 > IMPORTANT NOTE: Please support this library by donating via [PayPal](https://www.paypal.com/paypalme/yakovmeister), your help is much appreciated. Contributors are also welcome!
+
+> ANOTHER IMPORTANT NOTE: please use version 1.x for now as 2.x is still in early development stage
   
 ## Prerequisite  
   
@@ -86,6 +88,8 @@ convertPdf2Base64Image(pageToConvertAsImage, true).then((resolve) => {
 ### Bulk conversion  
   
 ```javascript
+import { fromPath } from "pdf2pic";
+
 const options = {
   density: 100,
   savename: "untitled",
@@ -103,6 +107,60 @@ convert.bulk(pageToConvertAsImage).then((resolve) => {
 });
 
 ```
+### PDF Stream input, saved as image file  
+  
+```javascript
+import { fromBuffer } from "pdf2pic";
+import { readFileSync } from "fs";
+
+const options = {
+  density: 100,
+  savename: "untitled",
+  savedir: "./images",
+  format: "png",
+  size: "600x600"
+};
+
+const file = readFileSync("/path/to/pdf/sample.pdf", "base64");
+const buff = Buffer.from(file, "base64");
+
+const convert = fromBuffer(buff, options);
+const pageToConvertAsImage = 1;
+
+convert(pageToConvertAsImage).then((resolve) => {
+  console.log("Page 1 is now converted as image");
+
+  return resolve;
+});
+
+```
+### PDF base64 input, saved as image file  
+  
+```javascript
+import { fromBase64 } from "pdf2pic";
+import { readFileSync } from "fs";
+
+const options = {
+  density: 100,
+  savename: "untitled",
+  savedir: "./images",
+  format: "png",
+  size: "600x600"
+};
+
+const file = readFileSync("/path/to/pdf/sample.pdf", "base64");
+
+const convert = fromBase64(file, options);
+const pageToConvertAsImage = 1;
+
+convert(pageToConvertAsImage).then((resolve) => {
+  console.log("Page 1 is now converted as image");
+
+  return resolve;
+});
+
+```
+
 ## TO BE CONTINUED!
 
 <!-- Markdown link & img dfn's -->
