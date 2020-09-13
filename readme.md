@@ -67,7 +67,8 @@ const options = {
   savename: "untitled",
   savedir: "./images",
   format: "png",
-  size: "600x600"
+  width: 600,
+  height: 600
 };
 const convertPdf2Base64Image = fromPath("/path/to/pdf/sample.pdf", options);
 const pageToConvertAsImage = 1;
@@ -95,7 +96,8 @@ const options = {
   savename: "untitled",
   savedir: "./images",
   format: "png",
-  size: "600x600"
+  width: 600,
+  height: 600
 };
 const convert = fromPath("/path/to/pdf/sample.pdf", options);
 const pageToConvertAsImage = [4, 5]; // let's convert page 4 and 5
@@ -118,7 +120,8 @@ const options = {
   savename: "untitled",
   savedir: "./images",
   format: "png",
-  size: "600x600"
+  width: 600,
+  height: 600
 };
 
 const file = readFileSync("/path/to/pdf/sample.pdf", "base64");
@@ -145,7 +148,8 @@ const options = {
   savename: "untitled",
   savedir: "./images",
   format: "png",
-  size: "600x600"
+  width: 600,
+  height: 600
 };
 
 const file = readFileSync("/path/to/pdf/sample.pdf", "base64");
