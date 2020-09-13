@@ -1,12 +1,12 @@
+os: osx
+osx_image: xcode9.4
 language: node_js
-dist: trusty
 node_js:
   - "node"
   - "lts/*"
 before_install:
-  - sudo apt-get update
-  - sudo apt-get install ghostscript
-  - sudo apt-get install graphicsmagick
+  - brew update
+  - brew install gs graphicsmagick
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
