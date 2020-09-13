@@ -22,7 +22,7 @@ export class Graphics {
 
   private compression = "jpeg";
 
-  private gm = gm;
+  private gm: gm.SubClass = gm.subClass({ imageMagick: false });
 
   public generateValidFilename(page?: number): string {
     if (typeof page === "number") {
@@ -92,7 +92,7 @@ export class Graphics {
   }
 
   public identify(filepath: string | fs.ReadStream, argument?: string): Promise<gm.ImageInfo | string> {
-    const image = this.gm(filepath);
+    const image = this.gm(filepath as string);
 
     return new Promise((resolve, reject) => {
       if (argument) {
@@ -160,18 +160,18 @@ export class Graphics {
 
   public setGMClass(gmClass: string | boolean): Graphics {
     if (typeof gmClass === "boolean") {
-      this.gm.subClass({ imageMagick: gmClass });
+      this.gm = gm.subClass({ imageMagick: gmClass });
 
       return this;
     }
 
     if (gmClass.toLocaleLowerCase() === "imagemagick") {
-      this.gm.subClass({ imageMagick: true });
+      this.gm = gm.subClass({ imageMagick: true });
 
       return this;
     }
 
-    this.gm.subClass({ appPath: gmClass });
+    this.gm = gm.subClass({ appPath: gmClass });
 
     return this;
   }

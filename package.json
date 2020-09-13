@@ -1,6 +1,6 @@
 {
   "name": "pdf2pic",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "A utility for converting pdf to image and base64 format.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -37,6 +37,7 @@
   "scripts": {
     "mocha": "./node_modules/.bin/mocha test/**/*.test.ts",
     "test": "npm run lint && nyc --reporter=lcov npm run mocha",
+    "test:text": "npm run lint && nyc --reporter=text npm run mocha",
     "rollup": "rollup -c",
     "clean": "rimraf ./dist",
     "lint": "./node_modules/.bin/eslint . --ext .ts",
