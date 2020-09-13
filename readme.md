@@ -13,8 +13,6 @@
 A utility for converting pdf to image and base64 format.  
 
 > IMPORTANT NOTE: Please support this library by donating via [PayPal](https://www.paypal.com/paypalme/yakovmeister), your help is much appreciated. Contributors are also welcome!
-
-> ANOTHER IMPORTANT NOTE: please use version 1.x for now as 2.x is still in early development stage
   
 ## Prerequisite  
   
