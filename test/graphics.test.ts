@@ -1,12 +1,10 @@
 import chai, { expect } from "chai";
 import { Graphics } from "../src/graphics";
 import { mkdirsSync, readFileSync, createReadStream, writeFileSync } from "fs-extra";
-import { PNG } from "pngjs";
-import pixelmatch from "pixelmatch";
 import rimraf from "rimraf";
 import gm from "gm";
 
-describe.skip("graphics", () => {
+describe("graphics", () => {
   before(() => {
     rimraf.sync("./dump/savefiletest");
 
@@ -121,7 +119,7 @@ describe.skip("graphics", () => {
     expect(options.height).to.be.equal(200);
   });
 
-  it.skip("should save first page as image file", async () => {
+  it("should save first page as image file", async () => {
     const gm = new Graphics();
 
     gm.setSize(1684, 2384);
@@ -130,14 +128,15 @@ describe.skip("graphics", () => {
 
     await gm.writeImage(file, 0);
 
-    const snapshot = PNG.sync.read(readFileSync("./test/snapshots/philpostapplicationpage1.png"));
-    const actual = PNG.sync.read(readFileSync("./dump/savefiletest/untitled.1.png"));
-    const {width, height} = snapshot;
-    const diff = new PNG({ width, height });
+    const info = await gm.identify("./dump/savefiletest/untitled.1.png") as gm.ImageInfo;
 
-    const result = pixelmatch(snapshot.data, actual.data, diff.data, width, height, {threshold: 0.1});
-
-    expect(result).to.be.equal(0);
+    expect(info).to.haveOwnProperty("format");
+    expect(info.format).to.be.equal("PNG");
+    expect(info).to.haveOwnProperty("size");
+    expect(info.size).to.haveOwnProperty("width");
+    expect(info.size.width).to.be.equal(1684);
+    expect(info.size).to.haveOwnProperty("height");
+    expect(info.size.height).to.be.equal(2384);
   });
 
   it("should save second page as image file", async () => {
@@ -149,14 +148,15 @@ describe.skip("graphics", () => {
 
     await gm.writeImage(file, 1);
 
-    const snapshot = PNG.sync.read(readFileSync("./test/snapshots/philpostapplicationpage2.png"));
-    const actual = PNG.sync.read(readFileSync("./dump/savefiletest/untitled.2.png"));
-    const {width, height} = snapshot;
-    const diff = new PNG({ width, height });
+    const info = await gm.identify("./dump/savefiletest/untitled.2.png") as gm.ImageInfo;
 
-    const result = pixelmatch(snapshot.data, actual.data, diff.data, width, height, {threshold: 0.1});
-
-    expect(result).to.be.equal(0);
+    expect(info).to.haveOwnProperty("format");
+    expect(info.format).to.be.equal("PNG");
+    expect(info).to.haveOwnProperty("size");
+    expect(info.size).to.haveOwnProperty("width");
+    expect(info.size.width).to.be.equal(1684);
+    expect(info.size).to.haveOwnProperty("height");
+    expect(info.size.height).to.be.equal(2384);
   });
 
   it("should save second page as base64 string", async () => {
@@ -167,9 +167,17 @@ describe.skip("graphics", () => {
     const file = createReadStream("./test/data/pdf2.pdf");
 
     const base64string = await gm.toBase64(file, 1);
-    const expected = readFileSync("./test/snapshots/philpostapplicationpage2.png", "base64");
 
-    expect(base64string.base64).to.be.equal(expected);
+    writeFileSync("./dump/fromfiletest/frombase64.png", Buffer.from(base64string.base64, "base64"));
+
+    const info = await gm.identify("./dump/savefiletest/untitled.2.png") as gm.ImageInfo;
+
+    expect(info).to.haveOwnProperty("format");
+    expect(info.format).to.be.equal("PNG");
+    expect(info).to.haveOwnProperty("size");
+    expect(info.size).to.haveOwnProperty("width");
+    expect(info.size.width).to.be.equal(1684);
+    expect(info.size).to.haveOwnProperty("height");
+    expect(info.size.height).to.be.equal(2384);
   });
-
 });
