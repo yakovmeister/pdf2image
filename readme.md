@@ -57,120 +57,142 @@ storeAsImage(pageToConvertAsImage).then((resolve) => {
 });
 
 ```  
-### Converting specific page of PDF from path, then saving as base64 string of image  
+  
+### Nuff talk, show me how:
+More usage example can be found [here](https://github.com/yakovmeister/pdf2pic-examples).  
+  
+## pdf2pic API  
+  
+### fromPath(filePath, options)  
+  
+Initialize PDF to image conversion by supplying a file path  
+  
+#### Functions  
+  
+Converts specific page of the PDF to Image/Base64 by supplying a file path  
   
 ```javascript
-import { fromPath } from "pdf2pic";
-
-const options = {
-  density: 100,
-  savename: "untitled",
-  savedir: "./images",
-  format: "png",
-  width: 600,
-  height: 600
-};
-const convertPdf2Base64Image = fromPath("/path/to/pdf/sample.pdf", options);
-const pageToConvertAsImage = 1;
-
-// adding true as second parameter will transform response to base64 string
-convertPdf2Base64Image(pageToConvertAsImage, true).then((resolve) => {
-  console.log("Page 1 is now converted as base64string");
-
-  console.log({
-    base64string: resolve.base64
-  })
-
-  return resolve;
-});
-
+fromPath(filePath, options).convert(pageNumber, isBase64)
+```
+* filePath - pdf file's path  
+* options - see [options](#options).  
+* pageNumber - page number to be converted to image  
+* isBase64 - if true, `convert()` will return base64 output instead  
+  
+---  
+  
+Converts PDF to Image/Base64 by supplying a file path  
+```javascript
+fromPath(filePath, options).bulk(pageNumber, isBase64)
+```
+* filePath - pdf file's path  
+* options - see [options](#options).  
+* pageNumber - page number/s to be converted to images  
+  * set `pageNumber` to `-1` to select all pages  
+  * `pageNumber` also accepts an array indicating the page number e.g. `[1,2,3]`
+  * also accepts number e.g. `1`
+* isBase64 - if true, `bulk()` will return an array of base64 output instead  
+  
+---
+  
+Set GraphicsMagick's subclass or path  
+```javascript
+fromPath(filePath, options).setGMClass(subClass)  
+```  
+NOTE: should be called before calling `convert()` or `bulk()`.
+* subClass - path to gm binary or set to true to use imagemagick  
+  * set `subClass` to true to use imagemagick  
+  * supply a valid path as `subClass` to locate gm path specified  
+  
+---
+  
+### fromBuffer(buffer, options)  
+   
+Initialize PDF to image conversion by supplying a PDF buffer  
+  
+#### Functions  
+  
+Converts specific page of the PDF to Image/Base64 by supplying a buffer  
+```javascript
+fromBuffer(buffer, options).convert(pageNumber, isBase64)
+```
+  
+Functions same as `fromPath(filePath, options).convert(pageNumber, isBase64)` only input is changed  
+  
+---
+Converts PDF to Image/Base64 by supplying a buffer  
+  
+```javascript
+fromBuffer(buffer, options).bulk(pageNumber, isBase64)
+```
+  
+Functions same as `fromPath(filePath, options).bulk(pageNumber, isBase64)` only input is changed  
+  
+---
+Set GraphicsMagick's subclass or path  
+```javascript
+fromBuffer(buffer, options).setGMClass(subClass)  
 ```  
   
-### Bulk conversion  
+Functions same as `fromPath(filePath, options).setGMClass(subClass)` only input is changed  
+  
+---
+  
+### fromBase64(b64string, options)  
+Initialize PDF to image conversion by supplying a PDF base64 string  
+  
+#### Functions  
+  
+Converts specific page of the PDF to Image/Base64 by supplying a base64 string  
+```javascript
+fromBase64(b64string, options).convert(pageNumber, isBase64)
+```
+  
+Functions same as `fromPath(filePath, options).convert(pageNumber, isBase64)` only input is changed  
+  
+---
+Converts PDF to Image/Base64 by supplying a base64 string  
   
 ```javascript
-import { fromPath } from "pdf2pic";
-
-const options = {
-  density: 100,
-  savename: "untitled",
-  savedir: "./images",
-  format: "png",
-  width: 600,
-  height: 600
-};
-const convert = fromPath("/path/to/pdf/sample.pdf", options);
-const pageToConvertAsImage = [4, 5]; // let's convert page 4 and 5
-
-convert.bulk(pageToConvertAsImage).then((resolve) => {
-  console.log("Page 4 and 5 is now converted as image");
-
-  return resolve;
-});
-
+fromBase64(b64string, options).bulk(pageNumber, isBase64)
 ```
-### PDF Stream input, saved as image file  
   
-```javascript
-import { fromBuffer } from "pdf2pic";
-import { readFileSync } from "fs";
-
-const options = {
-  density: 100,
-  savename: "untitled",
-  savedir: "./images",
-  format: "png",
-  width: 600,
-  height: 600
-};
-
-const file = readFileSync("/path/to/pdf/sample.pdf", "base64");
-const buff = Buffer.from(file, "base64");
-
-const convert = fromBuffer(buff, options);
-const pageToConvertAsImage = 1;
-
-convert(pageToConvertAsImage).then((resolve) => {
-  console.log("Page 1 is now converted as image");
-
-  return resolve;
-});
-
-```
-### PDF base64 input, saved as image file  
+Functions same as `fromPath(filePath, options).bulk(pageNumber, isBase64)` only input is changed  
   
+---
+Set GraphicsMagick's subclass or path  
 ```javascript
-import { fromBase64 } from "pdf2pic";
-import { readFileSync } from "fs";
-
-const options = {
-  density: 100,
-  savename: "untitled",
-  savedir: "./images",
-  format: "png",
-  width: 600,
-  height: 600
-};
-
-const file = readFileSync("/path/to/pdf/sample.pdf", "base64");
-
-const convert = fromBase64(file, options);
-const pageToConvertAsImage = 1;
-
-convert(pageToConvertAsImage).then((resolve) => {
-  console.log("Page 1 is now converted as image");
-
-  return resolve;
-});
-
-```
-
-## TO BE CONTINUED!
-
+fromBase64(b64string, options).setGMClass(subClass)  
+```  
+  
+Functions same as `fromPath(filePath, options).setGMClass(subClass)` only input is changed  
+  
+---
+### options  
+Following are the options that can be passed on the pdf2pic api:
+* quality - set output's image quality  
+* format - set output's file format  
+* width - set output's width  
+* height - set output's height  
+* density - controls output's dpi (i am not so sure)  
+* savePath - set output's save path  
+* saveFilename - set output's file name  
+* compressioon - set output's compression method  
+  
+## Contributing
+* Fork it (https://github.com/yakovmeister/pdf2image/fork)  
+* Create your feature branch (git checkout -b feature/make-maintainer-cry)  
+* Commit your changes (git commit -am 'feature: make maintainer cry by running git rm -rf')  
+* Push to the branch (git push origin feature/make-maintainer-cry)
+* Create a new PR  
+  
+## License
+pdf2pic is [MIT licensed](LICENSE).
+  
 <!-- Markdown link & img dfn's -->
 [npm-image]: https://img.shields.io/npm/v/pdf2pic.svg?style=flat-square
 [npm-url]: https://www.npmjs.com/package/pdf2pic
 [npm-downloads]: https://img.shields.io/npm/dm/pdf2pic.svg?style=flat-square
 [travis-image]: https://travis-ci.org/yakovmeister/pdf2image.svg?branch=next
 [travis-url]: https://travis-ci.org/yakovmeister/pdf2image
-[paypal-image]: https://img.shields.io/badge/Donate-PayPal-green.svg
+[paypal-image]: https://img.shields.io/badge/Donate-PayPal-green.svg  

@@ -5,7 +5,6 @@
 .eslintrc
 .nycrc
 rollup.config.js
-tsconfig.json
 /.gitignore
 /.rpt2_cache
 /coverage
