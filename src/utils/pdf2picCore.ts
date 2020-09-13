@@ -26,7 +26,7 @@ export function pdf2picCore(source: string, filePath: string | Buffer, options =
     return gm.writeImage(stream, (page - 1));
   };
 
-  convert.bulk = (pages: number | number[], toBase64 = false): Promise<(Promise<WriteImageResponse> | Promise<ToBase64Response>)[]> => {
+  convert.bulk = (pages: number | number[], toBase64 = false): Promise<WriteImageResponse[] | ToBase64Response[]> => {
     return bulkConvert(gm, source, filePath, pages, toBase64);
   }
 

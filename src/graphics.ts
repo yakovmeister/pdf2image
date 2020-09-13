@@ -82,7 +82,8 @@ export class Graphics {
 
           return resolve({
             name: path.basename(output),
-            size: fs.statSync(output).size / 1000.0,
+            size: `${this.width}x${this.height}`,
+            fileSize: fs.statSync(output).size / 1000.0,
             path: output,
             page: page + 1
           });

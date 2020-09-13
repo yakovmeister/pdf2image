@@ -3,7 +3,7 @@ import { ToBase64Response } from "@module/types/toBase64Response";
 
 export type Convert = {
 
-  bulk?: (pages?: number | number[], toBase64?: boolean) => Promise<(Promise<WriteImageResponse> | Promise<ToBase64Response>)[]>;
+  bulk?: (pages?: number | number[], toBase64?: boolean) => Promise<WriteImageResponse[] | ToBase64Response[]>;
 
   setOptions?: () => void;
 

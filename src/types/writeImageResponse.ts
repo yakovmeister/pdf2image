@@ -1,6 +1,7 @@
 export type WriteImageResponse = {
   name?: string;
-  size?: number;
+  size?: string;
+  fileSize?: number;
   path?: string;
   page?: number;
 }

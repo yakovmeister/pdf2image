@@ -72,7 +72,7 @@ describe("PDF2Pic Core", () => {
     expect(info.size.height).to.be.equal(512);
   });
 
-  it.skip("should convert pdf to pic (file input, bulk all pages)", async () => {
+  it("should convert pdf to pic (file input, bulk all pages)", async () => {
     const gm = new Graphics();
     const options = {
       ...baseOptions,
