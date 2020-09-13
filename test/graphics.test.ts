@@ -168,9 +168,9 @@ describe("graphics", () => {
 
     const base64string = await gm.toBase64(file, 1);
 
-    writeFileSync("./dump/fromfiletest/frombase64.png", Buffer.from(base64string.base64, "base64"));
+    writeFileSync("./dump/savefiletest/frombase64.png", Buffer.from(base64string.base64, "base64"));
 
-    const info = await gm.identify("./dump/savefiletest/untitled.2.png") as gm.ImageInfo;
+    const info = await gm.identify("./dump/savefiletest/frombase64.png") as gm.ImageInfo;
 
     expect(info).to.haveOwnProperty("format");
     expect(info.format).to.be.equal("PNG");
