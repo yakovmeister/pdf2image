@@ -5,6 +5,7 @@ import { WriteImageResponse } from "../src/types/writeImageResponse";
 import { ToBase64Response } from "../src/types/toBase64Response";
 import rimraf from "rimraf";
 import { looksSame } from "./utils/looksSame";
+import { Graphics } from "../src/graphics";
 import gm from "gm";
 
 describe("PDF2Pic Core", () => {
@@ -25,6 +26,7 @@ describe("PDF2Pic Core", () => {
   });
 
   it("should convert pdf to pic (file input, first page)", async () => {
+    const gm = new Graphics();
     const options = {
       ...baseOptions,
       format: "png",
@@ -33,17 +35,21 @@ describe("PDF2Pic Core", () => {
 
     const convert = fromPath("./test/data/pdf1.pdf", options);
 
-    const converted = (await convert() as WriteImageResponse);
-    const imageResult = await looksSame("./dump/fromfiletest/test-1.1.png", "./test/snapshots/car1.png");
+    await convert() as WriteImageResponse;
 
-    expect(converted).to.haveOwnProperty("path");
-    expect(converted).to.haveOwnProperty("name");
-    expect(converted.name).to.be.equal("test-1.1.png");
-    expect(converted.path).to.be.equal("./dump/fromfiletest/test-1.1.png");
-    expect(imageResult.equal).to.be.true;
+    const info = await gm.identify("./dump/fromfiletest/test-1.1.png") as gm.ImageInfo;
+
+    expect(info).to.haveOwnProperty("format");
+    expect(info.format).to.be.equal("PNG");
+    expect(info).to.haveOwnProperty("size");
+    expect(info.size).to.haveOwnProperty("width");
+    expect(info.size.width).to.be.equal(768);
+    expect(info.size).to.haveOwnProperty("height");
+    expect(info.size.height).to.be.equal(512);
   });
 
   it("should convert pdf to pic (file input, second page, base64 output)", async () => {
+    const gm = new Graphics();
     const options = {
       ...baseOptions,
       format: "png",
@@ -56,9 +62,15 @@ describe("PDF2Pic Core", () => {
 
     writeFileSync("./dump/fromfiletest/frombase64.png", Buffer.from(converted.base64, "base64"));
 
-    const imageResult = await looksSame("./dump/fromfiletest/frombase64.png", "./test/snapshots/car2.png");
+    const info = await gm.identify("./dump/fromfiletest/frombase64.png") as gm.ImageInfo;
 
-    expect(imageResult.equal).to.be.true;
+    expect(info).to.haveOwnProperty("format");
+    expect(info.format).to.be.equal("PNG");
+    expect(info).to.haveOwnProperty("size");
+    expect(info.size).to.haveOwnProperty("width");
+    expect(info.size.width).to.be.equal(768);
+    expect(info.size).to.haveOwnProperty("height");
+    expect(info.size.height).to.be.equal(512);
   });
 
   it("should convert pdf to pic (file input, bulk all pages)", async () => {

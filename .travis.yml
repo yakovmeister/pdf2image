@@ -5,8 +5,9 @@ node_js:
   - "node"
   - "lts/*"
 before_install:
-  - brew update
-  - brew install gs graphicsmagick
+  - sudo apt-get update
+  - sudo apt-get install ghostscript
+  - sudo apt-get install graphicsmagick
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
