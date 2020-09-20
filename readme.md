@@ -98,6 +98,8 @@ Set GraphicsMagick's subclass or path
 fromPath(filePath, options).setGMClass(subClass)  
 ```  
 NOTE: should be called before calling `convert()` or `bulk()`.
+* filePath - pdf file's path  
+* options - see [options](#options).  
 * subClass - path to gm binary or set to true to use imagemagick  
   * set `subClass` to true to use imagemagick  
   * supply a valid path as `subClass` to locate gm path specified  
