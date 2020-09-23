@@ -39,8 +39,8 @@ import { fromPath } from "pdf2pic";
 
 const options = {
   density: 100,
-  savename: "untitled",
-  savedir: "./images",
+  saveFilename: "untitled",
+  savePath: "./images",
   format: "png",
   width: 600,
   height: 600
