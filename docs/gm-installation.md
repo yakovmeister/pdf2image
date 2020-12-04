@@ -27,9 +27,18 @@ $ brew install gs graphicsmagick
 Once everything is installed, the library should work as expected.  
   
 ## Windows  
-  
-Since I don't own a windows machine, I can't really write a guide on how to setup the required dependencies, if you're a windows user, and luckily able to setup both ghostscript and graphicsmagick, feel free to contribute by creating a pull request. Alternatively, you can donate a Windows machine. 😉😉  
-  
+
+For windows users.. open the links and download installers.
+
+- Download Ghostscript **9.52** for Windows: https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/tag/gs952
+- Download GraphicsMagick for Windows: http://ftp.icm.edu.pl/pub/unix/graphics/GraphicsMagick/windows/
+
+Add Windows Environment Variables for your version(****)
+- C:\Program Files\gs\gs****\bin
+- C:\program files\graphicsmagick-****
+
+An error occurred when the Ghostscript version was 9.53 or later.
+
 ## AWS Lambda  
   
 Instructions to be added later
