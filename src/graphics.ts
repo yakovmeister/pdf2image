@@ -1,9 +1,9 @@
 import gm from "gm";
 import path from "path";
 import fs from "fs-extra";
-import { WriteImageResponse } from "@module/types/writeImageResponse";
-import { Options } from "@module/types/options";
-import { ToBase64Response } from "@module/types/toBase64Response";
+import { WriteImageResponse } from "./types/writeImageResponse";
+import { Options } from "./types/options";
+import { ToBase64Response } from "./types/toBase64Response";
 
 export class Graphics {
   private quality = 0;

@@ -1,5 +1,5 @@
-import { WriteImageResponse } from "@module/types/writeImageResponse";
-import { ToBase64Response } from "@module/types/toBase64Response";
+import { WriteImageResponse } from "./writeImageResponse";
+import { ToBase64Response } from "./toBase64Response";
 
 export type Convert = {
 

@@ -1,6 +1,6 @@
-import { Convert } from "@module/types/convert";
-import { defaultOptions } from "@module/utils/defaultOptions";
-import { pdf2picCore } from "@module/utils/pdf2picCore";
+import { Convert } from "./types/convert";
+import { defaultOptions } from "./utils/defaultOptions";
+import { pdf2picCore } from "./utils/pdf2picCore";
 
 export function fromPath(filePath: string, options = defaultOptions): Convert {
   return pdf2picCore("path", filePath, options);

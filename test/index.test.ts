@@ -1,5 +1,5 @@
 import chai, { expect } from "chai";
-import { mkdirsSync, readFileSync, createReadStream, writeFileSync } from "fs-extra";
+import { mkdirsSync, readFileSync, writeFileSync } from "fs-extra";
 import { fromBase64, fromBuffer, fromPath } from "../src/index";
 import { WriteImageResponse } from "../src/types/writeImageResponse";
 import { ToBase64Response } from "../src/types/toBase64Response";

@@ -1,4 +1,4 @@
-import { Options } from "@module/types/options";
+import { Options } from "../types/options";
 
 export const defaultOptions: Options = {
   quality: 0,

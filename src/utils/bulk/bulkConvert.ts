@@ -1,8 +1,8 @@
-import { Graphics } from "@module/graphics";
-import { getPages } from "@module/utils/bulk/getPages";
-import { convertToStream } from "@module/utils/converters/convertToStream";
-import { WriteImageResponse } from "@module/types/writeImageResponse";
-import { ToBase64Response } from "@module/types/toBase64Response";
+import { Graphics } from "../../graphics";
+import { getPages } from "./getPages";
+import { convertToStream } from "../converters/convertToStream";
+import { WriteImageResponse } from "../../types/writeImageResponse";
+import { ToBase64Response } from "../../types/toBase64Response";
 
 export async function bulkConvert(gm: Graphics, source: string, filePath: string | Buffer, pageNumber: number | number[] = 1, toBase64 = false): Promise<WriteImageResponse[] | ToBase64Response[]> {
   if (pageNumber !== -1 && pageNumber < 1) {

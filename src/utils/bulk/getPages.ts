@@ -1,4 +1,4 @@
-import { Graphics } from "@module/graphics";
+import { Graphics } from "../../graphics";
 import { ReadStream } from "fs-extra";
 
 export async function getPages(gm: Graphics, pdf_path: ReadStream): Promise<number[]> {

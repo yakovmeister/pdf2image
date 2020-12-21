@@ -1,6 +1,6 @@
 import chai, { expect } from "chai";
 import { Graphics } from "../src/graphics";
-import { mkdirsSync, readFileSync, createReadStream, writeFileSync } from "fs-extra";
+import { mkdirsSync, createReadStream, writeFileSync } from "fs-extra";
 import rimraf from "rimraf";
 import gm from "gm";
 

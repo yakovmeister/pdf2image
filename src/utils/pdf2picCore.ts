@@ -1,11 +1,11 @@
-import { defaultOptions } from "@module/utils/defaultOptions";
-import { Options } from "@module/types/options";
-import { Graphics } from "@module/graphics";
-import { convertToStream } from "@module/utils/converters/convertToStream";
-import { Convert } from "@module/types/convert";
-import { bulkConvert } from "@module/utils/bulk/bulkConvert";
-import { WriteImageResponse } from "@module/types/writeImageResponse";
-import { ToBase64Response } from "@module/types/toBase64Response";
+import { defaultOptions } from "../utils/defaultOptions";
+import { Options } from "../types/options";
+import { Graphics } from "../graphics";
+import { convertToStream } from "../utils/converters/convertToStream";
+import { Convert } from "../types/convert";
+import { bulkConvert } from "../utils/bulk/bulkConvert";
+import { WriteImageResponse } from "../types/writeImageResponse";
+import { ToBase64Response } from "../types/toBase64Response";
 
 export function pdf2picCore(source: string, filePath: string | Buffer, options = defaultOptions): Convert {
   const gm = new Graphics();
