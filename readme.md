@@ -177,7 +177,7 @@ Following are the options that can be passed on the pdf2pic api:
 * density - controls output's dpi (i am not so sure)  
 * savePath - set output's save path  
 * saveFilename - set output's file name  
-* compressioon - set output's compression method  
+* compression - set output's compression method  
   
 ## Contributing
 * Fork it (https://github.com/yakovmeister/pdf2image/fork)  
