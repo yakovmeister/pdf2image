@@ -114,10 +114,10 @@ Initialize PDF to image conversion by supplying a PDF buffer
   
 Converts specific page of the PDF to Image/Base64 by supplying a buffer  
 ```javascript
-fromBuffer(buffer, options).convert(pageNumber, isBase64)
+fromBuffer(buffer, options)(pageNumber, isBase64)
 ```
   
-Functions same as `fromPath(filePath, options).convert(pageNumber, isBase64)` only input is changed  
+Functions same as `fromPath(filePath, options)(pageNumber, isBase64)` only input is changed  
   
 ---
 Converts PDF to Image/Base64 by supplying a buffer  
@@ -145,10 +145,10 @@ Initialize PDF to image conversion by supplying a PDF base64 string
   
 Converts specific page of the PDF to Image/Base64 by supplying a base64 string  
 ```javascript
-fromBase64(b64string, options).convert(pageNumber, isBase64)
+fromBase64(b64string, options)(pageNumber, isBase64)
 ```
   
-Functions same as `fromPath(filePath, options).convert(pageNumber, isBase64)` only input is changed  
+Functions same as `fromPath(filePath, options)(pageNumber, isBase64)` only input is changed  
   
 ---
 Converts PDF to Image/Base64 by supplying a base64 string  
