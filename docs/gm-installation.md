@@ -41,4 +41,4 @@ An error occurred when the Ghostscript version was 9.53 or later.
 
 ## AWS Lambda  
   
-Instructions to be added later
+For lambda you can add the required libraries using [layers](https://docs.aws.amazon.com/lambda/latest/dg/invocation-layers.html). There are prebuilt, community driven layers for both [GraphicsMagic](https://github.com/rpidanny/gm-lambda-layer) and [Ghostscript](https://github.com/shelfio/ghostscript-lambda-layer).
