@@ -40,7 +40,7 @@
     "test:text": "npm run lint && nyc --reporter=text npm run mocha",
     "rollup": "rollup -c",
     "clean": "rimraf ./dist",
-    "lint": "./node_modules/.bin/eslint . --ext .ts",
+    "lint": "eslint . --ext .ts",
     "build": "npm run test && npm run clean && npm run rollup"
   },
   "repository": {
