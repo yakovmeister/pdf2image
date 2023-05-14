@@ -59,7 +59,11 @@ storeAsImage(pageToConvertAsImage).then((resolve) => {
 ### Nuff talk, show me how:
 More usage example can be found [here](https://github.com/yakovmeister/pdf2pic-examples).  
   
-## pdf2pic API  
+## pdf2pic API
+
+- [fromPath(filePath, options)](#frompathfilepath-options)
+- [fromBuffer(buffer, options)](#frombufferbuffer-options)
+- [fromBase64(b64string, options)](#frombase64b64string-options)
   
 ### fromPath(filePath, options)  
   
@@ -67,27 +71,27 @@ Initialize PDF to image conversion by supplying a file path
   
 #### Functions  
   
-Converts specific page of the PDF to Image/Base64 by supplying a file path  
+Convert a specific page of the PDF to Image/Base64 by supplying a file path  
   
 ```javascript
-fromPath(filePath, options).convert(pageNumber, isBase64)
+fromPath(filePath, options)(page, isBase64)
 ```
 * filePath - pdf file's path  
 * options - see [options](#options).  
-* pageNumber - page number to be converted to image  
+* page - page number to convert to an image  
 * isBase64 - if true, `convert()` will return base64 output instead  
   
 ---  
   
 Converts PDF to Image/Base64 by supplying a file path  
 ```javascript
-fromPath(filePath, options).bulk(pageNumber, isBase64)
+fromPath(filePath, options).bulk(pages, isBase64)
 ```
 * filePath - pdf file's path  
 * options - see [options](#options).  
-* pageNumber - page number/s to be converted to images  
-  * set `pageNumber` to `-1` to select all pages  
-  * `pageNumber` also accepts an array indicating the page number e.g. `[1,2,3]`
+* pages - page numbers to convert to image  
+  * set `pages` to `-1` to convert all pages  
+  * `pages` also accepts an array indicating the page number e.g. `[1,2,3]`
   * also accepts number e.g. `1`
 * isBase64 - if true, `bulk()` will return an array of base64 output instead  
   
@@ -112,21 +116,21 @@ Initialize PDF to image conversion by supplying a PDF buffer
   
 #### Functions  
   
-Converts specific page of the PDF to Image/Base64 by supplying a buffer  
+Convert a specific page of the PDF to Image/Base64 by supplying a buffer  
 ```javascript
-fromBuffer(buffer, options)(pageNumber, isBase64)
+fromBuffer(buffer, options)(page, isBase64)
 ```
   
-Functions same as `fromPath(filePath, options)(pageNumber, isBase64)` only input is changed  
+Functions same as `fromPath(filePath, options)(page, isBase64)` only input is changed  
   
 ---
 Converts PDF to Image/Base64 by supplying a buffer  
   
 ```javascript
-fromBuffer(buffer, options).bulk(pageNumber, isBase64)
+fromBuffer(buffer, options).bulk(pages, isBase64)
 ```
   
-Functions same as `fromPath(filePath, options).bulk(pageNumber, isBase64)` only input is changed  
+Functions same as `fromPath(filePath, options).bulk(pages, isBase64)` only input is changed  
   
 ---
 Set GraphicsMagick's subclass or path  
@@ -143,21 +147,21 @@ Initialize PDF to image conversion by supplying a PDF base64 string
   
 #### Functions  
   
-Converts specific page of the PDF to Image/Base64 by supplying a base64 string  
+Convert a specific page of the PDF to Image/Base64 by supplying a base64 string
 ```javascript
-fromBase64(b64string, options)(pageNumber, isBase64)
+fromBase64(b64string, options)(page, isBase64)
 ```
   
-Functions same as `fromPath(filePath, options)(pageNumber, isBase64)` only input is changed  
+Functions same as `fromPath(filePath, options)(page, isBase64)` only input is changed  
   
 ---
 Converts PDF to Image/Base64 by supplying a base64 string  
   
 ```javascript
-fromBase64(b64string, options).bulk(pageNumber, isBase64)
+fromBase64(b64string, options).bulk(pages, isBase64)
 ```
   
-Functions same as `fromPath(filePath, options).bulk(pageNumber, isBase64)` only input is changed  
+Functions same as `fromPath(filePath, options).bulk(pages, isBase64)` only input is changed  
   
 ---
 Set GraphicsMagick's subclass or path  
@@ -165,19 +169,23 @@ Set GraphicsMagick's subclass or path
 fromBase64(b64string, options).setGMClass(subClass)  
 ```  
   
-Functions same as `fromPath(filePath, options).setGMClass(subClass)` only input is changed  
+Functions same as `fromPath(filePath, options).setGMClass(subClass)` only input is changed.
   
 ---
 ### options  
 Following are the options that can be passed on the pdf2pic api:
-* quality - set output's image quality  
-* format - set output's file format  
-* width - set output's width  
-* height - set output's height  
-* density - controls output's dpi (i am not so sure)  
-* savePath - set output's save path  
-* saveFilename - set output's file name  
-* compression - set output's compression method  
+
+| option       | default value | description                  |
+|--------------|--------------- |------------------------------|
+| quality      | `0`            | Image compression level. Value depends on `format`, usually from `0` to `100` ([more info](http://www.graphicsmagick.org/GraphicsMagick.html#details-quality))                        |
+| format       | `'png'`        | Formatted image characteristics / image format ([image characteristics](http://www.graphicsmagick.org/GraphicsMagick.html#details-format), [image format](http://www.graphicsmagick.org/formats.html)) |
+| width        | `768`            | Output width                 |
+| height       | `512`            | Output height                |
+| density      | `72`             | Output DPI (dots per inch) ([more info](http://www.graphicsmagick.org/GraphicsMagick.html#details-density)) |
+| savePath     | `'./'`         | Path where to save the output |
+| saveFilename | `'untitled'`   | Output filename              |
+| compression  | `'jpeg'`       | Compression method ([more info](http://www.graphicsmagick.org/GraphicsMagick.html#details-compress)) |
+
   
 ## Contributing
 * Fork it (https://github.com/yakovmeister/pdf2image/fork)  

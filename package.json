@@ -8,9 +8,6 @@
     "fs-extra": "^10.0.0",
     "gm": "^1.23.1"
   },
-  "directories": {
-    "test": "test"
-  },
   "devDependencies": {
     "@rollup/plugin-alias": "^3.1.2",
     "@types/chai": "^4.2.14",
@@ -46,6 +43,9 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/yakovmeister/pdf2image.git"
+  },
+  "directories": {
+    "test": "test"
   },
   "keywords": [
     "pdf-to-image",
