@@ -1,7 +1,7 @@
 # PDF2Pic  
 [![Donate][paypal-image]](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=938FMCPPQG4DQ&currency_code=USD&source=url)
-[![Build Status][travis-image]][travis-url]
-[![CodeFactor](https://www.codefactor.io/repository/github/yakovmeister/pdf2image/badge/next)](https://www.codefactor.io/repository/github/yakovmeister/pdf2image/overview/next)
+![Build Status][github-actions-url]
+[![CodeFactor](https://www.codefactor.io/repository/github/yakovmeister/pdf2image/badge)](https://www.codefactor.io/repository/github/yakovmeister/pdf2image)
 [![Maintainability](https://api.codeclimate.com/v1/badges/6d7bfbae9057998bda99/maintainability)](https://codeclimate.com/github/yakovmeister/pdf2image/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/6d7bfbae9057998bda99/test_coverage)](https://codeclimate.com/github/yakovmeister/pdf2image/test_coverage)
 [![install size](https://packagephobia.com/badge?p=pdf2pic)](https://packagephobia.com/result?p=pdf2pic)
@@ -193,6 +193,5 @@ pdf2pic is [MIT licensed](LICENSE).
 [npm-image]: https://img.shields.io/npm/v/pdf2pic.svg?style=flat-square
 [npm-url]: https://www.npmjs.com/package/pdf2pic
 [npm-downloads]: https://img.shields.io/npm/dm/pdf2pic.svg?style=flat-square
-[travis-image]: https://travis-ci.org/yakovmeister/pdf2image.svg?branch=next
-[travis-url]: https://travis-ci.org/yakovmeister/pdf2image
-[paypal-image]: https://img.shields.io/badge/Donate-PayPal-green.svg  
+[github-actions-url]: https://github.com/yakovmeister/pdf2image/actions/workflows/test.yml/badge.svg?branch=master
+[paypal-image]: https://img.shields.io/badge/Donate-PayPal-green.svg
