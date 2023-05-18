@@ -1,11 +1,10 @@
 import chai, { expect } from "chai";
 import { mkdirsSync, readFileSync, writeFileSync } from "fs-extra";
-import { fromBase64, fromBuffer, fromPath } from "../src/index";
-import { WriteImageResponse } from "../src/types/writeImageResponse";
-import { ToBase64Response } from "../src/types/toBase64Response";
-import rimraf from "rimraf";
-import { Graphics } from "../src/graphics";
 import gm from "gm";
+import rimraf from "rimraf";
+import { fromBase64, fromBuffer, fromPath } from "../src/index";
+import { Graphics } from "../src/graphics";
+import { ToBase64Response, WriteImageResponse } from "../src/types/convertResponse";
 
 describe("PDF2Pic Core", () => {
   const baseOptions = {
