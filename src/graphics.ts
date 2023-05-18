@@ -1,9 +1,8 @@
 import gm from "gm";
 import path from "path";
 import fs from "fs-extra";
-import { WriteImageResponse } from "./types/writeImageResponse";
+import { ToBase64Response, WriteImageResponse } from './types/convertResponse';
 import { Options } from "./types/options";
-import { ToBase64Response } from "./types/toBase64Response";
 
 export class Graphics {
   private quality = 0;
@@ -46,7 +45,7 @@ export class Graphics {
     return new Promise((resolve, reject) => {
       this.gmBaseCommand(stream, pageSetup).stream(this.format, (error, stdout) => {
         let buffer = "";
-        
+
         if (error) {
           return reject(error);
         }
