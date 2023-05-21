@@ -5,6 +5,7 @@ import rimraf from "rimraf";
 import { fromBase64, fromBuffer, fromPath } from "../src/index";
 import { Graphics } from "../src/graphics";
 import { ToBase64Response, WriteImageResponse } from "../src/types/convertResponse";
+import { Options } from "../src/types/options";
 
 describe("PDF2Pic Core", () => {
   const baseOptions = {
@@ -14,6 +15,29 @@ describe("PDF2Pic Core", () => {
     height: 512,
     savePath: "./dump/fromfiletest"
   };
+
+  const expectInfoToBeValid = (info: gm.ImageInfo, options) => {
+    expect(info).to.haveOwnProperty('format');
+    expect(info.format).to.be.equal(options.format.toUpperCase());
+    expect(info).to.haveOwnProperty('size');
+    expect(info.size).to.haveOwnProperty('width');
+    expect(info.size.width).to.be.equal(options.width);
+    expect(info.size).to.haveOwnProperty('height');
+    expect(info.size.height).to.be.equal(options.height);
+  }
+
+  const expectImageResponseToBeValid = (response: WriteImageResponse, options: Options) => {
+    expect(response).to.haveOwnProperty('name');
+    expect(response.name).to.be.a('string');
+    expect(response).to.haveOwnProperty('size');
+    expect(response.size).to.be.a('string');
+    expect(response).to.haveOwnProperty('fileSize');
+    expect(response.fileSize).to.be.a('number');
+    expect(response).to.haveOwnProperty('path');
+    expect(response.path).to.equal(`${options.savePath}/${response.name}`);
+    expect(response).to.haveOwnProperty('page');
+    expect(response.page).to.be.a('number');
+  }
 
   before(() => {
     rimraf.sync("./dump/fromfiletest");
@@ -37,13 +61,7 @@ describe("PDF2Pic Core", () => {
 
     const info = await gm.identify("./dump/fromfiletest/test-1.1.png") as gm.ImageInfo;
 
-    expect(info).to.haveOwnProperty("format");
-    expect(info.format).to.be.equal("PNG");
-    expect(info).to.haveOwnProperty("size");
-    expect(info.size).to.haveOwnProperty("width");
-    expect(info.size.width).to.be.equal(768);
-    expect(info.size).to.haveOwnProperty("height");
-    expect(info.size.height).to.be.equal(512);
+    expectInfoToBeValid(info, options)
   });
 
   it("should convert pdf to pic (buffer input, first page)", async () => {
@@ -61,13 +79,7 @@ describe("PDF2Pic Core", () => {
 
     const info = await gm.identify("./dump/fromfiletest/test-1.1.png") as gm.ImageInfo;
 
-    expect(info).to.haveOwnProperty("format");
-    expect(info.format).to.be.equal("PNG");
-    expect(info).to.haveOwnProperty("size");
-    expect(info.size).to.haveOwnProperty("width");
-    expect(info.size.width).to.be.equal(768);
-    expect(info.size).to.haveOwnProperty("height");
-    expect(info.size.height).to.be.equal(512);
+    expectInfoToBeValid(info, options)
   });
 
   it("should convert pdf to pic (base64 input, first page)", async () => {
@@ -85,13 +97,7 @@ describe("PDF2Pic Core", () => {
 
     const info = await gm.identify("./dump/fromfiletest/test-1.1.png") as gm.ImageInfo;
 
-    expect(info).to.haveOwnProperty("format");
-    expect(info.format).to.be.equal("PNG");
-    expect(info).to.haveOwnProperty("size");
-    expect(info.size).to.haveOwnProperty("width");
-    expect(info.size.width).to.be.equal(768);
-    expect(info.size).to.haveOwnProperty("height");
-    expect(info.size.height).to.be.equal(512);
+    expectInfoToBeValid(info, options)
   });
 
   it("should convert pdf to pic (file input, second page, base64 output)", async () => {
@@ -110,13 +116,7 @@ describe("PDF2Pic Core", () => {
 
     const info = await gm.identify("./dump/fromfiletest/frombase64.png") as gm.ImageInfo;
 
-    expect(info).to.haveOwnProperty("format");
-    expect(info.format).to.be.equal("PNG");
-    expect(info).to.haveOwnProperty("size");
-    expect(info.size).to.haveOwnProperty("width");
-    expect(info.size.width).to.be.equal(768);
-    expect(info.size).to.haveOwnProperty("height");
-    expect(info.size.height).to.be.equal(512);
+    expectInfoToBeValid(info, options)
   });
 
   it("should convert pdf to pic (buffer input, second page, base64 output)", async () => {
@@ -137,13 +137,7 @@ describe("PDF2Pic Core", () => {
 
     const info = await gm.identify("./dump/fromfiletest/frombase64.png") as gm.ImageInfo;
 
-    expect(info).to.haveOwnProperty("format");
-    expect(info.format).to.be.equal("PNG");
-    expect(info).to.haveOwnProperty("size");
-    expect(info.size).to.haveOwnProperty("width");
-    expect(info.size.width).to.be.equal(768);
-    expect(info.size).to.haveOwnProperty("height");
-    expect(info.size.height).to.be.equal(512);
+    expectInfoToBeValid(info, options)
   });
 
   it("should convert pdf to pic (base64 input, second page, base64 output)", async () => {
@@ -164,13 +158,7 @@ describe("PDF2Pic Core", () => {
 
     const info = await gm.identify("./dump/fromfiletest/frombase64.png") as gm.ImageInfo;
 
-    expect(info).to.haveOwnProperty("format");
-    expect(info.format).to.be.equal("PNG");
-    expect(info).to.haveOwnProperty("size");
-    expect(info.size).to.haveOwnProperty("width");
-    expect(info.size.width).to.be.equal(768);
-    expect(info.size).to.haveOwnProperty("height");
-    expect(info.size.height).to.be.equal(512);
+    expectInfoToBeValid(info, options)
   });
 
   it("should convert pdf to pic (file input, bulk all pages)", async () => {
@@ -187,7 +175,8 @@ describe("PDF2Pic Core", () => {
 
     const imageResponse = await convert.bulk(-1);
 
-    expect(imageResponse).lengthOf(9)
+    expect(imageResponse).to.be.an('array').that.has.lengthOf(9)
+    imageResponse.forEach(imageResponse => expectImageResponseToBeValid(imageResponse, options))
 
     const info1 = await gm.identify("./dump/fromfiletest/test-3.1.png") as gm.ImageInfo;
     const info2 = await gm.identify("./dump/fromfiletest/test-3.2.png") as gm.ImageInfo;
@@ -199,77 +188,15 @@ describe("PDF2Pic Core", () => {
     const info8 = await gm.identify("./dump/fromfiletest/test-3.8.png") as gm.ImageInfo;
     const info9 = await gm.identify("./dump/fromfiletest/test-3.9.png") as gm.ImageInfo;
 
-    expect(info1).to.haveOwnProperty("format");
-    expect(info1.format).to.be.equal("PNG");
-    expect(info1).to.haveOwnProperty("size");
-    expect(info1.size).to.haveOwnProperty("width");
-    expect(info1.size.width).to.be.equal(768);
-    expect(info1.size).to.haveOwnProperty("height");
-    expect(info1.size.height).to.be.equal(512);
-
-    expect(info2).to.haveOwnProperty("format");
-    expect(info2.format).to.be.equal("PNG");
-    expect(info2).to.haveOwnProperty("size");
-    expect(info2.size).to.haveOwnProperty("width");
-    expect(info2.size.width).to.be.equal(768);
-    expect(info2.size).to.haveOwnProperty("height");
-    expect(info2.size.height).to.be.equal(512);
-
-    expect(info3).to.haveOwnProperty("format");
-    expect(info3.format).to.be.equal("PNG");
-    expect(info3).to.haveOwnProperty("size");
-    expect(info3.size).to.haveOwnProperty("width");
-    expect(info3.size.width).to.be.equal(768);
-    expect(info3.size).to.haveOwnProperty("height");
-    expect(info3.size.height).to.be.equal(512);
-
-    expect(info4).to.haveOwnProperty("format");
-    expect(info4.format).to.be.equal("PNG");
-    expect(info4).to.haveOwnProperty("size");
-    expect(info4.size).to.haveOwnProperty("width");
-    expect(info4.size.width).to.be.equal(768);
-    expect(info4.size).to.haveOwnProperty("height");
-    expect(info4.size.height).to.be.equal(512);
-
-    expect(info5).to.haveOwnProperty("format");
-    expect(info5.format).to.be.equal("PNG");
-    expect(info5).to.haveOwnProperty("size");
-    expect(info5.size).to.haveOwnProperty("width");
-    expect(info5.size.width).to.be.equal(768);
-    expect(info5.size).to.haveOwnProperty("height");
-    expect(info5.size.height).to.be.equal(512);
-
-    expect(info6).to.haveOwnProperty("format");
-    expect(info6.format).to.be.equal("PNG");
-    expect(info6).to.haveOwnProperty("size");
-    expect(info6.size).to.haveOwnProperty("width");
-    expect(info6.size.width).to.be.equal(768);
-    expect(info6.size).to.haveOwnProperty("height");
-    expect(info6.size.height).to.be.equal(512);
-
-    expect(info7).to.haveOwnProperty("format");
-    expect(info7.format).to.be.equal("PNG");
-    expect(info7).to.haveOwnProperty("size");
-    expect(info7.size).to.haveOwnProperty("width");
-    expect(info7.size.width).to.be.equal(768);
-    expect(info7.size).to.haveOwnProperty("height");
-    expect(info7.size.height).to.be.equal(512);
-
-    expect(info8).to.haveOwnProperty("format");
-    expect(info8.format).to.be.equal("PNG");
-    expect(info8).to.haveOwnProperty("size");
-    expect(info8.size).to.haveOwnProperty("width");
-    expect(info8.size.width).to.be.equal(768);
-    expect(info8.size).to.haveOwnProperty("height");
-    expect(info8.size.height).to.be.equal(512);
-
-    expect(info9).to.haveOwnProperty("format");
-    expect(info9.format).to.be.equal("PNG");
-    expect(info9).to.haveOwnProperty("size");
-    expect(info9.size).to.haveOwnProperty("width");
-    expect(info9.size.width).to.be.equal(768);
-    expect(info9.size).to.haveOwnProperty("height");
-    expect(info9.size.height).to.be.equal(512);
+    expectInfoToBeValid(info1, options)
+    expectInfoToBeValid(info2, options)
+    expectInfoToBeValid(info3, options)
+    expectInfoToBeValid(info4, options)
+    expectInfoToBeValid(info5, options)
+    expectInfoToBeValid(info6, options)
+    expectInfoToBeValid(info7, options)
+    expectInfoToBeValid(info8, options)
+    expectInfoToBeValid(info9, options)
   }).timeout(7000);
 
   it("should convert pdf to pic (buffer input, bulk all pages)", async () => {
@@ -288,7 +215,8 @@ describe("PDF2Pic Core", () => {
 
     const imageResponse = await convert.bulk(-1);
 
-    expect(imageResponse).lengthOf(9)
+    expect(imageResponse).to.be.an('array').that.has.lengthOf(9)
+    imageResponse.forEach(imageResponse => expectImageResponseToBeValid(imageResponse, options))
 
     const info1 = await gm.identify("./dump/fromfiletest/test-3.1.png") as gm.ImageInfo;
     const info2 = await gm.identify("./dump/fromfiletest/test-3.2.png") as gm.ImageInfo;
@@ -300,77 +228,15 @@ describe("PDF2Pic Core", () => {
     const info8 = await gm.identify("./dump/fromfiletest/test-3.8.png") as gm.ImageInfo;
     const info9 = await gm.identify("./dump/fromfiletest/test-3.9.png") as gm.ImageInfo;
 
-    expect(info1).to.haveOwnProperty("format");
-    expect(info1.format).to.be.equal("PNG");
-    expect(info1).to.haveOwnProperty("size");
-    expect(info1.size).to.haveOwnProperty("width");
-    expect(info1.size.width).to.be.equal(768);
-    expect(info1.size).to.haveOwnProperty("height");
-    expect(info1.size.height).to.be.equal(512);
-
-    expect(info2).to.haveOwnProperty("format");
-    expect(info2.format).to.be.equal("PNG");
-    expect(info2).to.haveOwnProperty("size");
-    expect(info2.size).to.haveOwnProperty("width");
-    expect(info2.size.width).to.be.equal(768);
-    expect(info2.size).to.haveOwnProperty("height");
-    expect(info2.size.height).to.be.equal(512);
-
-    expect(info3).to.haveOwnProperty("format");
-    expect(info3.format).to.be.equal("PNG");
-    expect(info3).to.haveOwnProperty("size");
-    expect(info3.size).to.haveOwnProperty("width");
-    expect(info3.size.width).to.be.equal(768);
-    expect(info3.size).to.haveOwnProperty("height");
-    expect(info3.size.height).to.be.equal(512);
-
-    expect(info4).to.haveOwnProperty("format");
-    expect(info4.format).to.be.equal("PNG");
-    expect(info4).to.haveOwnProperty("size");
-    expect(info4.size).to.haveOwnProperty("width");
-    expect(info4.size.width).to.be.equal(768);
-    expect(info4.size).to.haveOwnProperty("height");
-    expect(info4.size.height).to.be.equal(512);
-
-    expect(info5).to.haveOwnProperty("format");
-    expect(info5.format).to.be.equal("PNG");
-    expect(info5).to.haveOwnProperty("size");
-    expect(info5.size).to.haveOwnProperty("width");
-    expect(info5.size.width).to.be.equal(768);
-    expect(info5.size).to.haveOwnProperty("height");
-    expect(info5.size.height).to.be.equal(512);
-
-    expect(info6).to.haveOwnProperty("format");
-    expect(info6.format).to.be.equal("PNG");
-    expect(info6).to.haveOwnProperty("size");
-    expect(info6.size).to.haveOwnProperty("width");
-    expect(info6.size.width).to.be.equal(768);
-    expect(info6.size).to.haveOwnProperty("height");
-    expect(info6.size.height).to.be.equal(512);
-
-    expect(info7).to.haveOwnProperty("format");
-    expect(info7.format).to.be.equal("PNG");
-    expect(info7).to.haveOwnProperty("size");
-    expect(info7.size).to.haveOwnProperty("width");
-    expect(info7.size.width).to.be.equal(768);
-    expect(info7.size).to.haveOwnProperty("height");
-    expect(info7.size.height).to.be.equal(512);
-
-    expect(info8).to.haveOwnProperty("format");
-    expect(info8.format).to.be.equal("PNG");
-    expect(info8).to.haveOwnProperty("size");
-    expect(info8.size).to.haveOwnProperty("width");
-    expect(info8.size.width).to.be.equal(768);
-    expect(info8.size).to.haveOwnProperty("height");
-    expect(info8.size.height).to.be.equal(512);
-
-    expect(info9).to.haveOwnProperty("format");
-    expect(info9.format).to.be.equal("PNG");
-    expect(info9).to.haveOwnProperty("size");
-    expect(info9.size).to.haveOwnProperty("width");
-    expect(info9.size.width).to.be.equal(768);
-    expect(info9.size).to.haveOwnProperty("height");
-    expect(info9.size.height).to.be.equal(512);
+    expectInfoToBeValid(info1, options)
+    expectInfoToBeValid(info2, options)
+    expectInfoToBeValid(info3, options)
+    expectInfoToBeValid(info4, options)
+    expectInfoToBeValid(info5, options)
+    expectInfoToBeValid(info6, options)
+    expectInfoToBeValid(info7, options)
+    expectInfoToBeValid(info8, options)
+    expectInfoToBeValid(info9, options)
   }).timeout(7000);
 
   it("should convert pdf to pic (base64 input, bulk all pages)", async () => {
@@ -389,7 +255,8 @@ describe("PDF2Pic Core", () => {
 
     const imageResponse = await convert.bulk(-1);
 
-    expect(imageResponse).lengthOf(9)
+    expect(imageResponse).to.be.an('array').that.has.lengthOf(9)
+    imageResponse.forEach(imageResponse => expectImageResponseToBeValid(imageResponse, options))
 
     const info1 = await gm.identify("./dump/fromfiletest/test-3.1.png") as gm.ImageInfo;
     const info2 = await gm.identify("./dump/fromfiletest/test-3.2.png") as gm.ImageInfo;
@@ -401,76 +268,14 @@ describe("PDF2Pic Core", () => {
     const info8 = await gm.identify("./dump/fromfiletest/test-3.8.png") as gm.ImageInfo;
     const info9 = await gm.identify("./dump/fromfiletest/test-3.9.png") as gm.ImageInfo;
 
-    expect(info1).to.haveOwnProperty("format");
-    expect(info1.format).to.be.equal("PNG");
-    expect(info1).to.haveOwnProperty("size");
-    expect(info1.size).to.haveOwnProperty("width");
-    expect(info1.size.width).to.be.equal(768);
-    expect(info1.size).to.haveOwnProperty("height");
-    expect(info1.size.height).to.be.equal(512);
-
-    expect(info2).to.haveOwnProperty("format");
-    expect(info2.format).to.be.equal("PNG");
-    expect(info2).to.haveOwnProperty("size");
-    expect(info2.size).to.haveOwnProperty("width");
-    expect(info2.size.width).to.be.equal(768);
-    expect(info2.size).to.haveOwnProperty("height");
-    expect(info2.size.height).to.be.equal(512);
-
-    expect(info3).to.haveOwnProperty("format");
-    expect(info3.format).to.be.equal("PNG");
-    expect(info3).to.haveOwnProperty("size");
-    expect(info3.size).to.haveOwnProperty("width");
-    expect(info3.size.width).to.be.equal(768);
-    expect(info3.size).to.haveOwnProperty("height");
-    expect(info3.size.height).to.be.equal(512);
-
-    expect(info4).to.haveOwnProperty("format");
-    expect(info4.format).to.be.equal("PNG");
-    expect(info4).to.haveOwnProperty("size");
-    expect(info4.size).to.haveOwnProperty("width");
-    expect(info4.size.width).to.be.equal(768);
-    expect(info4.size).to.haveOwnProperty("height");
-    expect(info4.size.height).to.be.equal(512);
-
-    expect(info5).to.haveOwnProperty("format");
-    expect(info5.format).to.be.equal("PNG");
-    expect(info5).to.haveOwnProperty("size");
-    expect(info5.size).to.haveOwnProperty("width");
-    expect(info5.size.width).to.be.equal(768);
-    expect(info5.size).to.haveOwnProperty("height");
-    expect(info5.size.height).to.be.equal(512);
-
-    expect(info6).to.haveOwnProperty("format");
-    expect(info6.format).to.be.equal("PNG");
-    expect(info6).to.haveOwnProperty("size");
-    expect(info6.size).to.haveOwnProperty("width");
-    expect(info6.size.width).to.be.equal(768);
-    expect(info6.size).to.haveOwnProperty("height");
-    expect(info6.size.height).to.be.equal(512);
-
-    expect(info7).to.haveOwnProperty("format");
-    expect(info7.format).to.be.equal("PNG");
-    expect(info7).to.haveOwnProperty("size");
-    expect(info7.size).to.haveOwnProperty("width");
-    expect(info7.size.width).to.be.equal(768);
-    expect(info7.size).to.haveOwnProperty("height");
-    expect(info7.size.height).to.be.equal(512);
-
-    expect(info8).to.haveOwnProperty("format");
-    expect(info8.format).to.be.equal("PNG");
-    expect(info8).to.haveOwnProperty("size");
-    expect(info8.size).to.haveOwnProperty("width");
-    expect(info8.size.width).to.be.equal(768);
-    expect(info8.size).to.haveOwnProperty("height");
-    expect(info8.size.height).to.be.equal(512);
-
-    expect(info9).to.haveOwnProperty("format");
-    expect(info9.format).to.be.equal("PNG");
-    expect(info9).to.haveOwnProperty("size");
-    expect(info9.size).to.haveOwnProperty("width");
-    expect(info9.size.width).to.be.equal(768);
-    expect(info9.size).to.haveOwnProperty("height");
-    expect(info9.size.height).to.be.equal(512);
+    expectInfoToBeValid(info1, options)
+    expectInfoToBeValid(info2, options)
+    expectInfoToBeValid(info3, options)
+    expectInfoToBeValid(info4, options)
+    expectInfoToBeValid(info5, options)
+    expectInfoToBeValid(info6, options)
+    expectInfoToBeValid(info7, options)
+    expectInfoToBeValid(info8, options)
+    expectInfoToBeValid(info9, options)
   }).timeout(7000);
 });
