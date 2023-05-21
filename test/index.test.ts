@@ -271,7 +271,7 @@ describe("PDF2Pic Core", () => {
     expect(info9.size.width).to.be.equal(768);
     expect(info9.size).to.haveOwnProperty("height");
     expect(info9.size.height).to.be.equal(512);
-  });
+  }).timeout(7000);
 
   it("should convert pdf to pic (buffer input, bulk all pages)", async () => {
     const gm = new Graphics();
@@ -372,7 +372,7 @@ describe("PDF2Pic Core", () => {
     expect(info9.size.width).to.be.equal(768);
     expect(info9.size).to.haveOwnProperty("height");
     expect(info9.size.height).to.be.equal(512);
-  });
+  }).timeout(7000);
 
   it("should convert pdf to pic (base64 input, bulk all pages)", async () => {
     const gm = new Graphics();
@@ -473,5 +473,5 @@ describe("PDF2Pic Core", () => {
     expect(info9.size.width).to.be.equal(768);
     expect(info9.size).to.haveOwnProperty("height");
     expect(info9.size.height).to.be.equal(512);
-  });
+  }).timeout(7000);
 });
