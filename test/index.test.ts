@@ -186,7 +186,9 @@ describe("PDF2Pic Core", () => {
 
     const convert = fromPath("./test/data/pdf1.pdf", options);
 
-    await convert.bulk(-1);
+    const imageResponse = await convert.bulk(-1);
+
+    expect(imageResponse).lengthOf(9)
 
     const info1 = await gm.identify("./dump/fromfiletest/test-3.1.png") as gm.ImageInfo;
     const info2 = await gm.identify("./dump/fromfiletest/test-3.2.png") as gm.ImageInfo;
@@ -285,7 +287,9 @@ describe("PDF2Pic Core", () => {
 
     const convert = fromBuffer(buffer, options);
 
-    await convert.bulk(-1);
+    const imageResponse = await convert.bulk(-1);
+
+    expect(imageResponse).lengthOf(9)
 
     const info1 = await gm.identify("./dump/fromfiletest/test-3.1.png") as gm.ImageInfo;
     const info2 = await gm.identify("./dump/fromfiletest/test-3.2.png") as gm.ImageInfo;
@@ -384,7 +388,9 @@ describe("PDF2Pic Core", () => {
 
     const convert = fromBase64(b64, options);
 
-    await convert.bulk(-1);
+    const imageResponse = await convert.bulk(-1);
+
+    expect(imageResponse).lengthOf(9)
 
     const info1 = await gm.identify("./dump/fromfiletest/test-3.1.png") as gm.ImageInfo;
     const info2 = await gm.identify("./dump/fromfiletest/test-3.2.png") as gm.ImageInfo;
