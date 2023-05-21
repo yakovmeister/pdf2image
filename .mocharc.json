@@ -1,4 +1,15 @@
 {
   "ui": "bdd",
-  "timeout": 5000
+  "timeout": 5000,
+  "extension": [
+    ".ts"
+  ],
+  "require": [
+    "ts-node/register",
+    "tsconfig-paths/register"
+  ],
+  "watch-files": [
+    "src/**/*.ts",
+    "test/**/*.ts"
+  ]
 }
