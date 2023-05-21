@@ -29,7 +29,7 @@ export async function bulkConvert(gm: Graphics, source: string, filePath: string
   const results = []
   const batchSize = 10
   for (let i = 0; i < pagesToConvert.length; i += batchSize) {
-    results.concat(...await convert(gm, source, filePath, pagesToConvert.slice(i, i + batchSize), toBase64))
+    results.push(...await convert(gm, source, filePath, pagesToConvert.slice(i, i + batchSize), toBase64))
   }
 
   return results
