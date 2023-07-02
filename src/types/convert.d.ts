@@ -1,17 +1,26 @@
-import type { ConvertResponse } from './convertResponse';
+import type { WriteImageResponse } from './convertResponse';
+import { ToBase64Response } from './convertResponse';
 
 export type ResponseType = 'image' | 'base64'
-
 export type ConvertOptions = boolean | {
-  responseType: ResponseType
+  responseType: 'image' | 'base64'
+  otherOpt: string
 }
 
 export type Convert = {
-  bulk?: (pages?: number | number[], options?: ConvertOptions) => Promise<ConvertResponse[]>;
+  (pages?: number, options?: undefined): Promise<WriteImageResponse>;
+  (pages: number, options: false | { responseType?: undefined }): Promise<WriteImageResponse>;
+  (pages: number, options: true | { responseType: 'base64' }): Promise<ToBase64Response>;
+  (pages: number, options: { responseType: 'image' }): Promise<WriteImageResponse>;
 
-  setOptions?: () => void;
+  bulk: {
+    (pages?: number | number[], options?: undefined): Promise<WriteImageResponse[]>;
+    (pages: number | number[], options: false | { responseType?: undefined }): Promise<WriteImageResponse[]>;
+    (pages: number | number[], options: true | { responseType: 'base64' }): Promise<ToBase64Response[]>;
+    (pages: number | number[], options: { responseType: 'image' }): Promise<WriteImageResponse[]>;
+  };
 
-  setGMClass?: (gmClass: string | boolean) => void;
+  setOptions: () => void;
 
-  (page?: number, options?: ConvertOptions): Promise<ConvertResponse>;
+  setGMClass: (gmClass: string | boolean) => void;
 }
