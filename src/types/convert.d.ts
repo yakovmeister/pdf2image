@@ -3,8 +3,7 @@ import { ToBase64Response } from './convertResponse';
 
 export type ResponseType = 'image' | 'base64'
 export type ConvertOptions = boolean | {
-  responseType: 'image' | 'base64'
-  otherOpt: string
+  responseType: ResponseType
 }
 
 export type Convert = {

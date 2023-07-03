@@ -1,23 +1,17 @@
 import fs from 'fs-extra';
 import { Graphics } from "./graphics";
-import type { Convert, ConvertOptions, ResponseType } from "./types/convert";
+import type { Convert, ConvertOptions } from "./types/convert";
 import type { ConvertResponse } from './types/convertResponse';
 import type { Options } from "./types/options";
 import { convertToStream } from "./utils/converters/convertToStream";
 import { defaultOptions } from "./utils/defaultOptions";
 import { getPages } from './utils/getPages';
+import { resolveResponseType } from './utils/resolveResponseType';
 
 export function pdf2picCore(source: string, filePath: string | Buffer, options = defaultOptions): Convert {
   const gm = new Graphics();
 
   options = { ...defaultOptions, ...options };
-
-  const resolveResponseType = (convertOptions?: ConvertOptions): ResponseType => {
-    if (convertOptions === undefined || typeof convertOptions === 'boolean') {
-      return convertOptions ? 'base64' : 'image'
-    }
-    return convertOptions.responseType ?? 'image'
-  }
 
   const _convert = (stream: fs.ReadStream, page: number, convertOptions: ConvertOptions): Promise<ConvertResponse> => {
     if (page < 1) {
@@ -74,12 +68,12 @@ export function pdf2picCore(source: string, filePath: string | Buffer, options =
 
 function setGMOptions(gm: Graphics, options: Options): void {
   gm.setQuality(options.quality)
-  .setFormat(options.format)
-  .setSize(options.width, options.height)
-  .setDensity(options.density)
-  .setSavePath(options.savePath)
-  .setSaveFilename(options.saveFilename)
-  .setCompression(options.compression)
+    .setFormat(options.format)
+    .setSize(options.width, options.height)
+    .setDensity(options.density)
+    .setSavePath(options.savePath)
+    .setSaveFilename(options.saveFilename)
+    .setCompression(options.compression)
 
   return;
 }
