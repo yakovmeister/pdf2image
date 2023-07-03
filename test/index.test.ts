@@ -7,6 +7,7 @@ import { fromBase64, fromBuffer, fromPath } from "../src/index";
 import { Graphics } from "../src/graphics";
 import { ToBase64Response, WriteImageResponse } from "../src/types/convertResponse";
 import { Options } from "../src/types/options";
+import { defaultOptions } from '../src/utils/defaultOptions';
 
 describe("PDF2Pic Core", () => {
   const baseOptions = {
@@ -43,7 +44,8 @@ describe("PDF2Pic Core", () => {
     expect(response).to.haveOwnProperty('fileSize');
     expect(response.fileSize).to.be.a('number');
     expect(response).to.haveOwnProperty('path');
-    expect(response.path).to.equal(`${options.savePath}/${response.name}`);
+    const savePath = `${options.savePath.startsWith('./') ? './' : ''}${path.join(options.savePath, response.name)}`;
+    expect(response.path).to.equal(savePath);
     expect(response).to.haveOwnProperty('page');
     expect(response.page).to.be.a('number');
   }
@@ -66,7 +68,18 @@ describe("PDF2Pic Core", () => {
   });
 
   it('should use default options', async () => {
-    
+    const convert = fromPath('./test/data/pdf1.pdf');
+    const imageResponse = await convert();
+
+    expectImageResponseToBeValid(imageResponse, defaultOptions);
+
+    const defaultFilePath = `${defaultOptions.savePath}${defaultOptions.saveFilename}.1.${defaultOptions.format}`;
+    const gm = new Graphics();
+    const info = await gm.identify(defaultFilePath) as gm.ImageInfo;
+    expect(info.format).to.equal(defaultOptions.format.toUpperCase())
+    expect(info.size.width).to.equal(defaultOptions.width)
+    expect(info.size.height).to.equal(defaultOptions.height)
+    rimraf.sync(defaultFilePath)
   });
 
   it("should convert pdf to pic (file input, first page)", async () => {
