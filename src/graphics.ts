@@ -24,11 +24,16 @@ export class Graphics {
   private gm: gm.SubClass = gm.subClass({ imageMagick: false });
 
   public generateValidFilename(page?: number): string {
-    if (typeof page === "number") {
-      return `${this.savePath}/${this.saveFilename}.${page + 1}.${this.format}`;
+    let filePath = path.join(this.savePath, this.saveFilename);
+    if (this.savePath.startsWith('./')) {
+      filePath = `./${filePath}`
     }
 
-    return `${this.savePath}/${this.saveFilename}.${this.format}`;
+    if (typeof page === "number") {
+      filePath = `${filePath}.${page + 1}`;
+    }
+
+    return `${filePath}.${this.format}`;
   }
 
   public gmBaseCommand(stream: fs.ReadStream, filename: string): gm.State {
