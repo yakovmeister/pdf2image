@@ -14,7 +14,7 @@ export interface ToBase64Response extends BaseResponse {
 }
 
 export interface BufferResponse extends BaseResponse {
-  buffer: Buffer;
+  buffer?: Buffer;
 }
 
 export type ConvertResponse = WriteImageResponse | ToBase64Response | BufferResponse

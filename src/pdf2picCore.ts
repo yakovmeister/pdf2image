@@ -24,6 +24,8 @@ export function pdf2picCore(source: string, filePath: string | Buffer, options =
         return gm.toBase64(stream, (page - 1))
       case 'image':
         return gm.writeImage(stream, (page - 1))
+      case 'buffer':
+        return gm.toBuffer(stream, (page - 1))
       default:
         throw new Error(`Invalid responseType: ${responseType}`)
     }

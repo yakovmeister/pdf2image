@@ -5,7 +5,7 @@ import path from 'path';
 import rimraf from "rimraf";
 import { fromBase64, fromBuffer, fromPath } from "../src/index";
 import { Graphics } from "../src/graphics";
-import { ToBase64Response, WriteImageResponse } from "../src/types/convertResponse";
+import { BufferResponse, ToBase64Response, WriteImageResponse } from "../src/types/convertResponse";
 import { Options } from "../src/types/options";
 import { defaultOptions } from '../src/utils/defaultOptions';
 
@@ -276,4 +276,92 @@ describe("PDF2Pic Core", () => {
       expectInfoToBeValid(info, options)
     }
   }).timeout(7000);
+
+  describe('responseType: buffer', () => {
+    const expectBufferResponseToBeValid = (response: BufferResponse) => {
+      expect(response).to.haveOwnProperty('buffer');
+      expect(Buffer.isBuffer(response.buffer)).to.be.true;
+      expect(response).to.haveOwnProperty('size');
+      expect(response.size).to.be.a('string');
+      expect(response).to.haveOwnProperty('page');
+      expect(response.page).to.be.a('number');
+    }
+
+    it("should convert pdf to pic (file input, first page)", async () => {
+      const gm = new Graphics();
+      const options = {
+        ...baseOptions,
+        format: "png",
+      }
+
+      const convert = fromPath("./test/data/pdf1.pdf", options);
+      const bufferResponse = await convert(2, { responseType: 'buffer' });
+
+      expectBufferResponseToBeValid(bufferResponse)
+      writeFileSync("./dump/fromfiletest/out-buffer-1.png", bufferResponse.buffer);
+      const info = await gm.identify("./dump/fromfiletest/out-buffer-1.png") as gm.ImageInfo;
+      expectInfoToBeValid(info, options)
+    });
+
+    it("should convert pdf to pic (buffer input, second page)", async () => {
+      const gm = new Graphics();
+      const options = {
+        ...baseOptions,
+        format: "png",
+      }
+
+      const buffer = readFileSync("./test/data/pdf1.pdf");
+
+      const convert = fromBuffer(buffer, options);
+      const bufferResponse = await convert(2, { responseType: 'buffer' });
+
+      expectBufferResponseToBeValid(bufferResponse)
+      writeFileSync("./dump/fromfiletest/out-buffer-2.png", bufferResponse.buffer);
+      const info = await gm.identify("./dump/fromfiletest/out-buffer-2.png") as gm.ImageInfo;
+      expectInfoToBeValid(info, options)
+    });
+
+    it("should convert pdf to pic (base64 input, second page)", async () => {
+      const gm = new Graphics();
+      const options = {
+        ...baseOptions,
+        format: "png",
+        saveFilename: "test-2"
+      }
+
+      const b64 = readFileSync("./test/data/pdf1.pdf", "base64");
+
+      const convert = fromBase64(b64, options);
+      const bufferResponse = await convert(2, { responseType: 'buffer' });
+
+      expectBufferResponseToBeValid(bufferResponse)
+      writeFileSync("./dump/fromfiletest/out-buffer-3.png", bufferResponse.buffer);
+      const info = await gm.identify("./dump/fromfiletest/out-buffer-3.png") as gm.ImageInfo;
+      expectInfoToBeValid(info, options)
+    });
+
+    it("should convert pdf to pic (base64 input, bulk all pages)", async () => {
+      const gm = new Graphics();
+      const options = {
+        ...baseOptions,
+        format: "png",
+        width: 768,
+        height: 512,
+      }
+
+      const b64 = readFileSync("./test/data/pdf1.pdf", "base64");
+
+      const convert = fromBase64(b64, options);
+      const bufferResponses = await convert.bulk(-1, { responseType: 'buffer' });
+
+      expect(bufferResponses).to.be.an('array').that.has.lengthOf(9)
+      for (let i = 0; i < bufferResponses.length; i++) {
+        expectBufferResponseToBeValid(bufferResponses[i])
+        const filename = `./dump/fromfiletest/test-bulk.buffer.${i + 1}.png`
+        writeFileSync(filename, bufferResponses[i].buffer)
+        const info = await gm.identify(filename) as gm.ImageInfo;
+        expectInfoToBeValid(info, options)
+      }
+    }).timeout(7000);
+  });
 });

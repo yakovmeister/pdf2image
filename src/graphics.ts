@@ -1,7 +1,7 @@
 import gm from "gm";
 import path from "path";
 import fs from "fs";
-import { ToBase64Response, WriteImageResponse } from './types/convertResponse';
+import { BufferResponse, ToBase64Response, WriteImageResponse } from './types/convertResponse';
 import { Options } from "./types/options";
 
 export class Graphics {
@@ -44,27 +44,30 @@ export class Graphics {
       .compress(this.compression)
   }
 
-  public toBase64(stream: fs.ReadStream, page?: number): Promise<ToBase64Response> {
+  public async toBase64(stream: fs.ReadStream, page?: number): Promise<ToBase64Response> {
+    const { buffer, size, page: pageResponse } = await this.toBuffer(stream, page);
+
+    return { base64: buffer.toString("base64"), size, page: pageResponse }
+  }
+
+  public toBuffer(stream: fs.ReadStream, page?: number): Promise<BufferResponse> {
     const pageSetup = `${stream.path}[${page}]`;
 
     return new Promise((resolve, reject) => {
       this.gmBaseCommand(stream, pageSetup).stream(this.format, (error, stdout) => {
-        let buffer = "";
+        const buffers = [];
 
         if (error) {
           return reject(error);
         }
 
         stdout
-          .on("data", (data) => {
-            buffer += data.toString("binary");
+          .on('data', (data) => {
+            buffers.push(data);
           })
           .on("end", () => {
-            const binString = Buffer.from(buffer, "binary");
-            const result = binString.toString("base64");
-
             return resolve({
-              base64: result,
+              buffer: Buffer.concat(buffers),
               size: `${this.width}x${this.height}`,
               page: page + 1
             });
