@@ -1,5 +1,4 @@
-
-import { createReadStream, ReadStream } from "fs-extra";
+import { createReadStream, ReadStream } from "fs";
 import { base64ToStream } from "../../utils/converters/base64ToStream";
 import { bufferToStream } from "../../utils/converters/bufferToStream";
 

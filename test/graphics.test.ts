@@ -1,6 +1,6 @@
 import chai, { expect } from "chai";
 import { Graphics } from "../src/graphics";
-import { mkdirsSync, createReadStream, writeFileSync } from "fs-extra";
+import { mkdirSync, createReadStream, writeFileSync } from "fs";
 import rimraf from "rimraf";
 import gm from "gm";
 
@@ -8,7 +8,7 @@ describe("graphics", () => {
   before(() => {
     rimraf.sync("./dump/savefiletest");
 
-    mkdirsSync("./dump/savefiletest");
+    mkdirSync("./dump/savefiletest", { recursive: true });
   });
 
   it("should return page numbers", async () => {
@@ -53,7 +53,7 @@ describe("graphics", () => {
 
     expect(options).to.haveOwnProperty("height");
     expect(options.height).to.be.equal(512);
-  
+
     expect(options).to.haveOwnProperty("density");
     expect(options.density).to.be.equal(72);
 
@@ -77,7 +77,7 @@ describe("graphics", () => {
     gm.setSavePath("./test/data");
     gm.setSaveFilename("specimen");
     gm.setCompression("Lossless");
-  
+
     const options = gm.getOptions();
 
     expect(options).to.haveOwnProperty("quality");
@@ -91,7 +91,7 @@ describe("graphics", () => {
 
     expect(options).to.haveOwnProperty("height");
     expect(options.height).to.be.equal(100);
-  
+
     expect(options).to.haveOwnProperty("density");
     expect(options.density).to.be.equal(100);
 
@@ -109,7 +109,7 @@ describe("graphics", () => {
     const gm = new Graphics();
 
     gm.setSize(200);
-  
+
     const options = gm.getOptions();
 
     expect(options).to.haveOwnProperty("width");

@@ -1,6 +1,6 @@
 import gm from "gm";
 import path from "path";
-import fs from "fs-extra";
+import fs from "fs";
 import { ToBase64Response, WriteImageResponse } from './types/convertResponse';
 import { Options } from "./types/options";
 

@@ -1,4 +1,4 @@
-import fs from 'fs-extra';
+import fs from 'fs';
 import { Graphics } from "./graphics";
 import type { Convert, ConvertOptions } from "./types/convert";
 import type { ConvertResponse } from './types/convertResponse';
