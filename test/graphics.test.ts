@@ -180,4 +180,27 @@ describe("graphics", () => {
     expect(info.size).to.haveOwnProperty("height");
     expect(info.size.height).to.be.equal(2384);
   });
+
+  it("should save second page as buffer", async () => {
+    const gm = new Graphics();
+
+    gm.setSize(1684, 2384);
+    gm.setSavePath(`./dump/savefiletest`);
+    const file = createReadStream("./test/data/pdf2.pdf");
+
+    const { buffer } = await gm.toBuffer(file, 1);
+
+    expect(Buffer.isBuffer(buffer)).to.be.true;
+    writeFileSync("./dump/savefiletest/tobuffer.png", buffer);
+
+    const info = await gm.identify("./dump/savefiletest/tobuffer.png") as gm.ImageInfo;
+
+    expect(info).to.haveOwnProperty("format");
+    expect(info.format).to.be.equal("PNG");
+    expect(info).to.haveOwnProperty("size");
+    expect(info.size).to.haveOwnProperty("width");
+    expect(info.size.width).to.be.equal(1684);
+    expect(info.size).to.haveOwnProperty("height");
+    expect(info.size.height).to.be.equal(2384);
+  });
 });
