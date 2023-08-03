@@ -1,5 +1,5 @@
 import chai, { expect } from "chai";
-import { mkdirsSync, readFileSync, writeFileSync } from "fs-extra";
+import { mkdirSync, readFileSync, writeFileSync } from "fs";
 import gm from "gm";
 import path from 'path';
 import rimraf from "rimraf";
@@ -64,7 +64,7 @@ describe("PDF2Pic Core", () => {
     rimraf.sync("./dump/frombuffertest");
     rimraf.sync("./dump/frombase64test");
 
-    mkdirsSync("./dump/fromfiletest");
+    mkdirSync("./dump/fromfiletest", { recursive: true });
   });
 
   it('should use default options', async () => {

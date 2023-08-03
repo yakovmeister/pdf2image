@@ -1,5 +1,4 @@
-
-import { ReadStream } from "fs-extra";
+import { ReadStream } from "fs";
 import { bufferToStream } from "../../utils/converters/bufferToStream";
 
 export function base64ToStream(base64: string): ReadStream {

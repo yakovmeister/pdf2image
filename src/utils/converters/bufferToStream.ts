@@ -1,5 +1,4 @@
-
-import { ReadStream } from "fs-extra";
+import { ReadStream } from "fs";
 import { Readable } from "stream";
 
 export function bufferToStream(buffer: Buffer): ReadStream {
