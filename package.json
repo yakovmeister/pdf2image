@@ -31,12 +31,12 @@
   },
   "scripts": {
     "mocha": "mocha test/**/*.test.ts",
-    "test": "npm run lint && nyc --reporter=lcov npm run mocha",
-    "test:text": "npm run lint && nyc --reporter=text npm run mocha",
+    "test": "nyc --reporter=lcov npm run mocha",
+    "test:text": "nyc --reporter=text npm run mocha",
     "test:watch": "npm run mocha -- --watch",
     "rollup": "rollup -c",
     "clean": "rimraf ./dist",
-    "lint": "eslint . --ext .ts",
+    "lint": "eslint --ext .ts .",
     "build": "npm run test && npm run clean && npm run rollup"
   },
   "repository": {
