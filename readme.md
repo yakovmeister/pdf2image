@@ -17,7 +17,7 @@ A utility for converting pdf to image, base64 or buffer format.
 
 ## Prerequisites
 
-* node >= 12.x 
+* node >= 14.x 
 * graphicsmagick
 * ghostscript
 

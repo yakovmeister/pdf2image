@@ -39,6 +39,9 @@
     "lint": "eslint --ext .ts .",
     "build": "npm run test && npm run clean && npm run rollup"
   },
+  "engines": {
+    "node": ">=14"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/yakovmeister/pdf2image.git"
