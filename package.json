@@ -1,6 +1,6 @@
 {
   "name": "pdf2pic",
-  "version": "2.2.4",
+  "version": "3.0.1",
   "description": "A utility for converting pdf to image formats. Supports different outputs: directly to file, base64 or buffer.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
