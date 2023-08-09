@@ -1,12 +1,12 @@
 import chai, { expect } from "chai";
-import { Graphics } from "../src/graphics";
 import { mkdirSync, createReadStream, writeFileSync } from "fs";
-import rimraf from "rimraf";
+import { rimrafSync } from "rimraf";
 import gm from "gm";
+import { Graphics } from "../src/graphics";
 
 describe("graphics", () => {
   before(() => {
-    rimraf.sync("./dump/savefiletest");
+    rimrafSync("./dump/savefiletest");
 
     mkdirSync("./dump/savefiletest", { recursive: true });
   });

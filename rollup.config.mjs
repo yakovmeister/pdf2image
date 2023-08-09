@@ -1,5 +1,5 @@
-import transpile from "rollup-plugin-typescript2"
-import { terser } from "rollup-plugin-terser"
+import transpile from "@rollup/plugin-typescript"
+import terser from "@rollup/plugin-terser"
 import alias from "@rollup/plugin-alias"
 
 const base = {

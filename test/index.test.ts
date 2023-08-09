@@ -2,6 +2,7 @@ import chai, { expect } from "chai";
 import { mkdirSync, readFileSync, writeFileSync } from "fs";
 import gm from "gm";
 import path from 'path';
+import { rimrafSync } from "rimraf";
 import rimraf from "rimraf";
 import { fromBase64, fromBuffer, fromPath } from "../src/index";
 import { Graphics } from "../src/graphics";
@@ -60,9 +61,9 @@ describe("PDF2Pic Core", () => {
   }
 
   before(() => {
-    rimraf.sync("./dump/fromfiletest");
-    rimraf.sync("./dump/frombuffertest");
-    rimraf.sync("./dump/frombase64test");
+    rimrafSync("./dump/fromfiletest");
+    rimrafSync("./dump/frombuffertest");
+    rimrafSync("./dump/frombase64test");
 
     mkdirSync("./dump/fromfiletest", { recursive: true });
   });
@@ -79,7 +80,7 @@ describe("PDF2Pic Core", () => {
     expect(info.format).to.equal(defaultOptions.format.toUpperCase())
     expect(info.size.width).to.equal(defaultOptions.width)
     expect(info.size.height).to.equal(defaultOptions.height)
-    rimraf.sync(defaultFilePath)
+    rimrafSync(defaultFilePath)
   });
 
   it("should convert pdf to pic (file input, first page)", async () => {
