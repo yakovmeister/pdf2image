@@ -142,7 +142,7 @@ describe("PDF2Pic Core", () => {
     }
 
     const convert = fromPath("./test/data/pdf1.pdf", options);
-    const base64Response = await convert(2, true);
+    const base64Response = await convert(2, { responseType: 'base64' });
 
     expectBase64ResponseToBeValid(base64Response)
     writeFileSync("./dump/fromfiletest/frombase64.png", Buffer.from(base64Response.base64, "base64"));
