@@ -3,12 +3,14 @@ import { Graphics } from "./graphics";
 import type { Convert, ConvertOptions } from "./types/convert";
 import type { ConvertResponse } from './types/convertResponse';
 import type { Options } from "./types/options";
-import { convertToStream } from "./utils/converters/convertToStream";
+import { bufferToStream } from './utils/converters/bufferToStream';
+import { convertToBuffer } from "./utils/converters/convertToBuffer";
+import { convertToStream } from './utils/converters/convertToStream';
 import { defaultOptions } from "./utils/defaultOptions";
 import { getPages } from './utils/getPages';
 import { resolveResponseType } from './utils/resolveResponseType';
 
-export function pdf2picCore(source: string, filePath: string | Buffer, options = defaultOptions): Convert {
+export function pdf2picCore(source: string, data: string | Buffer, options = defaultOptions): Convert {
   const gm = new Graphics();
 
   options = { ...defaultOptions, ...options };
@@ -36,20 +38,20 @@ export function pdf2picCore(source: string, filePath: string | Buffer, options =
   }
 
   const convert = (page = 1, convertOptions) => {
-    const stream = convertToStream(source, filePath);
+    const stream = convertToStream(source, data);
     return _convert(stream, page, convertOptions)
   };
 
   convert.bulk = async (pages, convertOptions) => {
+    const buffer = await convertToBuffer(source, data);
     const pagesToConvert = pages === -1
-      ? await getPages(gm, convertToStream(source, filePath))
+      ? await getPages(gm, bufferToStream(buffer))
       : Array.isArray(pages) ? pages : [pages];
 
     const results = []
     const batchSize = 10
-    const stream = convertToStream(source, filePath);
     for (let i = 0; i < pagesToConvert.length; i += batchSize) {
-      results.push(...await _bulk(stream, pagesToConvert.slice(i, i + batchSize), convertOptions))
+      results.push(...await _bulk(bufferToStream(buffer), pagesToConvert.slice(i, i + batchSize), convertOptions))
     }
 
     return results

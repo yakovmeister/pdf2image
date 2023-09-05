@@ -3,7 +3,6 @@ import { mkdirSync, readFileSync, writeFileSync } from "fs";
 import gm from "gm";
 import path from 'path';
 import { rimrafSync } from "rimraf";
-import rimraf from "rimraf";
 import { fromBase64, fromBuffer, fromPath } from "../src/index";
 import { Graphics } from "../src/graphics";
 import { BufferResponse, ToBase64Response, WriteImageResponse } from "../src/types/convertResponse";
