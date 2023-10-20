@@ -83,3 +83,4 @@ dump
 .DS_Store
 test/**/.DS_Store
 src/**/.DS_Store
+pnpm-lock.yaml

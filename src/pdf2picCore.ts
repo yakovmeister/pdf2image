@@ -78,6 +78,7 @@ function setGMOptions(gm: Graphics, options: Options): void {
     .setSavePath(options.savePath)
     .setSaveFilename(options.saveFilename)
     .setCompression(options.compression)
+    .setIgnoreAspectRatio(options.ignoreAspectRatio)
 
   return;
 }

@@ -21,6 +21,8 @@ export class Graphics {
 
   private compression = "jpeg";
 
+  private ignoreAspectRatio = false;
+
   private gm: gm.SubClass = gm.subClass({ imageMagick: false });
 
   public generateValidFilename(page?: number): string {
@@ -39,7 +41,7 @@ export class Graphics {
   public gmBaseCommand(stream: fs.ReadStream, filename: string): gm.State {
     return this.gm(stream, filename)
       .density(this.density, this.density)
-      .resize(this.width, this.height, "!")
+      .resize(this.width, this.height, this.ignoreAspectRatio ? "!" : null)
       .quality(this.quality)
       .compress(this.compression)
   }
@@ -137,6 +139,12 @@ export class Graphics {
   public setSize(width: number, height?: number): Graphics {
     this.width = width;
     this.height = !!height ? height : width;
+
+    return this;
+  }
+
+  public setIgnoreAspectRatio(ignoreAspectRatio: boolean): Graphics {
+    this.ignoreAspectRatio = ignoreAspectRatio;
 
     return this;
   }

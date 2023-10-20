@@ -1,5 +1,5 @@
 {
-  "name": "pdf2pic",
+  "name": "@brunofrancadasilva/pdf2pic",
   "version": "3.0.3",
   "description": "A utility for converting pdf to image formats. Supports different outputs: directly to file, base64 or buffer.",
   "main": "dist/index.js",
@@ -47,6 +47,7 @@
     "url": "git+https://github.com/yakovmeister/pdf2image.git"
   },
   "directories": {
+    "doc": "docs",
     "test": "test"
   },
   "keywords": [

@@ -16,3 +16,4 @@ rollup.config.js
 dump
 docs
 .archive
+pnpm-lock.yaml

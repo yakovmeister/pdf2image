@@ -1,19 +1,10 @@
 # pdf2pic
 
-[![Donate][paypal-image]](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=938FMCPPQG4DQ&currency_code=USD&source=url)
-![Build Status][github-actions-url]
-[![CodeFactor](https://www.codefactor.io/repository/github/yakovmeister/pdf2image/badge)](https://www.codefactor.io/repository/github/yakovmeister/pdf2image)
-[![Maintainability](https://api.codeclimate.com/v1/badges/6d7bfbae9057998bda99/maintainability)](https://codeclimate.com/github/yakovmeister/pdf2image/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/6d7bfbae9057998bda99/test_coverage)](https://codeclimate.com/github/yakovmeister/pdf2image/test_coverage)
-[![install size](https://packagephobia.com/badge?p=pdf2pic)](https://packagephobia.com/result?p=pdf2pic)
-[![NPM Version][npm-image]][npm-url]
-[![License](https://img.shields.io/npm/l/pdf2pic?color=blue)][npm-url]
-[![Known Vulnerabilities](https://snyk.io/test/npm/pdf2pic/badge.svg)](https://snyk.io/test/npm/pdf2pic)
-[![Downloads Stats][npm-downloads]][npm-url]
+Forked from: https://github.com/yakovmeister/pdf2image
 
 A utility for converting pdf to image, base64 or buffer format.
 
-> IMPORTANT NOTE: Please support this library by donating via [PayPal](https://www.paypal.com/paypalme/yakovmeister), your help is much appreciated. Contributors are also welcome!
+> IMPORTANT NOTE: Please support this library by donating to the owner via [PayPal](https://www.paypal.com/paypalme/yakovmeister), your help is much appreciated. Contributors are also welcome!
 
 ## Prerequisites
 
@@ -44,7 +35,8 @@ const options = {
   savePath: "./images",
   format: "png",
   width: 600,
-  height: 600
+  height: 600,
+  ignoreAspectRatio: false
 };
 const convert = fromPath("/path/to/pdf/sample.pdf", options);
 const pageToConvertAsImage = 1;
@@ -56,9 +48,6 @@ convert(pageToConvertAsImage, { responseType: "image" })
     return resolve;
   });
 ```
-
-### Nuff talk, show me how:
-More usage example can be found [here](https://github.com/yakovmeister/pdf2pic-examples).
 
 ## pdf2pic API
 
@@ -183,6 +172,7 @@ Following are the options that can be passed on the pdf2pic api:
 | density      | `72`             | Output DPI (dots per inch) ([more info](http://www.graphicsmagick.org/GraphicsMagick.html#details-density)) |
 | savePath     | `'./'`         | Path where to save the output |
 | saveFilename | `'untitled'`   | Output filename              |
+| ignoreAspectRatio | `false`   | If gm should ignore output aspect ratio |
 | compression  | `'jpeg'`       | Compression method ([more info](http://www.graphicsmagick.org/GraphicsMagick.html#details-compress)) |
 
 ### convertOptions
@@ -194,19 +184,5 @@ Following are the options that can be passed on the pdf2pic api:
 The parameter can also be a boolean, if `true` then the response type will be `base64` and if `false` then the response type will be `image`. 
 This is deprecated and will be removed in the next major version.
 
-## Contributing
-* Fork it (https://github.com/yakovmeister/pdf2image/fork)
-* Create your feature branch (git checkout -b feature/make-maintainer-cry)
-* Commit your changes (git commit -am 'feature: make maintainer cry by running git rm -rf')
-* Push to the branch (git push origin feature/make-maintainer-cry)
-* Create a new PR
-
 ## License
 pdf2pic is [MIT licensed](LICENSE).
-
-<!-- Markdown link & img dfn's -->
-[npm-image]: https://img.shields.io/npm/v/pdf2pic.svg?style=flat-square
-[npm-url]: https://www.npmjs.com/package/pdf2pic
-[npm-downloads]: https://img.shields.io/npm/dm/pdf2pic.svg?style=flat-square
-[github-actions-url]: https://github.com/yakovmeister/pdf2image/actions/workflows/test.yml/badge.svg?branch=master
-[paypal-image]: https://img.shields.io/badge/Donate-PayPal-green.svg
