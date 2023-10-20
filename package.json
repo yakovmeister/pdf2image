@@ -37,7 +37,7 @@
     "rollup": "rollup -c",
     "clean": "rimraf ./dist",
     "lint": "eslint --ext .ts .",
-    "build": "npm run test && npm run clean && npm run rollup"
+    "build": "npm run clean && npm run rollup"
   },
   "engines": {
     "node": ">=14"
