@@ -39,9 +39,17 @@ export class Graphics {
   }
 
   public gmBaseCommand(stream: fs.ReadStream, filename: string): gm.State {
+    if (this.ignoreAspectRatio) {
+      return this.gm(stream, filename)
+        .density(this.density, this.density)
+        .resize(this.width, this.height, "!")
+        .quality(this.quality)
+        .compress(this.compression)
+    }
+
     return this.gm(stream, filename)
       .density(this.density, this.density)
-      .resize(this.width, this.height, this.ignoreAspectRatio ? "!" : null)
+      .resize(this.width, null, null)
       .quality(this.quality)
       .compress(this.compression)
   }
