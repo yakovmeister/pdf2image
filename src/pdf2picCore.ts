@@ -73,6 +73,7 @@ export function pdf2picCore(source: string, data: string | Buffer, options = def
 function setGMOptions(gm: Graphics, options: Options): void {
   gm.setQuality(options.quality)
     .setFormat(options.format)
+    .setPreserveAspectRatio(options.preserveAspectRatio)
     .setSize(options.width, options.height)
     .setDensity(options.density)
     .setSavePath(options.savePath)

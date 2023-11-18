@@ -72,6 +72,7 @@ describe("graphics", () => {
 
     gm.setQuality(100);
     gm.setFormat("jpg");
+    gm.setPreserveAspectRatio(true);
     gm.setSize(100, 100);
     gm.setDensity(100);
     gm.setSavePath("./test/data");
@@ -91,6 +92,9 @@ describe("graphics", () => {
 
     expect(options).to.haveOwnProperty("height");
     expect(options.height).to.be.equal(100);
+
+    expect(options).to.haveOwnProperty("preserveAspectRatio");
+    expect(options.preserveAspectRatio).to.be.equal(true);
 
     expect(options).to.haveOwnProperty("density");
     expect(options.density).to.be.equal(100);
@@ -117,6 +121,21 @@ describe("graphics", () => {
 
     expect(options).to.haveOwnProperty("height");
     expect(options.height).to.be.equal(200);
+  });
+
+  it("should by not set height if preserveAspectRatio is `true`", () => {
+    const gm = new Graphics();
+
+    gm.setPreserveAspectRatio(true);
+    gm.setSize(200);
+
+    const options = gm.getOptions();
+
+    expect(options).to.haveOwnProperty("width");
+    expect(options.width).to.be.equal(200);
+
+    expect(options).to.haveOwnProperty("height");
+    expect(options.height).to.be.equal(undefined);
   });
 
   it("should save first page as image file", async () => {

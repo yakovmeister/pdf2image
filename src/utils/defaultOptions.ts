@@ -6,6 +6,7 @@ export const defaultOptions: Options = {
   width: 768,
   height: 512,
   density: 72,
+  preserveAspectRatio: false,
   savePath: "./",
   saveFilename: "untitled",
   compression: "jpeg"

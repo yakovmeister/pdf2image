@@ -364,4 +364,70 @@ describe("PDF2Pic Core", () => {
       }
     }).timeout(7000);
   });
+
+  describe('preserveAspectRatio', () => {
+    it('should preserve aspect ratio of pages', async () => {
+      const gm = new Graphics();
+      const options = {
+        ...baseOptions,
+        format: "png",
+        width: undefined,
+        height: undefined,
+        preserveAspectRatio: true,
+        saveFilename: "test-aspect-ratio-1"
+      }
+
+      const convert = fromPath("./test/data/pdf1.pdf", options);
+      const imageResponse = await convert.bulk([1, 2], { responseType: 'image' });
+
+      expect(imageResponse).to.be.an('array').that.has.lengthOf(2)
+
+
+      expectImageResponseToBeValid(imageResponse[0], options)
+      const page1Info = await gm.identify(`./dump/fromfiletest/${options.saveFilename}.1.png`) as gm.ImageInfo;
+      expectInfoToBeValid(page1Info, { ...options, width: 842, height: 595 })
+
+      expectImageResponseToBeValid(imageResponse[1], options)
+      const page2Info = await gm.identify(`./dump/fromfiletest/${options.saveFilename}.2.png`) as gm.ImageInfo;
+      expectInfoToBeValid(page2Info, { ...options, width: 1684, height: 595 })
+    });
+
+    it('should set height automatically', async () => {
+      const gm = new Graphics();
+      const options = {
+        ...baseOptions,
+        format: "png",
+        width: 600,
+        height: undefined,
+        preserveAspectRatio: true,
+        saveFilename: "test-aspect-ratio-2"
+      }
+
+      const convert = fromPath("./test/data/pdf1.pdf", options);
+      const imageResponse = await convert(1, { responseType: 'image' });
+
+      expectImageResponseToBeValid(imageResponse, options)
+      const page1Info = await gm.identify(`./dump/fromfiletest/${options.saveFilename}.1.png`) as gm.ImageInfo;
+      expectInfoToBeValid(page1Info, { ...options, height: 424 })
+    });
+
+    it('should set width automatically', async () => {
+      const gm = new Graphics();
+      const options = {
+        ...baseOptions,
+        format: "png",
+        width: undefined,
+        height: 600,
+        preserveAspectRatio: true,
+        saveFilename: "test-aspect-ratio-3"
+      }
+
+      const convert = fromPath("./test/data/pdf1.pdf", options);
+      const imageResponse = await convert(1, { responseType: 'image' });
+
+      expectImageResponseToBeValid(imageResponse, options)
+      const page1Info = await gm.identify(`./dump/fromfiletest/${options.saveFilename}.1.png`) as gm.ImageInfo;
+      expectInfoToBeValid(page1Info, { ...options, width: 849 })
+    });
+  })
 });
