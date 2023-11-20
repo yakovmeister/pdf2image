@@ -13,6 +13,8 @@ export class Graphics {
 
   private height = 512;
 
+  private preserveAspectRatio = false;
+
   private density = 72;
 
   private savePath = "./";
@@ -39,7 +41,7 @@ export class Graphics {
   public gmBaseCommand(stream: fs.ReadStream, filename: string): gm.State {
     return this.gm(stream, filename)
       .density(this.density, this.density)
-      .resize(this.width, this.height, "!")
+      .resize(this.width, this.height, this.preserveAspectRatio ? '^' : '!')
       .quality(this.quality)
       .compress(this.compression)
   }
@@ -136,7 +138,13 @@ export class Graphics {
 
   public setSize(width: number, height?: number): Graphics {
     this.width = width;
-    this.height = !!height ? height : width;
+    this.height = this.preserveAspectRatio || !!height ? height : width;
+
+    return this;
+  }
+
+  public setPreserveAspectRatio(preserveAspectRatio: boolean): Graphics {
+    this.preserveAspectRatio = preserveAspectRatio;
 
     return this;
   }
@@ -189,6 +197,7 @@ export class Graphics {
       format:       this.format,
       width:        this.width,
       height:       this.height,
+      preserveAspectRatio: this.preserveAspectRatio,
       density:      this.density,
       savePath:     this.savePath,
       saveFilename: this.saveFilename,

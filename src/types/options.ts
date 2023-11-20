@@ -3,6 +3,7 @@ export type Options = {
   format?: string;
   width?: number;
   height?: number;
+  preserveAspectRatio?: boolean;
   density?: number;
   savePath?: string;
   saveFilename?: string;
