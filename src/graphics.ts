@@ -1,13 +1,13 @@
-import gm from "gm";
-import path from "path";
-import fs from "fs";
+import gm from 'gm';
+import path from 'path';
+import fs from 'fs';
 import { BufferResponse, ToBase64Response, WriteImageResponse } from './types/convertResponse';
-import { Options } from "./types/options";
+import { Options } from './types/options';
 
 export class Graphics {
   private quality = 0;
 
-  private format = "png";
+  private format = 'png';
 
   private width = 768;
 
@@ -17,21 +17,21 @@ export class Graphics {
 
   private density = 72;
 
-  private savePath = "./";
+  private savePath = './';
 
-  private saveFilename = "untitled";
+  private saveFilename = 'untitled';
 
-  private compression = "jpeg";
+  private compression = 'jpeg';
 
   private gm: gm.SubClass = gm.subClass({ imageMagick: false });
 
   public generateValidFilename(page?: number): string {
     let filePath = path.join(this.savePath, this.saveFilename);
     if (this.savePath.startsWith('./')) {
-      filePath = `./${filePath}`
+      filePath = `./${filePath}`;
     }
 
-    if (typeof page === "number") {
+    if (typeof page === 'number') {
       filePath = `${filePath}.${page + 1}`;
     }
 
@@ -43,13 +43,13 @@ export class Graphics {
       .density(this.density, this.density)
       .resize(this.width, this.height, this.preserveAspectRatio ? '^' : '!')
       .quality(this.quality)
-      .compress(this.compression)
+      .compress(this.compression);
   }
 
   public async toBase64(stream: fs.ReadStream, page?: number): Promise<ToBase64Response> {
     const { buffer, size, page: pageResponse } = await this.toBuffer(stream, page);
 
-    return { base64: buffer.toString("base64"), size, page: pageResponse }
+    return { base64: buffer.toString('base64'), size, page: pageResponse };
   }
 
   public toBuffer(stream: fs.ReadStream, page?: number): Promise<BufferResponse> {
@@ -67,11 +67,11 @@ export class Graphics {
           .on('data', (data) => {
             buffers.push(data);
           })
-          .on("end", () => {
+          .on('end', () => {
             return resolve({
               buffer: Buffer.concat(buffers),
               size: `${this.width}x${this.height}`,
-              page: page + 1
+              page: page + 1,
             });
           });
       });
@@ -83,20 +83,19 @@ export class Graphics {
     const pageSetup = `${stream.path}[${page}]`;
 
     return new Promise((resolve, reject) => {
-      this.gmBaseCommand(stream, pageSetup)
-        .write(output, (error) => {
-          if (error) {
-            return reject(error);
-          }
+      this.gmBaseCommand(stream, pageSetup).write(output, (error) => {
+        if (error) {
+          return reject(error);
+        }
 
-          return resolve({
-            name: path.basename(output),
-            size: `${this.width}x${this.height}`,
-            fileSize: fs.statSync(output).size / 1000.0,
-            path: output,
-            page: page + 1
-          });
+        return resolve({
+          name: path.basename(output),
+          size: `${this.width}x${this.height}`,
+          fileSize: fs.statSync(output).size / 1000.0,
+          path: output,
+          page: page + 1,
         });
+      });
     });
   }
 
@@ -110,7 +109,7 @@ export class Graphics {
             return reject(error);
           }
 
-          return resolve(data.replace(/^[\w\W]*?1/, "1"));
+          return resolve(data.replace(/^[\w\W]*?1/, '1'));
         });
       } else {
         image.identify((error, data) => {
@@ -119,7 +118,7 @@ export class Graphics {
           }
 
           return resolve(data);
-        })
+        });
       }
     });
   }
@@ -174,13 +173,13 @@ export class Graphics {
   }
 
   public setGMClass(gmClass: string | boolean): Graphics {
-    if (typeof gmClass === "boolean") {
+    if (typeof gmClass === 'boolean') {
       this.gm = gm.subClass({ imageMagick: gmClass });
 
       return this;
     }
 
-    if (gmClass.toLocaleLowerCase() === "imagemagick") {
+    if (gmClass.toLocaleLowerCase() === 'imagemagick') {
       this.gm = gm.subClass({ imageMagick: true });
 
       return this;
@@ -193,15 +192,15 @@ export class Graphics {
 
   public getOptions(): Options {
     return {
-      quality:      this.quality,
-      format:       this.format,
-      width:        this.width,
-      height:       this.height,
+      quality: this.quality,
+      format: this.format,
+      width: this.width,
+      height: this.height,
       preserveAspectRatio: this.preserveAspectRatio,
-      density:      this.density,
-      savePath:     this.savePath,
+      density: this.density,
+      savePath: this.savePath,
       saveFilename: this.saveFilename,
-      compression:  this.compression
+      compression: this.compression,
     };
   }
 }
