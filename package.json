@@ -20,6 +20,8 @@
     "@typescript-eslint/parser": "^6.2.1",
     "chai": "^4.3.7",
     "eslint": "^8.46.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.2.0",
     "mocha": "^10.2.0",
     "nyc": "^15.1.0",
     "prettier": "^3.1.1",
@@ -38,7 +40,8 @@
     "rollup": "rollup -c",
     "clean": "rimraf ./dist",
     "lint": "eslint --ext .ts .",
-    "build": "npm run test && npm run clean && npm run rollup"
+    "build": "npm run test && npm run clean && npm run rollup",
+    "prepare": "husky install"
   },
   "engines": {
     "node": ">=14"
@@ -73,5 +76,8 @@
   "bugs": {
     "url": "https://github.com/yakovmeister/pdf2image/issues"
   },
-  "homepage": "https://github.com/yakovmeister/pdf2image#readme"
+  "homepage": "https://github.com/yakovmeister/pdf2image#readme",
+  "lint-staged": {
+    "*.{js,ts}": ["prettier --write", "eslint --fix"]
+  }
 }
