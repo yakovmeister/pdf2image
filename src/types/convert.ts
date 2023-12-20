@@ -1,9 +1,9 @@
 import type { BufferResponse, ToBase64Response, WriteImageResponse } from './convertResponse';
 
-export type ResponseType = 'image' | 'base64' | 'buffer'
+export type ResponseType = 'image' | 'base64' | 'buffer';
 export type ConvertOptions = {
-  responseType: ResponseType
-}
+  responseType: ResponseType;
+};
 
 export type Convert = {
   (pages?: number, options?: undefined): Promise<WriteImageResponse>;
@@ -23,4 +23,4 @@ export type Convert = {
   setOptions: () => void;
 
   setGMClass: (gmClass: string | boolean) => void;
-}
+};

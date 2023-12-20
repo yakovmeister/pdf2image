@@ -1,13 +1,13 @@
-import { Options } from "../types/options";
+import { Options } from '../types/options';
 
 export const defaultOptions: Options = {
   quality: 0,
-  format: "png",
+  format: 'png',
   width: 768,
   height: 512,
   density: 72,
   preserveAspectRatio: false,
-  savePath: "./",
-  saveFilename: "untitled",
-  compression: "jpeg"
+  savePath: './',
+  saveFilename: 'untitled',
+  compression: 'jpeg',
 };
