@@ -33,9 +33,9 @@ For windows users.. open the links and download installers.
 - Download Ghostscript **9.52** for Windows: https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/tag/gs952
 - Download GraphicsMagick for Windows: https://sourceforge.net/projects/graphicsmagick/files/graphicsmagick-binaries/
 
-Add Windows Environment Variables for your version(****)
+Add the executable directories to the PATH environment variable for Ghostscript and GraphicsMagick:
 - C:\Program Files\gs\gs****\bin
-- C:\program files\graphicsmagick-****
+- C:\Program Files\GraphicsMagick-****
 
 An error occurred when the Ghostscript version was 9.53 or later.
 
