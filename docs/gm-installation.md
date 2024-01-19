@@ -31,7 +31,7 @@ Once everything is installed, the library should work as expected.
 For windows users.. open the links and download installers.
 
 - Download Ghostscript **9.52** for Windows: https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/tag/gs952
-- Download GraphicsMagick for Windows: http://ftp.icm.edu.pl/pub/unix/graphics/GraphicsMagick/windows/
+- Download GraphicsMagick for Windows: https://sourceforge.net/projects/graphicsmagick/files/graphicsmagick-binaries/
 
 Add Windows Environment Variables for your version(****)
 - C:\Program Files\gs\gs****\bin
