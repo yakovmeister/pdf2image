@@ -30,14 +30,14 @@ Once everything is installed, the library should work as expected.
 
 For windows users.. open the links and download installers.
 
-- Download Ghostscript **9.52** for Windows: https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/tag/gs952
+- Download Ghostscript **9.52**[^1] for Windows: https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/tag/gs952
 - Download GraphicsMagick for Windows: https://sourceforge.net/projects/graphicsmagick/files/graphicsmagick-binaries/
 
 Add the executable directories to the PATH environment variable for Ghostscript and GraphicsMagick:
 - C:\Program Files\gs\gs****\bin
 - C:\Program Files\GraphicsMagick-****
 
-An error occurred when the Ghostscript version was 9.53 or later.
+[^1]: An error occurred when the Ghostscript version was 9.53 or later.
 
 ## AWS Lambda  
   
