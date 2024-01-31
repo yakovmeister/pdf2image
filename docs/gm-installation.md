@@ -34,11 +34,19 @@ For windows users.. open the links and download installers.
 - Download GraphicsMagick for Windows: https://sourceforge.net/projects/graphicsmagick/files/graphicsmagick-binaries/
 
 Add the executable directories to the PATH environment variable for Ghostscript and GraphicsMagick:
-- C:\Program Files\gs\gs****\bin
-- C:\Program Files\GraphicsMagick-****
+- `C:\Program Files\gs\gs****\bin`
+- `C:\Program Files\GraphicsMagick-****`
 
 [^1]: An error occurred when the Ghostscript version was 9.53 or later.
 
 ## AWS Lambda  
   
-For lambda you can add the required libraries using [layers](https://docs.aws.amazon.com/lambda/latest/dg/invocation-layers.html). There are prebuilt, community driven layers for both [GraphicsMagic](https://github.com/rpidanny/gm-lambda-layer) and [Ghostscript](https://github.com/shelfio/ghostscript-lambda-layer).
+For lambda you can add the required libraries using [lambda layers](https://docs.aws.amazon.com/lambda/latest/dg/invocation-layers.html). There are prebuilt, community driven layers for both [GraphicsMagic](https://github.com/rpidanny/gm-lambda-layer) and [Ghostscript](https://github.com/shelfio/ghostscript-lambda-layer).
+
+Example ARNs are:
+```
+arn:aws:lambda:us-east-1:175033217214:layer:graphicsmagick:2
+arn:aws:lambda:us-east-1:764866452798:layer:ghostscript:15
+```
+
+You can also build and publish your own layers. A guide how to publish `GraphicsMagick` layer can be found [here](https://github.com/mskec/gm-lambda-layer).
