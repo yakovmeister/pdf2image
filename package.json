@@ -14,7 +14,7 @@
     "@types/chai": "^4.3.5",
     "@types/gm": "^1.25.1",
     "@types/mocha": "^10.0.1",
-    "@types/node": "^16.18.39",
+    "@types/node": "^18.19.50",
     "@types/rimraf": "^4.0.5",
     "@typescript-eslint/eslint-plugin": "^6.2.1",
     "@typescript-eslint/parser": "^6.2.1",
@@ -44,7 +44,7 @@
     "prepare": "husky install"
   },
   "engines": {
-    "node": ">=14"
+    "node": ">=18"
   },
   "repository": {
     "type": "git",
@@ -78,6 +78,9 @@
   },
   "homepage": "https://github.com/yakovmeister/pdf2image#readme",
   "lint-staged": {
-    "*.{js,ts}": ["prettier --write", "eslint --fix"]
+    "*.{js,ts}": [
+      "prettier --write",
+      "eslint --fix"
+    ]
   }
 }
