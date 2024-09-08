@@ -199,8 +199,8 @@ This is deprecated and will be removed in the next major version.
   
 | pdf2pic version | node version     |
 |-----------------|------------------|
-| 1.4.0           | < 14.x           |
-| 2.1.4, 2.2.4    | >= 14.x          |
+| 1.4.0           | < 10.x           |
+| 2.1.4, 2.2.4    | >= 10.x          |
 | 3.1.1           | >= 14.x          |
 | >= 3.1.2        | >= 18.x          |
 
