@@ -17,7 +17,7 @@ A utility for converting pdf to image, base64 or buffer format.
 
 ## Prerequisites
 
-* node >= 14.x 
+* node >= 18.x 
 * graphicsmagick
 * ghostscript
 
@@ -194,6 +194,15 @@ Following are the options that can be passed on the pdf2pic api:
 
 The parameter can also be a boolean, if `true` then the response type will be `base64` and if `false` then the response type will be `image`. 
 This is deprecated and will be removed in the next major version.
+  
+## Version Compatibility  
+  
+| pdf2pic version | node version     |
+|-----------------|------------------|
+| 1.4.0           | < 10.x           |
+| 2.1.4, 2.2.4    | >= 10.x          |
+| 3.1.1           | >= 14.x          |
+| >= 3.1.2        | >= 18.x          |
 
 ## Contributing
 * Fork it (https://github.com/yakovmeister/pdf2image/fork)
