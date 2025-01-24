@@ -23,6 +23,8 @@ export class Graphics {
 
   private compression = 'jpeg';
 
+  private password;
+
   private gm: gm.SubClass = gm.subClass({ imageMagick: false });
 
   public generateValidFilename(page?: number): string {
@@ -39,11 +41,17 @@ export class Graphics {
   }
 
   public gmBaseCommand(stream: fs.ReadStream, filename: string): gm.State {
-    return this.gm(stream, filename)
+    const state = this.gm(stream, filename)
       .density(this.density, this.density)
       .resize(this.width, this.height, this.preserveAspectRatio ? '^' : '!')
       .quality(this.quality)
       .compress(this.compression);
+
+    if (this.password) {
+      state.in('-authenticate', this.password);
+    }
+
+    return state;
   }
 
   public async toBase64(stream: fs.ReadStream, page?: number): Promise<ToBase64Response> {
@@ -81,7 +89,6 @@ export class Graphics {
   public writeImage(stream: fs.ReadStream, page?: number): Promise<WriteImageResponse> {
     const output = this.generateValidFilename(page);
     const pageSetup = `${stream.path}[${page}]`;
-
     return new Promise((resolve, reject) => {
       this.gmBaseCommand(stream, pageSetup).write(output, (error) => {
         if (error) {
@@ -172,6 +179,12 @@ export class Graphics {
     return this;
   }
 
+  public setPassword(password: string): Graphics {
+    this.password = password;
+
+    return this;
+  }
+
   public setGMClass(gmClass: string | boolean): Graphics {
     if (typeof gmClass === 'boolean') {
       this.gm = gm.subClass({ imageMagick: gmClass });
@@ -201,6 +214,7 @@ export class Graphics {
       savePath: this.savePath,
       saveFilename: this.saveFilename,
       compression: this.compression,
+      password: this.password,
     };
   }
 }

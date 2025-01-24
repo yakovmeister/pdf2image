@@ -445,4 +445,24 @@ describe('PDF2Pic Core', () => {
       expectInfoToBeValid(page1Info, { ...options, width: 849 });
     });
   });
+
+  describe('password protected', () => {
+    it('should convert password protected pdf to pic (file input, all pages)', async () => {
+      const gm = new Graphics();
+      const options = {
+        ...baseOptions,
+        format: 'png',
+        savePath: './dump/password-protected',
+        saveFilename: 'test-1',
+        password: 'pdf2pic',
+      };
+
+      const convert = fromPath('./test/data/password-protected.pdf', options);
+      const imageResponse = await convert();
+
+      expectImageResponseToBeValid(imageResponse, options);
+      const info = (await gm.identify('./dump/password-protected/test-1.1.png')) as gm.ImageInfo;
+      expectInfoToBeValid(info, options);
+    });
+  });
 });
