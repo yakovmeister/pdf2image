@@ -1,4 +1,4 @@
-import chai, { expect } from 'chai';
+import { expect } from 'chai';
 import { mkdirSync, createReadStream, writeFileSync } from 'fs';
 import { rimrafSync } from 'rimraf';
 import gm from 'gm';
@@ -65,6 +65,9 @@ describe('graphics', () => {
 
     expect(options).to.haveOwnProperty('compression');
     expect(options.compression).to.be.equal('jpeg');
+
+    expect(options).to.haveOwnProperty('password');
+    expect(options.password).to.be.equal(undefined);
   });
 
   it('should set and return all of the options (custom options)', () => {
@@ -78,6 +81,7 @@ describe('graphics', () => {
     gm.setSavePath('./test/data');
     gm.setSaveFilename('specimen');
     gm.setCompression('Lossless');
+    gm.setPassword('pdf2pic');
 
     const options = gm.getOptions();
 
@@ -107,6 +111,9 @@ describe('graphics', () => {
 
     expect(options).to.haveOwnProperty('compression');
     expect(options.compression).to.be.equal('Lossless');
+
+    expect(options).to.haveOwnProperty('password');
+    expect(options.password).to.be.equal('pdf2pic');
   });
 
   it('should by default use width as height if no height is given', () => {
@@ -123,7 +130,7 @@ describe('graphics', () => {
     expect(options.height).to.be.equal(200);
   });
 
-  it('should by not set height if preserveAspectRatio is `true`', () => {
+  it('should not set height if preserveAspectRatio is `true`', () => {
     const gm = new Graphics();
 
     gm.setPreserveAspectRatio(true);
