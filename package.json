@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "dependencies": {
-    "gm": "^1.25.0"
+    "gm": "^1.25.1"
   },
   "devDependencies": {
     "@rollup/plugin-alias": "^4.0.4",
@@ -78,6 +78,9 @@
   },
   "homepage": "https://github.com/yakovmeister/pdf2image#readme",
   "lint-staged": {
-    "*.{js,ts}": ["prettier --write", "eslint --fix"]
+    "*.{js,ts}": [
+      "prettier --write",
+      "eslint --fix"
+    ]
   }
 }
