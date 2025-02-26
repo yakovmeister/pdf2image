@@ -27,8 +27,18 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y graphicsmagick ghostscript
       - run: npm install
-      - uses: paambaati/codeclimate-action@v5
+
+      # Run tests only (for pull requests or non-master branches)
+      - name: Run tests only
+        if: github.ref != 'refs/heads/master'
+        run: npm test
+
+      # Run tests with CodeClimate reporting (only on master branch)
+      - name: Run tests with CodeClimate
+        if: github.ref == 'refs/heads/master'
+        uses: paambaati/codeclimate-action@v5
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
         with:
           coverageCommand: npm test
+
