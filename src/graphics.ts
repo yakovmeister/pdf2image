@@ -41,6 +41,7 @@ export class Graphics {
   public gmBaseCommand(stream: fs.ReadStream, filename: string): gm.State {
     return this.gm(stream, filename)
       .density(this.density, this.density)
+      .units("PixelsPerInch")
       .resize(this.width, this.height, this.preserveAspectRatio ? '^' : '!')
       .quality(this.quality)
       .compress(this.compression);
