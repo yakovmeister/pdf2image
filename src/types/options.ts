@@ -8,4 +8,5 @@ export type Options = {
   savePath?: string;
   saveFilename?: string;
   compression?: string;
+  units?: 'Undefined' | 'PixelsPerInch' | 'PixelsPerCentimeter';
 };
