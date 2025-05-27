@@ -10,4 +10,5 @@ export const defaultOptions: Options = {
   savePath: './',
   saveFilename: 'untitled',
   compression: 'jpeg',
+  units: 'PixelsPerInch',
 };

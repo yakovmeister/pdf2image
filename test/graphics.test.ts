@@ -65,6 +65,9 @@ describe('graphics', () => {
 
     expect(options).to.haveOwnProperty('compression');
     expect(options.compression).to.be.equal('jpeg');
+
+    expect(options).to.haveOwnProperty('units');
+    expect(options.units).to.be.equal('PixelsPerInch');
   });
 
   it('should set and return all of the options (custom options)', () => {
@@ -78,6 +81,7 @@ describe('graphics', () => {
     gm.setSavePath('./test/data');
     gm.setSaveFilename('specimen');
     gm.setCompression('Lossless');
+    gm.setUnits('Undefined');
 
     const options = gm.getOptions();
 
@@ -107,6 +111,9 @@ describe('graphics', () => {
 
     expect(options).to.haveOwnProperty('compression');
     expect(options.compression).to.be.equal('Lossless');
+
+    expect(options).to.haveOwnProperty('units');
+    expect(options.units).to.be.equal('Undefined');
   });
 
   it('should by default use width as height if no height is given', () => {

@@ -77,7 +77,8 @@ function setGMOptions(gm: Graphics, options: Options): void {
     .setDensity(options.density)
     .setSavePath(options.savePath)
     .setSaveFilename(options.saveFilename)
-    .setCompression(options.compression);
+    .setCompression(options.compression)
+    .setUnits(options.units);
 
   return;
 }

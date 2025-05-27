@@ -23,6 +23,8 @@ export class Graphics {
 
   private compression = 'jpeg';
 
+  private units: 'Undefined' | 'PixelsPerInch' | 'PixelsPerCentimeter' = 'PixelsPerInch';
+
   private gm: gm.SubClass = gm.subClass({ imageMagick: false });
 
   public generateValidFilename(page?: number): string {
@@ -41,7 +43,7 @@ export class Graphics {
   public gmBaseCommand(stream: fs.ReadStream, filename: string): gm.State {
     return this.gm(stream, filename)
       .density(this.density, this.density)
-      .units("PixelsPerInch")
+      .units(this.units)
       .resize(this.width, this.height, this.preserveAspectRatio ? '^' : '!')
       .quality(this.quality)
       .compress(this.compression);
@@ -167,6 +169,12 @@ export class Graphics {
     return this;
   }
 
+  public setUnits(units: 'Undefined' | 'PixelsPerInch' | 'PixelsPerCentimeter'): Graphics {
+    this.units = units;
+
+    return this;
+  }
+
   public setCompression(compression: string): Graphics {
     this.compression = compression;
 
@@ -202,6 +210,7 @@ export class Graphics {
       savePath: this.savePath,
       saveFilename: this.saveFilename,
       compression: this.compression,
+      units: this.units,
     };
   }
 }
