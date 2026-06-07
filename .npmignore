@@ -16,3 +16,6 @@ rollup.config.js
 dump
 docs
 .archive
+.github
+examples
+.husky
